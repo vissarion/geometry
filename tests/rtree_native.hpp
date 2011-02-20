@@ -1,3 +1,6 @@
+#ifndef TESTS_RTREE_NATIVE_HPP
+#define TESTS_RTREE_NATIVE_HPP
+
 #include <boost/geometry/geometry.hpp>
 
 #include <boost/geometry/extensions/index/rtree/rtree.hpp>
@@ -10,8 +13,10 @@
 
 #include <map>
 
-int main()
+void tests_rtree_native_hpp()
 {
+	std::cout << "tests\rtree_native.hpp\n";
+	
     // Box
     {
         typedef boost::geometry::model::point<float, 2, boost::geometry::cs::cartesian> P;
@@ -201,7 +206,6 @@ int main()
 
     // ERROR!
     // remove_in expects previously inserted box - it should remove all objects inside some bigger box
-
-    std::cin.get();
-    return 0;
 }
+
+#endif // TESTS_RTREE_NATIVE_HPP
