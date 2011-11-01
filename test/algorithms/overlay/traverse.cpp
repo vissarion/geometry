@@ -1,6 +1,8 @@
-// Boost.Geometry (aka GGL, Generic Geometry Library) test file
-//
-// Copyright Barend Gehrels 2010, Geodan, Amsterdam, the Netherlands
+// Boost.Geometry (aka GGL, Generic Geometry Library)
+// Unit Test
+
+// Copyright (c) 2010 Barend Gehrels, Amsterdam, the Netherlands.
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -49,8 +51,8 @@
 
 #include <boost/geometry/geometries/geometries.hpp>
 
-#include <boost/geometry/domains/gis/io/wkt/read_wkt.hpp>
-#include <boost/geometry/domains/gis/io/wkt/write_wkt.hpp>
+#include <boost/geometry/domains/gis/io/wkt/read.hpp>
+#include <boost/geometry/domains/gis/io/wkt/write.hpp>
 
 
 #if defined(TEST_WITH_SVG)
@@ -132,7 +134,7 @@ struct test_traverse
         //std::cout << bg::area(g1) << " " << bg::area(g2) << std::endl;
 #endif
 
-        typedef typename bg::strategy_side
+        typedef typename bg::strategy::side::services::default_strategy
         <
             typename bg::cs_tag<G1>::type
         >::type side_strategy_type;
@@ -156,7 +158,11 @@ struct test_traverse
         out_vector v;
 
 
-        bg::traverse<Reverse1, Reverse2>(g1, g2, Direction, turns, v);
+        bg::detail::overlay::traverse
+            <
+                Reverse1, Reverse2,
+                G1, G2
+            >::apply(g1, g2, Direction, turns, v);
 
         // Check number of resulting rings
         BOOST_CHECK_MESSAGE(expected_count == boost::size(v),
@@ -168,7 +174,7 @@ struct test_traverse
                 );
 
         // Check total area of resulting rings
-        typename bg::area_result<G1>::type total_area = 0;
+        typename bg::default_area_result<G1>::type total_area = 0;
         BOOST_FOREACH(ring_type const& ring, v)
         {
             total_area += bg::area(ring);

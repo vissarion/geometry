@@ -1,4 +1,5 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
+// QuickBook Example
 
 // Copyright (c) 2011 Barend Gehrels, Amsterdam, the Netherlands.
 
@@ -6,15 +7,14 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-// Quickbook Example
-
 //[assign_inverse
 //` Usage of assign_inverse and expand to conveniently determine bounding 3D box of two points
 
 #include <iostream>
 
-#include <boost/geometry/geometry.hpp>
-#include <boost/geometry/geometries/geometries.hpp>
+#include <boost/geometry.hpp>
+#include <boost/geometry/geometries/box.hpp>
+#include <boost/geometry/geometries/point.hpp>
 
 using namespace boost::geometry;
 

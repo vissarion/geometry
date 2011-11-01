@@ -1,7 +1,7 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
 //
-// Copyright Barend Gehrels 2007-2009, Geodan, Amsterdam, the Netherlands
-// Copyright Bruno Lalande 2008, 2009
+// Copyright (c) 2007-2011 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2011 Bruno Lalande, Paris, France.
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -131,12 +131,6 @@ If you want to use your own points it makes sense to use the registration macro'
 - \#include <boost/geometry/geometries/register/box.hpp> macro's for box registration
 
 
-If you are using standard containers containing points and want to handle them as a linestring
-- \#include <boost/geometry/geometries/adapted/std_as_linestring.hpp> allows you to use things like \c std::vector<point_2d>
-  and put them as parameters into algorithms.
-
-If you are using boost tuples and want to handle them as Cartesian points
-- \#include <boost/geometry/geometries/adapted/tuple_cartesian.hpp>
 
 
 \section extension_includes Extensions

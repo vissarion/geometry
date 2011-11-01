@@ -1,6 +1,9 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
-//
-// Copyright Barend Gehrels 2007-2009, Geodan, Amsterdam, the Netherlands
+
+// Copyright (c) 2007-2011 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2011 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2011 Mateusz Loskot, London, UK.
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -70,7 +73,6 @@ template<> struct interior_mutable_type<my_polygon>
     typedef boost::array<my_ring, 2>& type;
 };
 
-
 template<> struct exterior_ring<my_polygon>
 {
     static my_ring& get(my_polygon& p)
@@ -133,7 +135,7 @@ int main()
     std::cout << "Perimeter of " << p1.name << ": "
         << boost::geometry::perimeter(p1) << std::endl;
     std::cout << "Centroid of " << p1.name << ": "
-        << boost::geometry::dsv(boost::geometry::make_centroid<my_point>(p1)) << std::endl;
+        << boost::geometry::dsv(boost::geometry::return_centroid<my_point>(p1)) << std::endl;
 
     return 0;
 }

@@ -1,4 +1,5 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
+// QuickBook Example
 
 // Copyright (c) 2011 Barend Gehrels, Amsterdam, the Netherlands.
 
@@ -6,18 +7,18 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-// Quickbook Example
-
 //[append
 //` Shows usage of Boost.Geometry's append to append a point or a range to a polygon
 
 #include <iostream>
 
-#include <boost/geometry/geometry.hpp>
-#include <boost/geometry/geometries/geometries.hpp>
-#include <boost/geometry/geometries/adapted/tuple_cartesian.hpp>
-
 #include <boost/assign.hpp>
+
+#include <boost/geometry.hpp>
+#include <boost/geometry/geometries/polygon.hpp>
+#include <boost/geometry/geometries/adapted/boost_tuple.hpp>
+
+BOOST_GEOMETRY_REGISTER_BOOST_TUPLE_CS(cs::cartesian)
 
 int main()
 {

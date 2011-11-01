@@ -1,7 +1,13 @@
-// Boost.Geometry (aka GGL, Generic Geometry Library) test file
-//
-// Copyright Barend Gehrels 2007-2009, Geodan, Amsterdam, the Netherlands
-// Copyright Bruno Lalande 2008, 2009
+// Boost.Geometry (aka GGL, Generic Geometry Library)
+// Unit Test
+
+// Copyright (c) 2007-2011 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2008-2011 Bruno Lalande, Paris, France.
+// Copyright (c) 2009-2011 Mateusz Loskot, London, UK.
+
+// Parts of Boost.Geometry are redesigned from Geodan's Geographic Library
+// (geolib/GGL), copyright (c) 1995-2010 Geodan, Amsterdam, the Netherlands.
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -23,8 +29,8 @@
 
 #include <boost/geometry/geometries/geometries.hpp>
 
-#include <boost/geometry/domains/gis/io/wkt/read_wkt.hpp>
-#include <boost/geometry/domains/gis/io/wkt/write_wkt.hpp>
+#include <boost/geometry/domains/gis/io/wkt/read.hpp>
+#include <boost/geometry/domains/gis/io/wkt/write.hpp>
 
 #if defined(TEST_WITH_SVG)
 #  include <boost/geometry/extensions/io/svg/svg_mapper.hpp>
@@ -297,6 +303,11 @@ void test_all()
             4,
             ggl_list_20110306_javier[0], ggl_list_20110306_javier[1]);
 
+#ifdef _MSC_VER // gcc returns 14 for float
+    test_get_turns<polygon, polygon>::apply("ggl_list_20110716_enrico",
+            13,
+            ggl_list_20110716_enrico[0], ggl_list_20110716_enrico[1]);
+#endif
 
     // pies
     test_get_turns<polygon, polygon>::apply("pie_23_16_16", 3, pie_23_16_16[0], pie_23_16_16[1]);

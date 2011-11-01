@@ -1,6 +1,7 @@
-// Boost.Geometry (aka GGL, Generic Geometry Library) test file
-//
-// Copyright Barend Gehrels 2010, Geodan, Amsterdam, the Netherlands
+// Boost.Geometry (aka GGL, Generic Geometry Library) 
+// Unit Test
+
+// Copyright (c) 2010-2011 Barend Gehrels, Amsterdam, the Netherlands.
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -137,7 +138,7 @@ static std::string case_77_multi[2] =
     // -> went wrong in the assemble phase for intersection (traversal is OK)
     // -> fixed
     "MULTIPOLYGON(((3 3,3 4,4 4,4 3,3 3)),((5 3,5 4,4 4,4 5,3 5,3 6,5 6,5 5,7 5,7 6,8 6,8 5,9 5,9 2,8 2,8 1,7 1,7 2,5 2,5 3),(6 3,8 3,8 4,6 4,6 3)))",
-    "MULTIPOLYGON(((6 3,6 4,7 4,7 3,6 3)),((2 3,1 3,1 4,3 4,3 5,4 5,4 6,5 6,5 7,9 7,9 4,7 4,7 5,8 5,8 6,7 6,7 5,6 5,6 4,4 4,4 3,3 3,3 2,4 2,2 2,2 3)),((5 2,4 2,4 3,6 3,6 2,5 2)),((7 2,7 3,8 3,8 2,8 1,7 1,7 2)))" 
+    "MULTIPOLYGON(((6 3,6 4,7 4,7 3,6 3)),((2 3,1 3,1 4,3 4,3 5,4 5,4 6,5 6,5 7,9 7,9 4,7 4,7 5,8 5,8 6,7 6,7 5,6 5,6 4,4 4,4 3,3 3,3 2,2 2,2 3)),((5 2,4 2,4 3,6 3,6 2,5 2)),((7 2,7 3,8 3,8 2,8 1,7 1,7 2)))" 
 };
 
 static std::string case_78_multi[2] = 
@@ -408,6 +409,23 @@ static std::string pie_7_2_1_0_15[2] =
     "MULTIPOLYGON(((2500 2500,2500 3875,2855 3828,3187 3690,3472 3472,3690 3187,3828 2855,3875 2500,2500 2500)))",
     "MULTIPOLYGON(((2500 2500,2791 3586,3062 3474,2500 2500)),((2500 2500,3474 3062,3586 2791,3625 2500,3586 2208,3474 1937,3295 1704,3062 1525,2791 1413,2499 1375,2208 1413,1937 1525,1704 1704,1525 1937,1413 2208,1375 2500,2500 2500)))" 
 };
+
+// Case, not literally on this list but derived, to mix polygon/multipolygon in call to difference
+static std::string ggl_list_20111025_vd[4] =
+    {
+    "POLYGON((0 0,0 4,4 0,0 0))",
+    "POLYGON((10 0,10 5,15 0,10 0))",
+    "MULTIPOLYGON(((0 0,0 4,4 0,0 0)))",
+    "MULTIPOLYGON(((10 0,10 5,15 0,10 0)))"
+    };
+
+// Same, mail with other case with text "Say the MP is the 2 squares below and P is the blue-ish rectangle."    
+static std::string ggl_list_20111025_vd_2[2] =
+    {
+    "POLYGON((5 0,5 4,8 4,8 0,5 0))",
+    "MULTIPOLYGON(((0 0,0 2,2 2,2 0,0 0)),((4 0,4 2,6 2,6 0,4 0)))"
+    };
+    
 
 
 #endif // BOOST_GEOMETRY_TEST_MULTI_OVERLAY_CASES_HPP

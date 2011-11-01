@@ -1,4 +1,5 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
+// QuickBook Example
 
 // Copyright (c) 2011 Barend Gehrels, Amsterdam, the Netherlands.
 
@@ -6,15 +7,13 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-// Quickbook Example
-
 //[make_3d_point
 //` Using make to construct a three dimensional point
 
 #include <iostream>
 
-#include <boost/geometry/geometry.hpp>
-#include <boost/geometry/geometries/geometries.hpp>
+#include <boost/geometry.hpp>
+#include <boost/geometry/geometries/point.hpp>
 
 int main()
 {

@@ -1,4 +1,5 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
+// QuickBook Example
 
 // Copyright (c) 2011 Barend Gehrels, Amsterdam, the Netherlands.
 
@@ -6,13 +7,11 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-// Quickbook Example
-
 //[register_point_2d
 //` Show the use of the macro BOOST_GEOMETRY_REGISTER_POINT_2D
 
 #include <iostream>
-#include <boost/geometry/geometry.hpp>
+#include <boost/geometry.hpp>
 #include <boost/geometry/geometries/register/point.hpp>
 
 /*< Somewhere, any legacy point struct is defined >*/
@@ -29,9 +28,9 @@ int main()
 
     namespace bg = boost::geometry;
 
-    /*< Any Boost.Geometry function can be used for legacy point now. Here: assign and distance >*/
-    bg::assign(p1, 1, 1);
-    bg::assign(p2, 2, 2);
+    /*< Any Boost.Geometry function can be used for legacy point now. Here: assign_values and distance >*/
+    bg::assign_values(p1, 1, 1);
+    bg::assign_values(p2, 2, 2);
 
     double d = bg::distance(p1, p2);
 

@@ -1,4 +1,5 @@
 // Boost.Geometry (aka GGL, Generic Geometry Library)
+// QuickBook Example
 
 // Copyright (c) 2011 Barend Gehrels, Amsterdam, the Netherlands.
 
@@ -6,13 +7,13 @@
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
 
-// Quickbook Example
-
 //[get_box
 //` Get the coordinate of a box
 
 #include <iostream>
-#include <boost/geometry/geometry.hpp>
+
+#include <boost/geometry.hpp>
+#include <boost/geometry/geometries/point_xy.hpp>
 
 namespace bg = boost::geometry;
 
@@ -20,7 +21,7 @@ int main()
 {
     bg::model::box<bg::model::d2::point_xy<double> > box;
 
-    bg::assign(box, 1, 3, 5, 6);
+    bg::assign_values(box, 1, 3, 5, 6);
 
     std::cout << "Box:"
         << " " << bg::get<bg::min_corner, 0>(box)
