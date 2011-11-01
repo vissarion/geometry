@@ -48,11 +48,13 @@ struct tag
 
 
 /*!
-\brief Meta-function to get the tag of any geometry type
-\details All geometries tell their geometry type (point, linestring, polygon, etc) by implementing
-  a tag traits class. This meta-function uses that traits class to retrieve the tag.
-\tparam Geometry geometry
+\brief \brief_meta{type, tag, \meta_geometry_type}
+\details With Boost.Geometry, tags are the driving force of the tag dispatching
+    mechanism. The tag metafunction is therefore used in every free function.
+\tparam Geometry \tparam_geometry 
 \ingroup core
+
+\qbk{[include reference/core/tag.qbk]}
 */
 template <typename Geometry>
 struct tag

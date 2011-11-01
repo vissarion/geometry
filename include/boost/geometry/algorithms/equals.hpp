@@ -15,9 +15,7 @@
 #define BOOST_GEOMETRY_ALGORITHMS_EQUALS_HPP
 
 
-
 #include <cstddef>
-#include <deque>
 #include <vector>
 
 #include <boost/mpl/if.hpp>
@@ -88,7 +86,7 @@ struct area_check
     {
         return geometry::math::equals(
                 geometry::area(geometry1),
-                geometry::area(geometry1));
+                geometry::area(geometry2));
     }
 };
 
@@ -100,7 +98,7 @@ struct length_check
     {
         return geometry::math::equals(
                 geometry::length(geometry1),
-                geometry::length(geometry1));
+                geometry::length(geometry2));
     }
 };
 
@@ -135,15 +133,11 @@ struct equals_by_collection
             return false;
         }
 
-        // Check where direction is NOT changing
-
         std::sort(c1.begin(), c1.end());
         std::sort(c2.begin(), c2.end());
 
         // Just check if these vectors are equal.
-        return c1.size() == c2.size()
-            && std::equal(c1.begin(), c1.end(), c2.begin());
-
+        return std::equal(c1.begin(), c1.end(), c2.begin());
     }
 };
 
@@ -271,12 +265,20 @@ struct equals_reversed
 
 /*!
 \brief \brief_check{are spatially equal}
+\details \details_check12{equals, is spatially equal}. Spatially equal means 
+    that the same point set is included. A box can therefore be spatially equal
+    to a ring or a polygon, or a linestring can be spatially equal to a 
+    multi-linestring or a segment. This only theoretically, not all combinations
+    are implemented yet.
 \ingroup equals
 \tparam Geometry1 \tparam_geometry
 \tparam Geometry2 \tparam_geometry
 \param geometry1 \param_geometry
 \param geometry2 \param_geometry
-\return \return_check2{are spatially disjoint}
+\return \return_check2{are spatially equal}
+
+\qbk{[include reference/algorithms/equals.qbk]}
+
  */
 template <typename Geometry1, typename Geometry2>
 inline bool equals(Geometry1 const& geometry1, Geometry2 const& geometry2)

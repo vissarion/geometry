@@ -14,7 +14,9 @@
 #include <boost/geometry/algorithms/expand.hpp>
 #include <boost/geometry/algorithms/detail/partition.hpp>
 #include <boost/geometry/algorithms/detail/overlay/get_ring.hpp>
-#include <boost/geometry/algorithms/detail/overlay/within_util.hpp>
+#include <boost/geometry/algorithms/within.hpp>
+
+#include <boost/geometry/geometries/box.hpp>
 
 
 namespace boost { namespace geometry
@@ -40,30 +42,29 @@ static inline bool within_selected_input(Item const& item2, ring_identifier cons
     typedef typename geometry::tag<Geometry1>::type tag1;
     typedef typename geometry::tag<Geometry2>::type tag2;
 
-    int code = -1;
     switch (ring_id.source_index)
     {
         case 0 :
-            code = point_in_ring(item2.point,
+            return geometry::within(item2.point,
                 get_ring<tag1>::apply(ring_id, geometry1));
             break;
         case 1 :
-            code = point_in_ring(item2.point,
+            return geometry::within(item2.point,
                 get_ring<tag2>::apply(ring_id, geometry2));
             break;
         case 2 :
-            code = point_in_ring(item2.point,
+            return geometry::within(item2.point,
                 get_ring<void>::apply(ring_id, collection));
             break;
     }
-    return code == 1;
+    return false;
 }
 
 
 template <typename Point>
 struct ring_info_helper
 {
-    typedef typename geometry::area_result<Point>::type area_type;
+    typedef typename geometry::default_area_result<Point>::type area_type;
 
     ring_identifier id;
     area_type real_area;
@@ -75,7 +76,7 @@ struct ring_info_helper
     {}
 
     inline ring_info_helper(ring_identifier i, area_type a)
-        : id(i), real_area(a), abs_area(abs(a))
+        : id(i), real_area(a), abs_area(geometry::math::abs(a))
     {}
 };
 

@@ -35,14 +35,7 @@
 #include <boost/geometry/algorithms/num_points.hpp>
 #include <boost/geometry/strategies/transform.hpp>
 #include <boost/geometry/strategies/transform/map_transformer.hpp>
-#include <boost/geometry/ranges/segment_range.hpp>
-
-#include <boost/geometry/geometries/box.hpp>
-#include <boost/geometry/geometries/linestring.hpp>
-#include <boost/geometry/geometries/ring.hpp>
-#include <boost/geometry/geometries/polygon.hpp>
-#include <boost/geometry/geometries/point_xy.hpp>
-
+#include <boost/geometry/views/segment_view.hpp>
 
 #include <boost/geometry/multi/core/tags.hpp>
 #include <boost/geometry/multi/algorithms/envelope.hpp>
@@ -50,14 +43,26 @@
 
 #include <boost/geometry/extensions/io/svg/write_svg.hpp>
 
+// Helper geometries (all points are transformed to integer-points)
+#include <boost/geometry/geometries/geometries.hpp>
+
 
 namespace boost { namespace geometry
 {
+
+#ifndef DOXYGEN_NO_DETAIL
+namespace detail { namespace svg
+{
+    typedef model::point<int, 2, cs::cartesian> svg_point_type;
+}}
+#endif
 
 
 #ifndef DOXYGEN_NO_DISPATCH
 namespace dispatch
 {
+
+
 
 template <typename GeometryTag, typename Geometry>
 struct svg_map
@@ -78,7 +83,7 @@ struct svg_map<point_tag, Point>
                     std::string const& style, int size,
                     Point const& point, TransformStrategy const& strategy)
     {
-        model::d2::point_xy<int> ipoint;
+        detail::svg::svg_point_type ipoint;
         geometry::transform(point, ipoint, strategy);
         stream << geometry::svg(ipoint, style, size) << std::endl;
     }
@@ -92,7 +97,7 @@ struct svg_map<box_tag, Box>
                     std::string const& style, int size,
                     Box const& box, TransformStrategy const& strategy)
     {
-        model::box<model::d2::point_xy<int> > ibox;
+        model::box<detail::svg::svg_point_type> ibox;
         geometry::transform(box, ibox, strategy);
 
         stream << geometry::svg(ibox, style, size) << std::endl;
@@ -122,12 +127,12 @@ struct svg_map<segment_tag, Segment>
                     std::string const& style, int size,
                     Segment const& segment, TransformStrategy const& strategy)
     {
-        typedef segment_range<Segment> range_type;
-        range_type range(segment);
+        typedef segment_view<Segment> view_type;
+        view_type range(segment);
         svg_map_range
             <
-                range_type,
-                model::linestring<model::d2::point_xy<int> >
+                view_type,
+                model::linestring<detail::svg::svg_point_type>
             >::apply(stream, style, size, range, strategy);
     }
 };
@@ -135,13 +140,13 @@ struct svg_map<segment_tag, Segment>
 
 template <typename Ring>
 struct svg_map<ring_tag, Ring>
-    : svg_map_range<Ring, model::ring<model::d2::point_xy<int> > >
+    : svg_map_range<Ring, model::ring<detail::svg::svg_point_type> >
 {};
 
 
 template <typename Linestring>
 struct svg_map<linestring_tag, Linestring>
-    : svg_map_range<Linestring, model::linestring<model::d2::point_xy<int> > >
+    : svg_map_range<Linestring, model::linestring<detail::svg::svg_point_type> >
 {};
 
 
@@ -153,7 +158,7 @@ struct svg_map<polygon_tag, Polygon>
                     std::string const& style, int size,
                     Polygon const& polygon, TransformStrategy const& strategy)
     {
-        model::polygon<model::d2::point_xy<int> > ipoly;
+        model::polygon<detail::svg::svg_point_type> ipoly;
         geometry::transform(polygon, ipoly, strategy);
         stream << geometry::svg(ipoly, style, size) << std::endl;
     }
@@ -212,11 +217,10 @@ inline void svg_map(std::ostream& stream,
 template <typename Point, bool SameScale = true>
 class svg_mapper : boost::noncopyable
 {
-    typedef model::d2::point_xy<int> map_point_type;
     typedef strategy::transform::map_transformer
         <
             Point,
-            map_point_type,
+            detail::svg::svg_point_type,
             true,
             SameScale
         > transformer_type;
@@ -225,6 +229,7 @@ class svg_mapper : boost::noncopyable
     boost::scoped_ptr<transformer_type> m_matrix;
     std::ostream& m_stream;
     int m_width, m_height;
+    std::string m_width_height; // for <svg> tag only, defaults to 2x 100%
 
     void init_matrix()
     {
@@ -239,7 +244,7 @@ class svg_mapper : boost::noncopyable
                 << std::endl
                 << "\"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">"
                 << std::endl
-                << "<svg width=\"100%\" height=\"100%\" version=\"1.1\""
+                << "<svg " << m_width_height << " version=\"1.1\""
                 << std::endl
                 << "xmlns=\"http://www.w3.org/2000/svg\">"
                 << std::endl;
@@ -247,10 +252,12 @@ class svg_mapper : boost::noncopyable
     }
 
 public :
-    svg_mapper(std::ostream& s, int w, int h)
+    svg_mapper(std::ostream& s, int w, int h
+        , std::string const& width_height = "width=\"100%\" height=\"100%\"")
         : m_stream(s)
         , m_width(w)
         , m_height(h)
+        , m_width_height(width_height)
     {
         assign_inverse(m_bounding_box);
     }
@@ -266,7 +273,7 @@ public :
         if (num_points(geometry) > 0)
         {
             expand(m_bounding_box,
-                make_envelope
+                return_envelope
                     <
                         model::box<Point>
                     >(geometry));
@@ -299,7 +306,7 @@ public :
                 int offset_x = 0, int offset_y = 0, int lineheight = 10)
     {
         init_matrix();
-        map_point_type map_point;
+        detail::svg::svg_point_type map_point;
         transform(point, map_point, *m_matrix);
         m_stream
             << "<text style=\"" << style << "\""

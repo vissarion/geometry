@@ -54,8 +54,7 @@ static inline double course(Point const& p1, Point const& p2)
 
 
 /*!
-\brief Check at which side of a segment a point lies:
-\details from a Great Circle segment between two points:
+\brief Check at which side of a Great Circle segment a point lies
          left of segment (> 0), right of segment (< 0), on segment (0)
 \ingroup strategies
 \tparam CalculationType \tparam_calculation
@@ -83,29 +82,16 @@ public :
                 CalculationType
             >::type coordinate_type;
 
-        // Calculate the distance using the Haversine formula.
-        // That is also applicable on the spherical earth. A radius is not necessary.
-
         double d1 = 0.001; // m_strategy.apply(sp1, p);
         double crs_AD = detail::course(p1, p);
         double crs_AB = detail::course(p1, p2);
-        double XTD = geometry::math::abs(asin(sin(d1) * sin(crs_AD - crs_AB)));
+        double XTD = asin(sin(d1) * sin(crs_AD - crs_AB));
 
-        return math::equals(XTD, 0) ? 0 : XTD > 0 ? 1 : -1;
-        //return s > 0 ? 1 : s < 0 ? -1 : 0;
+        return math::equals(XTD, 0) ? 0 : XTD < 0 ? 1 : -1;
     }
 };
 
 }} // namespace strategy::side
-
-
-#ifndef DOXYGEN_NO_STRATEGY_SPECIALIZATIONS
-template <typename CalculationType>
-struct strategy_side<spherical_tag, CalculationType>
-{
-    typedef strategy::side::side_by_cross_track<CalculationType> type;
-};
-#endif
 
 
 }} // namespace boost::geometry

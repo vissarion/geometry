@@ -33,10 +33,11 @@
 #include <boost/geometry/util/math.hpp>
 #include <boost/geometry/views/closeable_view.hpp>
 #include <boost/geometry/views/reversible_view.hpp>
+#include <boost/geometry/views/detail/range_type.hpp>
 
 #include <boost/geometry/geometries/box.hpp>
+#include <boost/geometry/geometries/segment.hpp>
 
-#include <boost/geometry/iterators/range_type.hpp>
 #include <boost/geometry/iterators/ever_circling_iterator.hpp>
 
 #include <boost/geometry/strategies/cartesian/cart_intersect.hpp>
@@ -57,7 +58,7 @@
 
 #ifdef BOOST_GEOMETRY_DEBUG_INTERSECTION
 #  include <sstream>
-#  include <boost/geometry/util/write_dsv.hpp>
+#  include <boost/geometry/io/dsv/write.hpp>
 #endif
 
 
@@ -125,6 +126,31 @@ class get_turns_in_sections
             view_type2 const
         >::type range2_iterator;
 
+
+    template <typename Geometry, typename Section>
+    static inline bool neighbouring(Section const& section,
+            int index1, int index2)
+    {
+        // About n-2:
+        //   (square: range_count=5, indices 0,1,2,3
+        //    -> 0-3 are adjacent, don't check on intersections)
+        // Also tested for open polygons, and/or duplicates
+        // About first condition: will be optimized by compiler (static)
+        // It checks if it is areal (box,ring,(multi)polygon
+        int const n = int(section.range_count);
+        return boost::is_same
+                    <
+                        typename tag_cast
+                            <
+                                typename geometry::point_type<Geometry1>::type, 
+                                areal_tag
+                            >::type, 
+                        areal_tag
+                    >::value
+               && index1 == 0 
+               && index2 >= n - 2
+                ;
+    }
 
 
 public :
@@ -195,7 +221,7 @@ public :
                 if (skip)
                 {
                     // If sources are the same (possibly self-intersecting):
-                    // skip if it is a neighbouring sement.
+                    // skip if it is a neighbouring segment.
                     // (including first-last segment
                     //  and two segments with one or more degenerate/duplicate
                     //  (zero-length) segments in between)
@@ -203,12 +229,9 @@ public :
                     // Also skip if index1 < index2 to avoid getting all
                     // intersections twice (only do this on same source!)
 
-                    // About n-2:
-                    //   (square: range_count=5, indices 0,1,2,3
-                    //    -> 0-3 are adjacent)
-                    skip = index2 >= index1
-                        || ndi1 == ndi2 + 1
-                        || (index2 == 0 && index1 >= int(sec1.range_count) - 2)
+                    skip = index1 >= index2
+                        || ndi2 == ndi1 + 1
+                        || neighbouring<Geometry1>(sec1, index1, index2)
                         ;
                 }
 
@@ -491,9 +514,9 @@ struct get_turns_cs
         next++;
         next++;
 
-        bool first = true;
+        //bool first = true;
 
-        char previous_side[2] = {0, 0};
+        //char previous_side[2] = {0, 0};
 
         int index = 0;
 
@@ -504,7 +527,7 @@ struct get_turns_cs
             segment_identifier seg_id(source_id1,
                         multi_index, ring_index, index);
 
-            if (first)
+            /*if (first)
             {
                 previous_side[0] = get_side<0>(box, *prev);
                 previous_side[1] = get_side<1>(box, *prev);
@@ -518,7 +541,7 @@ struct get_turns_cs
             // 1) EITHER the two points are lying on one side of the box (! 0 && the same)
             // 2) OR same in Y-direction
             // 3) OR all points are inside the box (0)
-            /*if (! (
+            if (! (
                 (current_side[0] != 0 && current_side[0] == previous_side[0])
                 || (current_side[1] != 0 && current_side[1] == previous_side[1])
                 || (current_side[0] == 0
@@ -533,7 +556,8 @@ struct get_turns_cs
                         *prev, *it, *next,
                         bp[0], bp[1], bp[2], bp[3],
                         turns);
-                // TODO: call the interrupt policy if applicable
+                // Future performance enhancement: 
+                // return if told by the interrupt policy 
             }
         }
     }
@@ -572,7 +596,6 @@ private:
             // Output
             Turns& turns)
     {
-        // TODO:
         // Depending on code some relations can be left out
 
         typedef typename boost::range_value<Turns>::type turn_info;

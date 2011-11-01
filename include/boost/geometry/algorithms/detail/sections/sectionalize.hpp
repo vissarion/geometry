@@ -58,7 +58,6 @@ struct section
 {
     typedef Box box_type;
 
-    // unique ID used in get_turns to mark section-pairs already handled.
     int id; // might be obsolete now, BSG 14-03-2011 TODO decide about this
 
     int directions[DimensionCount];
@@ -190,11 +189,12 @@ struct check_duplicate_loop
 
     static inline bool apply(Segment const& seg)
     {
-        coordinate_type const diff =
-            geometry::get<1, Dimension>(seg) - geometry::get<0, Dimension>(seg);
-
-        coordinate_type const zero = 0;
-        if (! geometry::math::equals(diff, zero))
+        if (! geometry::math::equals
+                (
+                    geometry::get<0, Dimension>(seg), 
+                    geometry::get<1, Dimension>(seg)
+                )
+            )
         {
             return false;
         }
@@ -462,8 +462,10 @@ struct sectionalize_box
         // (or polygon would be a helper-type).
         // Therefore we mimic a linestring/std::vector of 5 points
 
+        // TODO: might be replaced by assign_box_corners_oriented 
+        // or just "convert"
         point_type ll, lr, ul, ur;
-        assign_box_corners(box, ll, lr, ul, ur);
+        geometry::detail::assign_box_corners(box, ll, lr, ul, ur);
 
         std::vector<point_type> points;
         points.push_back(ll);
@@ -619,8 +621,9 @@ inline void sectionalize(Geometry const& geometry, Sections& sections, int sourc
 {
     concept::check<Geometry const>();
 
+    // TODO: review use of this constant (see below) as causing problems with GCC 4.6 --mloskot
     // A maximum of 10 segments per section seems to give the fastest results
-    static std::size_t const max_segments_per_section = 10;
+    //static std::size_t const max_segments_per_section = 10;
     typedef dispatch::sectionalize
         <
             typename tag<Geometry>::type,
@@ -628,7 +631,7 @@ inline void sectionalize(Geometry const& geometry, Sections& sections, int sourc
             Reverse,
             Sections,
             Sections::value,
-            max_segments_per_section
+            10 // TODO: max_segments_per_section
         > sectionalizer_type;
 
     sections.clear();

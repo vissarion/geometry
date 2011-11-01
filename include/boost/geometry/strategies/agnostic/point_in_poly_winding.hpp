@@ -17,10 +17,9 @@
 #include <boost/geometry/util/select_calculation_type.hpp>
 
 #include <boost/geometry/strategies/side.hpp>
+#include <boost/geometry/strategies/covered_by.hpp>
 #include <boost/geometry/strategies/within.hpp>
 
-// TEMP!
-#include <boost/geometry/multi/core/tags.hpp>
 
 namespace boost { namespace geometry
 {
@@ -60,7 +59,7 @@ class winding
         >::type calculation_type;
 
 
-    typedef typename strategy_side
+    typedef typename strategy::side::services::default_strategy
         <
             typename cs_tag<Point>::type
         >::type strategy_side_type;
@@ -182,50 +181,19 @@ public :
 namespace services
 {
 
-template <typename Point, typename PointOfSegment>
-struct default_strategy<point_tag, polygon_tag, cartesian_tag, cartesian_tag, Point, PointOfSegment>
+// Register using "areal_tag" for ring, polygon, multi-polygon
+template <typename AnyTag, typename Point, typename Geometry>
+struct default_strategy<point_tag, AnyTag, point_tag, areal_tag, cartesian_tag, cartesian_tag, Point, Geometry>
 {
-    typedef winding<Point, PointOfSegment> type;
+    typedef winding<Point, typename geometry::point_type<Geometry>::type> type;
 };
 
-template <typename Point, typename PointOfSegment>
-struct default_strategy<point_tag, ring_tag, cartesian_tag, cartesian_tag, Point, PointOfSegment>
+template <typename AnyTag, typename Point, typename Geometry>
+struct default_strategy<point_tag, AnyTag, point_tag, areal_tag, spherical_tag, spherical_tag, Point, Geometry>
 {
-    typedef winding<Point, PointOfSegment> type;
+    typedef winding<Point, typename geometry::point_type<Geometry>::type> type;
 };
 
-template <typename Point, typename PointOfSegment>
-struct default_strategy<point_tag, polygon_tag, spherical_tag, spherical_tag, Point, PointOfSegment>
-{
-    typedef winding<Point, PointOfSegment> type;
-};
-
-// TEMP!
-// register it even for the multi here, and for the box
-// future: use tag inheritance, see elsewhere
-template <typename Point, typename PointOfSegment>
-struct default_strategy<point_tag, multi_polygon_tag, cartesian_tag, cartesian_tag, Point, PointOfSegment>
-{
-    typedef winding<Point, PointOfSegment> type;
-};
-
-template <typename Point, typename PointOfSegment>
-struct default_strategy<point_tag, multi_polygon_tag, spherical_tag, spherical_tag, Point, PointOfSegment>
-{
-    typedef winding<Point, PointOfSegment> type;
-};
-
-template <typename Point, typename PointOfSegment>
-struct default_strategy<point_tag, box_tag, cartesian_tag, cartesian_tag, Point, PointOfSegment>
-{
-    typedef winding<Point, PointOfSegment> type;
-};
-
-template <typename Point, typename PointOfSegment>
-struct default_strategy<point_tag, box_tag, spherical_tag, spherical_tag, Point, PointOfSegment>
-{
-    typedef winding<Point, PointOfSegment> type;
-};
 
 } // namespace services
 
@@ -233,6 +201,29 @@ struct default_strategy<point_tag, box_tag, spherical_tag, spherical_tag, Point,
 
 
 }} // namespace strategy::within
+
+
+
+#ifndef DOXYGEN_NO_STRATEGY_SPECIALIZATIONS
+namespace strategy { namespace covered_by { namespace services
+{
+
+// Register using "areal_tag" for ring, polygon, multi-polygon
+template <typename AnyTag, typename Point, typename Geometry>
+struct default_strategy<point_tag, AnyTag, point_tag, areal_tag, cartesian_tag, cartesian_tag, Point, Geometry>
+{
+    typedef strategy::within::winding<Point, typename geometry::point_type<Geometry>::type> type;
+};
+
+template <typename AnyTag, typename Point, typename Geometry>
+struct default_strategy<point_tag, AnyTag, point_tag, areal_tag, spherical_tag, spherical_tag, Point, Geometry>
+{
+    typedef strategy::within::winding<Point, typename geometry::point_type<Geometry>::type> type;
+};
+
+
+}}} // namespace strategy::covered_by::services
+#endif
 
 
 }} // namespace boost::geometry

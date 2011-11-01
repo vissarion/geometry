@@ -13,20 +13,18 @@
 #ifndef BOOST_GEOMETRY_STRATEGIES_CARTESIAN_CENTROID_WEIGHTED_LENGTH_HPP
 #define BOOST_GEOMETRY_STRATEGIES_CARTESIAN_CENTROID_WEIGHTED_LENGTH_HPP
 
-#include <cstddef>
-
-#include <boost/array.hpp>
 #include <boost/geometry/algorithms/distance.hpp>
+#include <boost/geometry/arithmetic/arithmetic.hpp>
 #include <boost/geometry/util/select_most_precise.hpp>
 #include <boost/geometry/strategies/centroid.hpp>
-#include <boost/geometry/strategies/distance_result.hpp>
+#include <boost/geometry/strategies/default_distance_result.hpp>
+
+// Helper geometry
+#include <boost/geometry/geometries/point.hpp>
 
 
 namespace boost { namespace geometry
 {
-
-// Note: when calling the namespace "centroid", it sometimes,
-// somehow, in gcc, gives compilation problems (confusion with function centroid).
 
 namespace strategy { namespace centroid
 {
@@ -37,16 +35,19 @@ namespace detail
 template <typename Type, std::size_t DimensionCount>
 struct weighted_length_sums
 {
+    typedef typename geometry::model::point
+        <
+            Type, DimensionCount,
+            cs::cartesian
+        > work_point;
+
     Type length;
-    boost::array<Type, DimensionCount> average_sum;
+    work_point average_sum;
 
     inline weighted_length_sums()
         : length(Type())
     {
-        for (std::size_t i = 0; i < DimensionCount; i++)
-        {
-            average_sum[i] = Type();
-        }
+        geometry::assign_zero(average_sum);
     }
 };
 }
@@ -61,12 +62,16 @@ class weighted_length
 private :
     typedef typename select_most_precise
         <
-            typename distance_result<Point>::type,
-            typename distance_result<PointOfSegment>::type
+            typename default_distance_result<Point>::type,
+            typename default_distance_result<PointOfSegment>::type
         >::type distance_type;
 
 public :
-    typedef detail::weighted_length_sums<distance_type, 2> state_type;
+    typedef detail::weighted_length_sums
+        <
+            distance_type,
+            geometry::dimension<Point>::type::value
+        > state_type;
 
     static inline void apply(PointOfSegment const& p1,
             PointOfSegment const& p2, state_type& state)
@@ -74,13 +79,12 @@ public :
         distance_type const d = geometry::distance(p1, p2);
         state.length += d;
 
-        distance_type two(2);
-
-        // Might be made generic for N dimensions using specializations
-        distance_type const mx = (get<0>(p1) + get<0>(p2)) / two;
-        distance_type const my = (get<1>(p1) + get<1>(p2)) / two;
-        state.average_sum[0] += d * mx;
-        state.average_sum[1] += d * my;
+        typename state_type::work_point weighted_median;
+        geometry::assign_zero(weighted_median);
+        geometry::add_point(weighted_median, p1);
+        geometry::add_point(weighted_median, p2);
+        geometry::multiply_value(weighted_median, d/2);
+        geometry::add_point(state.average_sum, weighted_median);
     }
 
     static inline bool result(state_type const& state, Point& centroid)
@@ -88,8 +92,9 @@ public :
         distance_type const zero = distance_type();
         if (! geometry::math::equals(state.length, zero))
         {
-            set<0>(centroid, state.average_sum[0] / state.length);
-            set<1>(centroid, state.average_sum[1] / state.length);
+            assign_zero(centroid);
+            add_point(centroid, state.average_sum);
+            divide_value(centroid, state.length);
             return true;
         }
 
@@ -103,13 +108,15 @@ public :
 namespace services
 {
 
-// Register this strategy for linestrings and polygons, in two or three dimensions
-template <typename Point, typename Geometry>
+
+// Register this strategy for linear geometries, in all dimensions
+
+template <std::size_t N, typename Point, typename Geometry>
 struct default_strategy
 <
     cartesian_tag,
     linear_tag,
-    2,
+    N,
     Point,
     Geometry
 >
@@ -120,7 +127,6 @@ struct default_strategy
             typename point_type<Geometry>::type
         > type;
 };
-
 
 
 } // namespace services

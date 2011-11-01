@@ -51,7 +51,7 @@ struct append_point
                 int = 0, int = 0)
     {
         typename geometry::point_type<Geometry>::type copy;
-        geometry::detail::convert::convert_point_to_point(point, copy);
+        geometry::detail::conversion::convert_point_to_point(point, copy);
         traits::push_back<Geometry>::apply(geometry, copy);
     }
 };
@@ -79,19 +79,19 @@ struct append_range
 template <typename Polygon, typename Point>
 struct point_to_polygon
 {
-    typedef typename ring_type<Polygon>::type range_type;
+    typedef typename ring_type<Polygon>::type ring_type;
 
     static inline void apply(Polygon& polygon, Point const& point,
                 int ring_index, int = 0)
     {
         if (ring_index == -1)
         {
-            append_point<range_type, Point>::apply(
+            append_point<ring_type, Point>::apply(
                         exterior_ring(polygon), point);
         }
         else if (ring_index < int(num_interior_rings(polygon)))
         {
-            append_point<range_type, Point>::apply(
+            append_point<ring_type, Point>::apply(
                         interior_rings(polygon)[ring_index], point);
         }
     }

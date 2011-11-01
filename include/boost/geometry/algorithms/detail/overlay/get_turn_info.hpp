@@ -17,6 +17,8 @@
 #include <boost/geometry/algorithms/convert.hpp>
 #include <boost/geometry/algorithms/detail/overlay/turn_info.hpp>
 
+#include <boost/geometry/geometries/segment.hpp>
+
 
 namespace boost { namespace geometry
 {
@@ -363,8 +365,9 @@ struct touch : public base_turn_handler
             return;
         }
 
+#ifdef BOOST_GEOMETRY_DEBUG_GET_TURNS
         // Normally a robustness issue.
-        // TODO: solve this!
+        // TODO: more research if still occuring
         std::cout << "Not yet handled" << std::endl
             << "pi " << get<0>(pi) << " , " << get<1>(pi)
             << " pj " << get<0>(pj) << " , " << get<1>(pj)
@@ -374,6 +377,8 @@ struct touch : public base_turn_handler
             << " qj " << get<0>(qj) << " , " << get<1>(qj)
             << " qk " << get<0>(qk) << " , " << get<1>(qk)
             << std::endl;
+#endif
+
     }
 };
 
@@ -871,7 +876,10 @@ struct get_turn_info
                // degenerate points
                break;
             default :
+#ifdef BOOST_GEOMETRY_DEBUG_GET_TURNS
                 std::cout << "get_turns, nyi: " << method << std::endl;
+#endif
+                break;
         }
 
         return out;

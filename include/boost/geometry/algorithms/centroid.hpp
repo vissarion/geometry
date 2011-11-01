@@ -26,6 +26,7 @@
 #include <boost/geometry/core/exception.hpp>
 #include <boost/geometry/core/exterior_ring.hpp>
 #include <boost/geometry/core/interior_rings.hpp>
+#include <boost/geometry/core/tag_cast.hpp>
 
 #include <boost/geometry/algorithms/convert.hpp>
 #include <boost/geometry/algorithms/distance.hpp>
@@ -35,6 +36,7 @@
 #include <boost/geometry/views/closeable_view.hpp>
 
 #include <boost/geometry/util/for_each_coordinate.hpp>
+#include <boost/geometry/util/select_coordinate_type.hpp>
 
 
 
@@ -347,10 +349,7 @@ struct centroid<polygon_tag, Polygon, Point, Strategy>
 
 \qbk{distinguish,with strategy}
 \qbk{[include reference/algorithms/centroid.qbk]}
-
-\qbk{
-[heading Available Strategies]
-\* [link geometry.reference.strategies.strategy_centroid_bashein_detmer Bashein Detmer (cartesian)]
+\qbk{[include reference/algorithms/centroid_strategies.qbk]}
 }
 
 */
@@ -379,13 +378,18 @@ inline void centroid(Geometry const& geometry, Point& c,
 /*!
 \brief \brief_calc{centroid}
 \ingroup centroid
-\details \details_calc{centroid,geometric center (or: center of mass)}
+\details \details_calc{centroid,geometric center (or: center of mass)}. \details_default_strategy
 \tparam Geometry \tparam_geometry
 \tparam Point \tparam_point
 \param geometry \param_geometry
-\param c the calculated centroid will be assigned to this point reference
+\param c The calculated centroid will be assigned to this point reference
 
 \qbk{[include reference/algorithms/centroid.qbk]}
+\qbk{
+[heading Example]
+[centroid]
+[centroid_output]
+}
  */
 template<typename Geometry, typename Point>
 inline void centroid(Geometry const& geometry, Point& c)
@@ -414,15 +418,16 @@ inline void centroid(Geometry const& geometry, Point& c)
 /*!
 \brief \brief_calc{centroid}
 \ingroup centroid
-\details \details_calc{centroid,geometric center (or: center of mass)}. \details_make{centroid}.
+\details \details_calc{centroid,geometric center (or: center of mass)}. \details_return{centroid}.
 \tparam Point \tparam_point
 \tparam Geometry \tparam_geometry
 \param geometry \param_geometry
 \return \return_calc{centroid}
+
 \qbk{[include reference/algorithms/centroid.qbk]}
  */
 template<typename Point, typename Geometry>
-inline Point make_centroid(Geometry const& geometry)
+inline Point return_centroid(Geometry const& geometry)
 {
     concept::check_concepts_and_equal_dimensions<Point, Geometry const>();
 
@@ -434,7 +439,7 @@ inline Point make_centroid(Geometry const& geometry)
 /*!
 \brief \brief_calc{centroid} \brief_strategy
 \ingroup centroid
-\details \details_calc{centroid,geometric center (or: center of mass)}. \details_make{centroid}. \details_strategy_reasons
+\details \details_calc{centroid,geometric center (or: center of mass)}. \details_return{centroid}. \details_strategy_reasons
 \tparam Point \tparam_point
 \tparam Geometry \tparam_geometry
 \tparam Strategy \tparam_strategy{centroid}
@@ -444,15 +449,10 @@ inline Point make_centroid(Geometry const& geometry)
 
 \qbk{distinguish,with strategy}
 \qbk{[include reference/algorithms/centroid.qbk]}
-
-\qbk{
-[heading Available Strategies]
-\* [link geometry.reference.strategies.strategy_centroid_bashein_detmer Bashein Detmer (cartesian)]
-}
-
+\qbk{[include reference/algorithms/centroid_strategies.qbk]}
  */
 template<typename Point, typename Geometry, typename Strategy>
-inline Point make_centroid(Geometry const& geometry, Strategy const& strategy)
+inline Point return_centroid(Geometry const& geometry, Strategy const& strategy)
 {
     //BOOST_CONCEPT_ASSERT( (geometry::concept::CentroidStrategy<Strategy>) );
 

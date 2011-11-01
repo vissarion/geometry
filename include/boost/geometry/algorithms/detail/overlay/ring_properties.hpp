@@ -27,7 +27,7 @@ template <typename Point>
 struct ring_properties
 {
     typedef Point point_type;
-    typedef typename area_result<Point>::type area_type;
+    typedef typename default_area_result<Point>::type area_type;
 
     // Filled by "select_rings"
     Point point;
@@ -52,17 +52,17 @@ struct ring_properties
     {}
 
     template <typename RingOrBox>
-    inline ring_properties(RingOrBox const& ring_or_box)
+    inline ring_properties(RingOrBox const& ring_or_box, bool midpoint)
         : within_code(-1)
         , reversed(false)
         , discarded(false)
         , parent_area(-1)
     {
         this->area = geometry::area(ring_or_box);
-        geometry::point_on_border(this->point, ring_or_box, true);
+        geometry::point_on_border(this->point, ring_or_box, midpoint);
     }
 
-    area_type get_area() const
+    inline area_type get_area() const
     {
         return reversed ? -area : area;
     }
