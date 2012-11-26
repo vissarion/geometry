@@ -20,7 +20,7 @@ __rtree__ has 4 parameters:
 * `Parameters` - parameters type, inserting/splitting algorithm,
 * `__translator__` - type of object translating `Value` objects to
   `__indexable__` objects (`__point__` or `__box__`) which __rtree__ can handle,
-* `Allocator` - the allocator.
+* `Allocator` - `Value`s allocator, all allocators needed by the container are created from it.
 
 [endsect]
 
