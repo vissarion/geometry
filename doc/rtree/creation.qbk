@@ -120,7 +120,7 @@ which also supports compilers not supporting rvalue references.
 
 [endsect]
 
-[section Inserting and removing Values]
+[section Inserting and removing of Values]
 
 The following code creates an __rtree__ using quadratic algorithm.
 
@@ -149,6 +149,49 @@ code.
 Typically you will perform those operations in a loop in order to e.g. insert
 some number of `__value__`s corresponding to geometrical objects (e.g. `Polygons`)
 stored in another container.
+
+[endsect]
+
+[section Additional interface]
+
+The __rtree__ allows creation, inserting and removing of Values from a range. The range may be passed as
+[first, last) Iterators pair or as a Range.
+
+ namespace bgi = boost::geometry::index;
+ typedef std::pair<Box, int> __value__;
+ typedef bgi::rtree< __value__, bgi::linear<32, 8> > RTree;
+
+ std::vector<__value__> values;
+ /* vector filling code, here */
+
+ // create a RTree with default constructor and insert values with RTree::insert(Value const&)
+ RTree rt1;
+ BOOST_FOREACH(__value__ const& v, values)
+    rt1.insert(v);
+
+ // create a RTree with default constructor and insert values with RTree::insert(Iter, Iter)
+ RTree rt2;
+ rt2.insert(values.begin(), values.end());
+
+ // create a RTree with default constructor and insert values with RTree::insert(Range)
+ RTree rt3;
+ rt3.insert(values);
+
+ // create a RTree with constructor taking Iterators
+ RTree rt4(values.begin(), values.end());
+
+ // create a RTree with constructor taking Range
+ RTree rt5(values);
+
+ // remove values with RTree::remove(Value const&)
+ BOOST_FOREACH(__value__ const& v, values)
+    rt1.remove(v);
+
+ // remove values with RTree::remove(Iter, Iter)
+ rt2.remove(values.begin(), values.end());
+
+ // remove values with RTree::remove(Range)
+ rt3.remove(values);
 
 [endsect]
 

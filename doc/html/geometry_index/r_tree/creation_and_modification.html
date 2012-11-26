@@ -38,8 +38,10 @@
         and splitting algorithms (run-time)</a></span></dt>
 <dt><span class="section"><a href="creation_and_modification.html#geometry_index.r_tree.creation_and_modification.copying__moving_and_swapping">Copying,
         moving and swapping</a></span></dt>
-<dt><span class="section"><a href="creation_and_modification.html#geometry_index.r_tree.creation_and_modification.inserting_and_removing_values">Inserting
-        and removing Values</a></span></dt>
+<dt><span class="section"><a href="creation_and_modification.html#geometry_index.r_tree.creation_and_modification.inserting_and_removing_of_values">Inserting
+        and removing of Values</a></span></dt>
+<dt><span class="section"><a href="creation_and_modification.html#geometry_index.r_tree.creation_and_modification.additional_interface">Additional
+        interface</a></span></dt>
 </dl></div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
@@ -212,8 +214,8 @@
 </div>
 <div class="section">
 <div class="titlepage"><div><div><h4 class="title">
-<a name="geometry_index.r_tree.creation_and_modification.inserting_and_removing_values"></a><a class="link" href="creation_and_modification.html#geometry_index.r_tree.creation_and_modification.inserting_and_removing_values" title="Inserting and removing Values">Inserting
-        and removing Values</a>
+<a name="geometry_index.r_tree.creation_and_modification.inserting_and_removing_of_values"></a><a class="link" href="creation_and_modification.html#geometry_index.r_tree.creation_and_modification.inserting_and_removing_of_values" title="Inserting and removing of Values">Inserting
+        and removing of Values</a>
 </h4></div></div></div>
 <p>
           The following code creates an R-tree using quadratic algorithm.
@@ -248,6 +250,52 @@
           objects (e.g. <code class="computeroutput"><span class="identifier">Polygons</span></code>)
           stored in another container.
         </p>
+</div>
+<div class="section">
+<div class="titlepage"><div><div><h4 class="title">
+<a name="geometry_index.r_tree.creation_and_modification.additional_interface"></a><a class="link" href="creation_and_modification.html#geometry_index.r_tree.creation_and_modification.additional_interface" title="Additional interface">Additional
+        interface</a>
+</h4></div></div></div>
+<p>
+          The R-tree allows creation, inserting and removing of Values from a range.
+          The range may be passed as [first, last) Iterators pair or as a Range.
+        </p>
+<pre class="programlisting"><span class="keyword">namespace</span> <span class="identifier">bgi</span> <span class="special">=</span> <span class="identifier">boost</span><span class="special">::</span><span class="identifier">geometry</span><span class="special">::</span><span class="identifier">index</span><span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">std</span><span class="special">::</span><span class="identifier">pair</span><span class="special">&lt;</span><span class="identifier">Box</span><span class="special">,</span> <span class="keyword">int</span><span class="special">&gt;</span> Value<span class="special">;</span>
+<span class="keyword">typedef</span> <span class="identifier">bgi</span><span class="special">::</span><span class="identifier">rtree</span><span class="special">&lt;</span> Value<span class="special">,</span> <span class="identifier">bgi</span><span class="special">::</span><span class="identifier">linear</span><span class="special">&lt;</span><span class="number">32</span><span class="special">,</span> <span class="number">8</span><span class="special">&gt;</span> <span class="special">&gt;</span> <span class="identifier">RTree</span><span class="special">;</span>
+
+<span class="identifier">std</span><span class="special">::</span><span class="identifier">vector</span><span class="special">&lt;</span>Value<span class="special">&gt;</span> <span class="identifier">values</span><span class="special">;</span>
+<span class="comment">/* vector filling code, here */</span>
+
+<span class="comment">// create a RTree with default constructor and insert values with RTree::insert(Value const&amp;)</span>
+<span class="identifier">RTree</span> <span class="identifier">rt1</span><span class="special">;</span>
+<span class="identifier">BOOST_FOREACH</span><span class="special">(</span>Value <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">values</span><span class="special">)</span>
+   <span class="identifier">rt1</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">v</span><span class="special">);</span>
+
+<span class="comment">// create a RTree with default constructor and insert values with RTree::insert(Iter, Iter)</span>
+<span class="identifier">RTree</span> <span class="identifier">rt2</span><span class="special">;</span>
+<span class="identifier">rt2</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">values</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">values</span><span class="special">.</span><span class="identifier">end</span><span class="special">());</span>
+
+<span class="comment">// create a RTree with default constructor and insert values with RTree::insert(Range)</span>
+<span class="identifier">RTree</span> <span class="identifier">rt3</span><span class="special">;</span>
+<span class="identifier">rt3</span><span class="special">.</span><span class="identifier">insert</span><span class="special">(</span><span class="identifier">values</span><span class="special">);</span>
+
+<span class="comment">// create a RTree with constructor taking Iterators</span>
+<span class="identifier">RTree</span> <span class="identifier">rt4</span><span class="special">(</span><span class="identifier">values</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">values</span><span class="special">.</span><span class="identifier">end</span><span class="special">());</span>
+
+<span class="comment">// create a RTree with constructor taking Range</span>
+<span class="identifier">RTree</span> <span class="identifier">rt5</span><span class="special">(</span><span class="identifier">values</span><span class="special">);</span>
+
+<span class="comment">// remove values with RTree::remove(Value const&amp;)</span>
+<span class="identifier">BOOST_FOREACH</span><span class="special">(</span>Value <span class="keyword">const</span><span class="special">&amp;</span> <span class="identifier">v</span><span class="special">,</span> <span class="identifier">values</span><span class="special">)</span>
+   <span class="identifier">rt1</span><span class="special">.</span><span class="identifier">remove</span><span class="special">(</span><span class="identifier">v</span><span class="special">);</span>
+
+<span class="comment">// remove values with RTree::remove(Iter, Iter)</span>
+<span class="identifier">rt2</span><span class="special">.</span><span class="identifier">remove</span><span class="special">(</span><span class="identifier">values</span><span class="special">.</span><span class="identifier">begin</span><span class="special">(),</span> <span class="identifier">values</span><span class="special">.</span><span class="identifier">end</span><span class="special">());</span>
+
+<span class="comment">// remove values with RTree::remove(Range)</span>
+<span class="identifier">rt3</span><span class="special">.</span><span class="identifier">remove</span><span class="special">(</span><span class="identifier">values</span><span class="special">);</span>
+</pre>
 </div>
 </div>
 <table xmlns:rev="http://www.cs.rpi.edu/~gregod/boost/tools/doc/revision" width="100%"><tr>
