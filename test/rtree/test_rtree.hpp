@@ -98,6 +98,29 @@ struct generate_value< std::pair<bg::model::box< bg::model::point<T, 2, C> >, in
 };
 
 template <typename T, typename C>
+struct generate_value< boost::tuple<bg::model::point<T, 2, C>, int, int> >
+{
+    typedef bg::model::point<T, 2, C> P;
+    typedef boost::tuple<P, int, int> R;
+    static R apply(int x, int y)
+    {
+        return boost::make_tuple(P(x, y), x + y * 100, 0);
+    }
+};
+
+template <typename T, typename C>
+struct generate_value< boost::tuple<bg::model::box< bg::model::point<T, 2, C> >, int, int> >
+{
+    typedef bg::model::point<T, 2, C> P;
+    typedef bg::model::box<P> B;
+    typedef boost::tuple<B, int, int> R;
+    static R apply(int x, int y)
+    {
+        return boost::make_tuple(B(P(x, y), P(x + 2, y + 3)), x + y * 100, 0);
+    }
+};
+
+template <typename T, typename C>
 struct generate_value< bg::model::point<T, 3, C> >
 {
     typedef bg::model::point<T, 3, C> P;
@@ -138,6 +161,29 @@ struct generate_value< std::pair<bg::model::box< bg::model::point<T, 3, C> >, in
     static R apply(int x, int y, int z)
     {
         return std::make_pair(B(P(x, y, z), P(x + 2, y + 3, z + 4)), x + y * 100 + z * 10000);
+    }
+};
+
+template <typename T, typename C>
+struct generate_value< boost::tuple<bg::model::point<T, 3, C>, int, int> >
+{
+    typedef bg::model::point<T, 3, C> P;
+    typedef boost::tuple<P, int, int> R;
+    static R apply(int x, int y, int z)
+    {
+        return boost::make_tuple(P(x, y, z), x + y * 100 + z * 10000, 0);
+    }
+};
+
+template <typename T, typename C>
+struct generate_value< boost::tuple<bg::model::box< bg::model::point<T, 3, C> >, int, int> >
+{
+    typedef bg::model::point<T, 3, C> P;
+    typedef bg::model::box<P> B;
+    typedef boost::tuple<B, int, int> R;
+    static R apply(int x, int y, int z)
+    {
+        return boost::make_tuple(B(P(x, y, z), P(x + 2, y + 3, z + 4)), x + y * 100 + z * 10000, 0);
     }
 };
 
@@ -818,11 +864,15 @@ void test_rtree(Parameters const& parameters = Parameters())
     typedef bg::model::box<Point> Box;
     typedef std::pair<Box, int> PairB;
     typedef std::pair<Point, int> PairP;
+    typedef boost::tuple<Point, int, int> TupleP;
+    typedef boost::tuple<Box, int, int> TupleB;
 
     test_rtree_by_value<Point, Parameters>(parameters);
     test_rtree_by_value<Box, Parameters>(parameters);
     test_rtree_by_value<PairB, Parameters>(parameters);
     test_rtree_by_value<PairP, Parameters>(parameters);
+    test_rtree_by_value<TupleP, Parameters>(parameters);
+    test_rtree_by_value<TupleB, Parameters>(parameters);
 }
 
 #endif
