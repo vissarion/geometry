@@ -281,7 +281,7 @@ void test_spatial_query(Rtree & rtree, Predicates const& pred, std::vector<Value
 // rtree specific queries tests
 
 template <typename Value, typename Algo, typename Box>
-void test_intersects_and_disjoint(bgi::rtree<Value, Algo> const& tree, std::vector<Value> const& input, Box const& qbox)
+void test_intersects(bgi::rtree<Value, Algo> const& tree, std::vector<Value> const& input, Box const& qbox)
 {
     std::vector<Value> expected_output;
 
@@ -291,10 +291,22 @@ void test_intersects_and_disjoint(bgi::rtree<Value, Algo> const& tree, std::vect
 
     test_spatial_query(tree, qbox, expected_output);
     test_spatial_query(tree, bgi::intersects(qbox), expected_output);
-    test_spatial_query(tree, !bgi::not_intersects(qbox), expected_output);
     test_spatial_query(tree, !bgi::disjoint(qbox), expected_output);
-    test_spatial_query(tree, bgi::not_disjoint(qbox), expected_output);
 }
+
+template <typename Value, typename Algo, typename Box>
+void test_disjoint(bgi::rtree<Value, Algo> const& tree, std::vector<Value> const& input, Box const& qbox)
+{
+    std::vector<Value> expected_output;
+
+    BOOST_FOREACH(Value const& v, input)
+        if ( bg::disjoint(tree.translator()(v), qbox) )
+            expected_output.push_back(v);
+
+    test_spatial_query(tree, bgi::disjoint(qbox), expected_output);
+    test_spatial_query(tree, !bgi::intersects(qbox), expected_output);
+}
+
 
 template <typename Value, typename Algo, typename Box>
 void test_covered_by(bgi::rtree<Value, Algo> const& tree, std::vector<Value> const& input, Box const& qbox)
@@ -638,7 +650,8 @@ void test_rtree_by_value(Parameters const& parameters)
 
     generate_rtree(tree, input, qbox);
 
-    test_intersects_and_disjoint(tree, input, qbox);
+    test_intersects(tree, input, qbox);
+    test_disjoint(tree, input, qbox);
     test_covered_by(tree, input, qbox);
     test_overlaps(tree, input, qbox);
     //test_touches(tree, input, qbox);
@@ -661,7 +674,8 @@ void test_rtree_by_value(Parameters const& parameters)
     Tree empty_tree(parameters);
     std::vector<Value> empty_input;
 
-    test_intersects_and_disjoint(empty_tree, empty_input, qbox);
+    test_intersects(empty_tree, empty_input, qbox);
+    test_disjoint(empty_tree, empty_input, qbox);
     test_covered_by(empty_tree, empty_input, qbox);
     test_overlaps(empty_tree, empty_input, qbox);
     //test_touches(empty_tree, empty_input, qbox);
