@@ -78,7 +78,7 @@ R*-tree - splitting algorithm minimizing nodes' overlap with forced reinsertions
 
 [section Inserting and splitting algorithms (run-time)]
 
-Splitting algorithm parameters may be also passed to the __rtree__ in run time.
+Splitting algorithm parameters may be passed to the __rtree__ in run time.
 To use run-time versions of the __rtree__ one may pass parameters defined in index::runtime
 namespace.
 
