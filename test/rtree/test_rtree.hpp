@@ -187,6 +187,62 @@ struct generate_value< boost::tuple<bg::model::box< bg::model::point<T, 3, C> >,
     }
 };
 
+// shared_ptr value
+
+template <typename Indexable>
+struct test_object
+{
+    test_object(Indexable const& indexable_) : indexable(indexable_) {}
+    Indexable indexable;
+};
+
+namespace boost { namespace geometry { namespace index { namespace translator {
+
+template <typename Indexable>
+struct def< boost::shared_ptr< test_object<Indexable> > >
+{
+    typedef boost::shared_ptr< test_object<Indexable> > value_type;
+    typedef Indexable const& result_type;
+
+    result_type operator()(value_type const& value) const
+    {
+        return value->indexable;
+    }
+
+    bool equals(value_type const& v1, value_type const& v2) const
+    {
+        return v1 == v2;
+    }
+};
+
+}}}}
+
+template <typename T, typename C>
+struct generate_value< boost::shared_ptr<test_object<bg::model::point<T, 2, C> > > >
+{
+    typedef bg::model::point<T, 2, C> P;
+    typedef test_object<P> O;
+
+    static boost::shared_ptr<O> apply(int x, int y)
+    {
+        return boost::shared_ptr<O>(new O(P(x, y)));
+    }
+};
+
+template <typename T, typename C>
+struct generate_value< boost::shared_ptr<test_object<bg::model::point<T, 3, C> > > >
+{
+    typedef bg::model::point<T, 3, C> P;
+    typedef test_object<P> O;
+
+    static boost::shared_ptr<O> apply(int x, int y, int z)
+    {   
+        return boost::shared_ptr<O>(new O(P(x, y, z)));
+    }
+};
+
+// generate input
+
 template <size_t Dimension>
 struct generate_input
 {};
@@ -874,6 +930,7 @@ void test_rtree(Parameters const& parameters = Parameters())
     typedef std::pair<Point, int> PairP;
     typedef boost::tuple<Point, int, int> TupleP;
     typedef boost::tuple<Box, int, int> TupleB;
+    typedef boost::shared_ptr< test_object<Point> > SharedPtrP;
 
     test_rtree_by_value<Point, Parameters>(parameters);
     test_rtree_by_value<Box, Parameters>(parameters);
@@ -881,6 +938,7 @@ void test_rtree(Parameters const& parameters = Parameters())
     test_rtree_by_value<PairP, Parameters>(parameters);
     test_rtree_by_value<TupleP, Parameters>(parameters);
     test_rtree_by_value<TupleB, Parameters>(parameters);
+    test_rtree_by_value<SharedPtrP, Parameters>(parameters);
 }
 
 #endif
