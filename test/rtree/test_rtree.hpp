@@ -801,7 +801,7 @@ void test_create_insert(bgi::rtree<Value, Algo> & tree, std::vector<Value> const
 // rtree removing
 
 template <typename Value, typename Algo, typename Box>
-void test_remove(bgi::rtree<Value, Algo> & tree, Box const& qbox)
+void test_remove_clear(bgi::rtree<Value, Algo> & tree, std::vector<Value> const& input, Box const& qbox)
 {
     typedef bgi::rtree<Value, Algo> T;
 
@@ -863,6 +863,21 @@ void test_remove(bgi::rtree<Value, Algo> & tree, Box const& qbox)
         BOOST_CHECK( output.size() == tree.size() - values_to_remove.size() );
         test_compare_outputs(t, output, expected_output);
     }
+
+    //clear
+    {
+        std::vector<Value> expected_output;
+        tree.spatial_query(bgi::intersects(qbox), std::back_inserter(expected_output));
+        size_t s = tree.size();
+        tree.clear();
+        BOOST_CHECK(tree.empty());
+        BOOST_CHECK(tree.size() == 0);
+        tree.insert(input);
+        BOOST_CHECK(tree.size() == s);
+        std::vector<Value> output;
+        tree.spatial_query(bgi::intersects(qbox), std::back_inserter(output));
+        test_exactly_the_same_outputs(tree, output, expected_output);
+    }
 }
 
 // run all tests for a single Algorithm and single rtree
@@ -900,7 +915,7 @@ void test_rtree_by_value(Parameters const& parameters)
     test_copy_assignment_swap_move(tree, qbox);
 
     test_create_insert(tree, input, qbox);
-    test_remove(tree, qbox);
+    test_remove_clear(tree, input, qbox);
 
     // empty tree test
 
