@@ -15,9 +15,9 @@
 
 int test_main(int, char* [])
 {
-    typedef bg::model::point<double, 3, bg::cs::cartesian> P3dc;
+    typedef bg::model::point<float, 2, bg::cs::cartesian> P2fc;
 
-    test_rtree<P3dc, bgi::linear<4, 2> >();
-    
+    test_rtree<P2fc>(bgi::runtime::linear(4, 2));
+
     return 0;
 }
