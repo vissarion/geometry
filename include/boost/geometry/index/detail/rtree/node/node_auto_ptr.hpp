@@ -39,7 +39,7 @@ public:
         reset();
     }
 
-    void reset(pointer ptr = 0)
+    void reset(pointer ptr = pointer(0))
     {
         if ( m_ptr )
         {
@@ -51,7 +51,7 @@ public:
 
     void release()
     {
-        m_ptr = 0;
+        m_ptr = pointer(0);
     }
 
     pointer get() const
