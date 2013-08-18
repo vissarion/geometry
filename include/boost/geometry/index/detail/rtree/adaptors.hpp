@@ -18,13 +18,10 @@
 
 namespace boost { namespace geometry { namespace index {
 
-template <typename Value, typename Options, typename IndexableGetter, typename EqualTo, typename Allocator>
-class rtree;
-
 namespace adaptors { namespace detail {
 
-template <typename Value, typename Options, typename IndexableGetter, typename EqualTo, typename Allocator>
-class query_range< index::rtree<Value, Options, IndexableGetter, EqualTo, Allocator> >
+template <typename Value, typename Options, typename IndexableGetter, typename EqualTo, typename Allocator, typename Storage>
+class query_range< index::rtree<Value, Options, IndexableGetter, EqualTo, Allocator, Storage> >
 {
 public:
     typedef std::vector<Value> result_type;
@@ -32,7 +29,7 @@ public:
     typedef typename result_type::const_iterator const_iterator;
 
     template <typename Predicates> inline
-    query_range(index::rtree<Value, Options, IndexableGetter, EqualTo, Allocator> const& rtree,
+    query_range(index::rtree<Value, Options, IndexableGetter, EqualTo, Allocator, Storage> const& rtree,
                 Predicates const& pred)
     {
         rtree.query(pred, std::back_inserter(m_result));

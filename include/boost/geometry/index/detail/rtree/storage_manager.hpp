@@ -139,7 +139,7 @@ public:
     }
 
 // INFO
-// Nodes aren't stored during acquire
+// Nodes aren't stored during acquire - dismiss
 
     template <typename Node>
     void acquire(storage_node_pointer & ptr)
@@ -157,7 +157,8 @@ public:
 // WARNING!
 // Can't destroy node in dismiss if it were modified
 
-// is dismiss really needed since nodes will be unloaded in flush()
+// Dismiss will probably be used only in nonmodyfying operations, like queries
+// If cacheing were used, acquire and dismiss should also store nodes in the map
 
     template <typename Node>
     void dismiss(storage_node_pointer & ptr)
@@ -165,6 +166,8 @@ public:
 // TODO - not thread safe
 
         BOOST_GEOMETRY_INDEX_ASSERT(ptr.get(), "node should be acquired before dismiss");
+// TODO - Later disable this assertion?
+        BOOST_GEOMETRY_INDEX_ASSERT(m_nodes.find(ptr) == m_nodes.end(), "can't dismiss modified node");
 
         rtree::destroy_node<Allocators, Node>(allocators(), ptr.get());                         // shouldn't throw
         storage().unload_node(ptr.id());                                                        // may throw?
@@ -172,8 +175,6 @@ public:
         ptr = storage_node_pointer(node_pointer(0), ptr.id());
     }
 
-    //enum operation { none, query, insert, remove, copy };
-    // or
     enum operation { none, nonmodifying, incremental, immediate };
 
     void operation_begin(operation o) {}
@@ -212,7 +213,7 @@ public:
 
     storage_node_pointer root() { return null(); }
 
-    storage_node_pointer null() { return storage_node_pointer(node_pointer(0), 0); }
+    storage_node_pointer null() { return storage_node_pointer(node_pointer(0), storage().null_id()); }
 
 private:
     enum flag { unloaded, loaded, modified, destroyed };
@@ -284,6 +285,52 @@ private:
     nodes_map m_nodes;
     operation m_current_operation;
 };
+
+}}}}} // namespace boost::geometry::index::detail::rtree
+
+namespace boost { namespace geometry { namespace index {
+
+struct none {};
+
+// rtree empty storage
+class rtree_storage
+{
+    // TODO
+    // there must be a way to load the header and retrieve needed data
+
+public:
+    typedef uintptr_t node_id;
+    typedef std::size_t size_type;
+
+    node_id null_id() { return 0; }
+
+    // or maybe return header?
+    node_id root_id() { return null_id(); }
+
+    template <typename T>
+    node_id new_id(T seed)
+    {
+        BOOST_STATIC_ASSERT(sizeof(T) <= sizeof(node_id));
+        return static_cast<node_id>(seed);
+    }
+
+    void destroy_node(node_id id) {}
+
+    template <typename Node> // leaf or internal_node
+    void save_node(node_id id, Node const& n) {}
+
+    template <typename Node> // leaf or internal_node
+    void load_node(node_id id, Node & n) {}
+
+    void save_begin() {}
+    void save_end() {}
+    // ?
+    void load_begin() {}
+    void load_end() {}
+    // or operation_begin(nonmodifying|incremental|immediate)s
+};
+
+}}} // namespace boost::geometry::index
 
 // Also the header must be loaded/saved
 
@@ -399,7 +446,5 @@ private:
 // allocators     v
 //     v          v
 // some_nodes_data_manager
-
-}}}}} // namespace boost::geometry::index::detail::rtree
 
 #endif // BOOST_GEOMETRY_INDEX_DETAIL_RTREE_STORAGE_MANAGER_HPP

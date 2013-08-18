@@ -19,6 +19,15 @@
 
 #include <boost/geometry/geometry.hpp>
 
+// forward declaration
+
+namespace boost { namespace geometry { namespace index {
+
+template <typename Value, typename Options, typename IndexableGetter, typename EqualTo, typename Allocator, typename Storage>
+class rtree;
+
+}}} // namespace boost::geometry::index
+
 #include <boost/geometry/index/detail/config_begin.hpp>
 
 #include <boost/geometry/index/detail/assert.hpp>
@@ -38,6 +47,8 @@
 #include <boost/geometry/index/detail/meta.hpp>
 #include <boost/geometry/index/detail/utilities.hpp>
 #include <boost/geometry/index/detail/rtree/node/node.hpp>
+
+#include <boost/geometry/index/detail/rtree/storage_manager.hpp>
 
 #include <boost/geometry/index/detail/algorithms/is_valid.hpp>
 
@@ -121,7 +132,8 @@ template <
     typename Parameters,
     typename IndexableGetter = index::indexable<Value>,
     typename EqualTo = index::equal_to<Value>,
-    typename Allocator = std::allocator<Value>
+    typename Allocator = std::allocator<Value>,
+    typename Storage = index::none
 >
 class rtree
 {
@@ -171,6 +183,15 @@ private:
     typedef typename allocators_type::node_pointer node_pointer;
     typedef ::boost::container::allocator_traits<Allocator> allocator_traits_type;
     typedef detail::rtree::node_auto_ptr<value_type, options_type, translator_type, box_type, allocators_type> node_auto_ptr;
+
+    typedef detail::rtree::storage_manager<Value, options_type, translator_type, box_type, allocators_type, Storage> storage_manager;
+
+    // storage_node_pointer must be stored in nodes
+    // so storage or storage manager must be passed as node's template parameter
+    // also to all visitors and other classes/structs
+    // storage_size_type must be used to count rtree values
+    // this may be different type than allocator::size_type
+    // value of this type will be returned by size(), count() and probably query()
 
     friend class detail::rtree::utilities::view<rtree>;
 
