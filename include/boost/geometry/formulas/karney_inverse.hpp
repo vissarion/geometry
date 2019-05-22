@@ -94,11 +94,11 @@ public:
     {
         result_type result;
 
-        CT lat1 = la1;
-        CT lat2 = la2;
+        CT lat1 = la1 * math::r2d<CT>();
+        CT lat2 = la2 * math::r2d<CT>();
 
-        CT lon1 = lo1;
-        CT lon2 = lo2;
+        CT lon1 = lo1 * math::r2d<CT>();
+        CT lon2 = lo2 * math::r2d<CT>();
 
         CT const a = CT(get_radius<0>(spheroid));
         CT const b = CT(get_radius<2>(spheroid));
