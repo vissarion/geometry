@@ -813,26 +813,23 @@ inline void sin_cos_degrees(T const& x,
 }
 
 /*!
-\brief Round off a given angle
+\brief The error-free sum of two numbers.
 */
 template<typename T>
-inline T round_angle(T x) {
-    static const T z = 1/T(16);
+inline T sum_error(T u, T v, T& t)
+{
+    volatile T s = u + v;
+    volatile T up = s - v;
+    volatile T vpp = s - up;
 
-    if (x == 0)
-    {
-        return 0;
-    }
+    up -= u;
+    vpp -= v;
+    t = -(up + vpp);
 
-    T y = math::abs(x);
-
-    // z - (z - y) must not be simplified to y.
-    y = y < z ? z - (z - y) : y;
-
-    return x < 0 ? -y : y;
+    return s;
 }
 
-/*
+/*!
 \brief Evaluate the polynomial in x using Horner's method.
 */
 // TODO: adl1995 - Merge these functions with formulas/area_formulas.hpp
@@ -852,7 +849,7 @@ inline NT horner_evaluate(NT x,
     return result;
 }
 
-/*
+/*!
 \brief Evaluate the polynomial.
 */
 template<typename IteratorType, typename CT>
