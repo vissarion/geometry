@@ -107,7 +107,6 @@ public :
         typename Operation,
         typename Rings, typename Ring, typename Turns,
         typename Strategy,
-        typename RobustPolicy,
         typename Visitor
     >
     static inline void apply(std::size_t size_at_start,
@@ -120,7 +119,6 @@ public :
                              Geometry1 const& geometry1,
                              Geometry2 const& geometry2,
                              Strategy const& strategy,
-                             RobustPolicy const& robust_policy,
                              state_type& state,
                              Visitor& visitor)
     {
@@ -132,8 +130,8 @@ public :
         if (! state.m_checked)
         {
             state.m_checked = true;
-            has_self_intersections(geometry1, strategy, robust_policy);
-            has_self_intersections(geometry2, strategy, robust_policy);
+            has_self_intersections(geometry1, strategy);
+            has_self_intersections(geometry2, strategy);
         }
 
         // Make bad output clean

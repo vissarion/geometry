@@ -41,15 +41,15 @@ struct no_rescale_policy
 } // namespace detail
 #endif
 
-
+/*
 // Implement meta-functions for this policy
 template <typename Point>
-struct robust_point_type<Point, detail::no_rescale_policy>
+struct robust_point_type<Point>
 {
     // The point itself
     typedef Point type;
 };
-
+*/
 }} // namespace boost::geometry
 
 #endif // BOOST_GEOMETRY_POLICIES_ROBUSTNESS_NO_RESCALE_POLICY_HPP

@@ -78,11 +78,6 @@ struct buffer_all<Input, Output, TagIn, multi_polygon_tag>
         typedef typename boost::range_value<Output>::type polygon_type;
 
         typedef typename point_type<Input>::type point_type;
-        typedef typename rescale_policy_type
-            <
-                point_type,
-                typename geometry::cs_tag<point_type>::type
-            >::type rescale_policy_type;
 
         if (geometry::is_empty(geometry_in))
         {
@@ -94,10 +89,6 @@ struct buffer_all<Input, Output, TagIn, multi_polygon_tag>
         geometry::envelope(geometry_in, box);
         geometry::buffer(box, box, distance_strategy.max_distance(join_strategy, end_strategy));
 
-        rescale_policy_type rescale_policy
-                = boost::geometry::get_rescale_policy<rescale_policy_type>(
-                    box, strategies);
-
         detail::buffer::buffer_inserter<polygon_type>(geometry_in,
                     range::back_inserter(geometry_out),
                     distance_strategy,
@@ -105,8 +96,7 @@ struct buffer_all<Input, Output, TagIn, multi_polygon_tag>
                     join_strategy,
                     end_strategy,
                     point_strategy,
-                    strategies,
-                    rescale_policy);
+                    strategies);
     }
 };
 

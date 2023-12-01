@@ -126,10 +126,7 @@ int main()
         bg::correct(p);
         mp.push_back(p);
 
-        rescale_policy_type robust_policy
-            = bg::get_rescale_policy<rescale_policy_type>(mp, strategy);
-
-        bg::detail::overlay::has_self_intersections(mp, strategy, robust_policy);
+        bg::detail::overlay::has_self_intersections(mp, strategy);
 
         std::ostringstream out;
         out << "original " << poly_list.size();

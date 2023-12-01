@@ -52,16 +52,10 @@ intersect(Geometry1 const& g1, Geometry2 const& g2, std::string const& name,
 
     typedef typename bg::point_type<Geometry1>::type point_type;
 
-    typedef typename bg::rescale_policy_type<point_type>::type
-        rescale_policy_type;
-
-    rescale_policy_type rescale_policy
-            = bg::get_rescale_policy<rescale_policy_type>(g1, g2);
-
     typedef bg::detail::overlay::traversal_turn_info
     <
         point_type,
-        typename bg::detail::segment_ratio_type<point_type, rescale_policy_type>::type
+        typename bg::detail::segment_ratio_type<point_type>::type
     > turn_info;
     std::vector<turn_info> turns;
 
@@ -71,14 +65,14 @@ intersect(Geometry1 const& g1, Geometry2 const& g2, std::string const& name,
             rev<Geometry1>::value,
             rev<Geometry2>::value,
             bg::detail::overlay::assign_null_policy
-        >(g1, g2, rescale_policy, turns, policy);
+        >(g1, g2, turns, policy);
 
     bg::enrich_intersection_points
             <
                 rev<Geometry1>::value, rev<Geometry2>::value,
                 bg::overlay_intersection
             >(turns, bg::detail::overlay::operation_intersection,
-        g1, g2, rescale_policy, side_strategy_type());
+        g1, g2, side_strategy_type());
 
     typedef bg::model::ring<typename bg::point_type<Geometry1>::type> ring_type;
     typedef std::deque<ring_type> out_vector;
@@ -88,7 +82,7 @@ intersect(Geometry1 const& g1, Geometry2 const& g2, std::string const& name,
         <
             rev<Geometry1>::value, rev<Geometry2>::value,
             Geometry1, Geometry2
-        >::apply(g1, g2, op, rescale_policy, turns, v);
+        >::apply(g1, g2, op, turns, v);
 
     typename bg::coordinate_type<Geometry1>::type result = 0.0;
     for (ring_type& ring : v)

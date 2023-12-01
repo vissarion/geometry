@@ -32,7 +32,7 @@ void test_get_turns_on_const(Ring1 const &ring1, Ring2 const &ring2,
 
     using segment_ratio_type = typename bg::detail::segment_ratio_type
         <
-            writable_point_type, rescale_policy_type
+            writable_point_type
         >::type;
     using turn_info = bg::detail::overlay::turn_info
         <
@@ -50,7 +50,7 @@ void test_get_turns_on_const(Ring1 const &ring1, Ring2 const &ring2,
     BOOST_CHECK_EQUAL(turns.size(), expectation.size());
 
     const double tolerance = 0.001;
-    for (std::size_t i = 0; i < turns.size() && i < expectation.size(); i++) 
+    for (std::size_t i = 0; i < turns.size() && i < expectation.size(); i++)
     {
         BOOST_CHECK_CLOSE(expectation[i].GetX(), bg::get<0>(turns[i].point), tolerance);
         BOOST_CHECK_CLOSE(expectation[i].GetY(), bg::get<1>(turns[i].point), tolerance);
@@ -58,11 +58,11 @@ void test_get_turns_on_const(Ring1 const &ring1, Ring2 const &ring2,
 
 #ifdef BOOST_GEOMETRY_TEST_DEBUG
     std::cout << bg::wkt(ring1) << " " << bg::wkt(ring2) << std::endl;
-    for (const auto& turn : turns) 
+    for (const auto& turn : turns)
     {
         std::cout << bg::wkt(turn.point) << std::endl;
     }
-#endif    
+#endif
 }
 
 int test_main(int, char* [])

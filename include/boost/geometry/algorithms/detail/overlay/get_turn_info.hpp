@@ -1,6 +1,6 @@
-// Boost.Geometry
+// Boost.Geometry (aka GGL, Generic Geometry Library)
 
-// Copyright (c) 2007-2023 Barend Gehrels, Amsterdam, the Netherlands.
+// Copyright (c) 2007-2021 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2017 Adam Wulkiewicz, Lodz, Poland.
 
 // This file was modified by Oracle on 2015-2022.
@@ -77,12 +77,7 @@ struct policy_verify_all
 };
 
 
-#if defined(BOOST_GEOMETRY_USE_RESCALING)
-using verify_policy_aa = policy_verify_nothing;
-#else
 using verify_policy_aa = policy_verify_all;
-#endif
-
 using verify_policy_ll = policy_verify_nothing;
 using verify_policy_la = policy_verify_nothing;
 
@@ -852,15 +847,24 @@ struct equal : public base_turn_handler
         int const side_pk_p = has_pk ? side.pk_wrt_p1() : 0;
         int const side_qk_p = has_qk ? side.qk_wrt_p1() : 0;
 
-        if (has_pk && has_qk && side_pk_p == side_qk_p)
+        if (BOOST_GEOMETRY_CONDITION(VerifyPolicy::use_side_verification)
+            && has_pk && has_qk && side_pk_p == side_qk_p)
         {
             // They turn to the same side, or continue both collinearly
-            // To check for union/intersection, try to check side values
-            int const side_qk_p2 = side.qk_wrt_p2();
+            // Without rescaling, to check for union/intersection,
+            // try to check side values (without any thresholds)
+            auto const dm_pk_q2
+               = get_distance_measure(range_q.at(1), range_q.at(2), range_p.at(2),
+                                      umbrella_strategy);
+            auto const dm_qk_p2
+               = get_distance_measure(range_p.at(1), range_p.at(2), range_q.at(2),
+                                      umbrella_strategy);
 
-            if (opposite(side_qk_p2, side_pk_q2))
+            if (dm_qk_p2.measure != dm_pk_q2.measure)
             {
-                ui_else_iu(side_pk_q2 == 1, ti);
+                // A (possibly very small) difference is detected, which
+                // can be used to distinguish between union/intersection
+                ui_else_iu(dm_qk_p2.measure < dm_pk_q2.measure, ti);
                 return;
             }
         }
@@ -893,8 +897,7 @@ struct equal : public base_turn_handler
 
 template
 <
-    typename TurnInfo,
-    typename VerifyPolicy
+    typename TurnInfo
 >
 struct start : public base_turn_handler
 {
@@ -915,11 +918,6 @@ struct start : public base_turn_handler
                 SideCalculator const& side,
                 UmbrellaStrategy const& )
     {
-        if (! BOOST_GEOMETRY_CONDITION(VerifyPolicy::use_start_turn))
-        {
-            return false;
-        }
-
         // Start turns have either how_a = -1, or how_b = -1 (either p leaves or q leaves)
         BOOST_GEOMETRY_ASSERT(dir_info.how_a != dir_info.how_b);
         BOOST_GEOMETRY_ASSERT(dir_info.how_a == -1 || dir_info.how_b == -1);
@@ -1387,7 +1385,6 @@ struct get_turn_info
         typename UniqueSubRange2,
         typename TurnInfo,
         typename UmbrellaStrategy,
-        typename RobustPolicy,
         typename OutputIterator
     >
     static inline OutputIterator apply(
@@ -1395,18 +1392,16 @@ struct get_turn_info
                 UniqueSubRange2 const& range_q,
                 TurnInfo const& tp_model,
                 UmbrellaStrategy const& umbrella_strategy,
-                RobustPolicy const& robust_policy,
                 OutputIterator out)
     {
         typedef intersection_info
             <
                 UniqueSubRange1, UniqueSubRange2,
                 typename TurnInfo::point_type,
-                UmbrellaStrategy,
-                RobustPolicy
+                UmbrellaStrategy
             > inters_info;
 
-        inters_info inters(range_p, range_q, umbrella_strategy, robust_policy);
+        inters_info inters(range_p, range_q, umbrella_strategy);
 
         char const method = inters.d_info().how;
 
@@ -1433,7 +1428,7 @@ struct get_turn_info
         if (handle_as_start)
         {
             // It is in some cases necessary to handle a start turn
-            using handler = start<TurnInfo, verify_policy_aa>;
+            using handler = start<TurnInfo>;
             if (BOOST_GEOMETRY_CONDITION(AssignPolicy::include_start_turn)
                 && handler::apply(range_p, range_q, tp,
                                inters.i_info(), inters.d_info(), inters.sides(),

@@ -87,7 +87,6 @@ public :
             typename Rings,
             typename Turns,
             typename IntersectionStrategy,
-            typename RobustPolicy,
             typename Visitor
         >
     static inline void apply(std::size_t size_at_start,
@@ -100,7 +99,6 @@ public :
                 Geometry const& ,
                 Geometry const& ,
                 IntersectionStrategy const& ,
-                RobustPolicy const& ,
                 state_type& state,
                 Visitor const& /*visitor*/
                 )
@@ -155,11 +153,10 @@ struct dissolve_ring
 
     template
     <
-        typename RescalePolicy, typename OutputIterator,
+        typename OutputIterator,
         typename Strategy, typename Visitor
     >
     static inline void apply_one(Ring const& input_ring,
-                RescalePolicy const& rescale_policy,
                 OutputIterator out,
                 Strategy const& strategy,
                 Visitor& visitor)
@@ -170,7 +167,7 @@ struct dissolve_ring
         using turn_info = detail::overlay::traversal_turn_info
             <
                 point_type,
-                typename segment_ratio_type<point_type, RescalePolicy>::type
+                typename segment_ratio_type<point_type>::type
             >;
 
         std::deque<turn_info> turns;
@@ -179,7 +176,7 @@ struct dissolve_ring
             <
                 Reverse,
                 detail::overlay::assign_null_policy
-            >(input_ring, strategy, rescale_policy, turns, policy, 0, false);
+            >(input_ring, strategy, turns, policy, 0, false);
 
         adapt_turns(turns);
 
@@ -199,7 +196,7 @@ struct dissolve_ring
 
         // Enrich/traverse the polygons
         enrich_intersection_points<Reverse, Reverse, overlay_dissolve>(turns,
-                    clusters, input_ring, input_ring, rescale_policy,
+                    clusters, input_ring, input_ring,
                     strategy);
 
         visitor.visit_turns(2, turns);
@@ -210,7 +207,7 @@ struct dissolve_ring
         std::map<ring_identifier, overlay::ring_turn_info> turn_info_per_ring;
 
         detail::dissolve::traverse<Reverse, backtrack_for_dissolve<Ring> >
-                ::apply(input_ring, strategy, rescale_policy,
+                ::apply(input_ring, strategy,
                      turns, rings, turn_info_per_ring, clusters, visitor);
 
         visitor.visit_turns(3, turns);
@@ -242,18 +239,17 @@ struct dissolve_ring
 
     template
     <
-        typename RescalePolicy, typename OutputIterator,
+        typename OutputIterator,
         typename Strategy, typename Visitor
     >
     static inline OutputIterator apply(Ring const& geometry,
-                RescalePolicy const& rescale_policy,
                 OutputIterator out,
                 Strategy const& strategy,
                 Visitor& visitor)
     {
         using multi_polygon = model::multi_polygon<GeometryOut>;
         multi_polygon step1;
-        apply_one(geometry, rescale_policy, std::back_inserter(step1), strategy, visitor);
+        apply_one(geometry, std::back_inserter(step1), strategy, visitor);
 
         // Step 2: remove mutual overlap
         {
@@ -261,7 +257,7 @@ struct dissolve_ring
             detail::dissolver::dissolver_generic
                 <
                     detail::dissolver::plusmin_policy
-                >::apply(step1, rescale_policy, step2, strategy);
+                >::apply(step1, step2, strategy);
             for (auto it = step2.begin(); it != step2.end(); ++it)
             {
                 *out++ = *it;
@@ -278,11 +274,10 @@ struct dissolve_polygon
 
     template
     <
-        typename RescalePolicy, typename OutputCollection,
+        typename OutputCollection,
         typename Strategy, typename Visitor
     >
     static inline void apply_ring(ring_type const& ring,
-                RescalePolicy const& rescale_policy,
                 OutputCollection& out,
                 Strategy const& strategy,
                 Visitor& visitor)
@@ -291,43 +286,39 @@ struct dissolve_polygon
         if (orientation_ok)
         {
             dissolve_ring<ring_type, GeometryOut, Reverse>
-                    ::apply(ring, rescale_policy,
-                            std::back_inserter(out), strategy, visitor);
+                    ::apply(ring, std::back_inserter(out), strategy, visitor);
         }
         else
         {
             // Apply the whole dissolve implementation reversed
             dissolve_ring<ring_type, GeometryOut, ! Reverse>
-                    ::apply(ring, rescale_policy,
-                            std::back_inserter(out), strategy, visitor);
+                    ::apply(ring, std::back_inserter(out), strategy, visitor);
         }
     }
 
     template
     <
         typename Rings,
-        typename RescalePolicy, typename OutputCollection,
+        typename OutputCollection,
         typename Strategy, typename Visitor
     >
     static inline void apply_rings(Rings const& rings,
-                RescalePolicy const& rescale_policy,
                 OutputCollection& out,
                 Strategy const& strategy,
                 Visitor& visitor)
     {
         for (auto it = boost::begin(rings); it != boost::end(rings); ++it)
         {
-            apply_ring(*it, rescale_policy, out, strategy, visitor);
+            apply_ring(*it, out, strategy, visitor);
         }
     }
 
     template
     <
-        typename RescalePolicy, typename OutputIterator,
+        typename OutputIterator,
         typename Strategy, typename Visitor
     >
     static inline OutputIterator apply(Polygon const& polygon,
-                RescalePolicy const& rescale_policy,
                 OutputIterator out,
                 Strategy const& strategy,
                 Visitor& visitor)
@@ -336,13 +327,13 @@ struct dissolve_polygon
 
         // Handle exterior ring
         multi_polygon exterior_out;
-        apply_ring(exterior_ring(polygon), rescale_policy,
+        apply_ring(exterior_ring(polygon),
                    exterior_out, strategy, visitor);
 
         // Dissolve all the (negative) interior rings into
         // a (positive) mulpolygon. Do this per interior ring and combine them.
         multi_polygon interior_out_per_ring;
-        apply_rings(interior_rings(polygon), rescale_policy,
+        apply_rings(interior_rings(polygon),
                    interior_out_per_ring, strategy, visitor);
 
         // Remove mutual overlap in the interior ring output
@@ -350,7 +341,7 @@ struct dissolve_polygon
         detail::dissolver::dissolver_generic
             <
                 detail::dissolver::plusmin_policy
-            >::apply(interior_out_per_ring, rescale_policy, interior_out, strategy);
+            >::apply(interior_out_per_ring, interior_out, strategy);
 
         // Subtract the interior rings from the output. Where interior rings
         // are partly or completely outside the polygon, sym_difference will
@@ -413,11 +404,10 @@ struct dissolve
 {
     template
     <
-        typename Geometry, typename RescalePolicy, typename OutputIterator,
+        typename Geometry, typename OutputIterator,
         typename Strategy, typename Visitor
     >
     static inline OutputIterator apply(Geometry const& geometry,
-                                       RescalePolicy const& rescale_policy,
                                        OutputIterator out,
                                        Strategy const& strategy,
                                        Visitor& visitor)
@@ -430,7 +420,7 @@ struct dissolve
                     <
                         geometry::point_order<Geometry>::value
                     >::value
-            >::apply(geometry, rescale_policy, out, strategy, visitor);
+            >::apply(geometry, out, strategy, visitor);
     }
 };
 
@@ -439,11 +429,10 @@ struct dissolve<GeometryOut, Strategy, false>
 {
     template
     <
-        typename Geometry, typename RescalePolicy, typename OutputIterator,
+        typename Geometry, typename OutputIterator,
         typename Strategy, typename Visitor
     >
     static inline OutputIterator apply(Geometry const& geometry,
-                                       RescalePolicy const& rescale_policy,
                                        OutputIterator out,
                                        Strategy const& strategy,
                                        Visitor& visitor)
@@ -458,7 +447,7 @@ struct dissolve<GeometryOut, Strategy, false>
                     <
                         geometry::point_order<Geometry>::value
                     >::value
-            >::apply(geometry, rescale_policy, out,
+            >::apply(geometry, out,
                      strategy_converter<Strategy>::get(strategy),
                      visitor);
     }
@@ -496,22 +485,12 @@ inline OutputIterator dissolve_inserter(Geometry const& geometry,
     concepts::check<Geometry const>();
     concepts::check<GeometryOut>();
 
-    typedef typename geometry::rescale_policy_type
-        <
-            typename geometry::point_type<Geometry>::type,
-            typename Strategy::cs_tag
-        >::type rescale_policy_type;
-
-    rescale_policy_type robust_policy
-            = geometry::get_rescale_policy<rescale_policy_type>(
-                geometry, strategy);
-
     detail::overlay::overlay_null_visitor visitor;
 
     return resolve_strategy::dissolve
         <
             GeometryOut, Strategy
-        >::apply(geometry, robust_policy, out, strategy, visitor);
+        >::apply(geometry, out, strategy, visitor);
 }
 
 /*!
@@ -566,16 +545,12 @@ inline void dissolve(Geometry const& geometry, Collection& output_collection,
             typename Strategy::cs_tag
         >::type rescale_policy_type;
 
-    rescale_policy_type robust_policy
-        = geometry::get_rescale_policy<rescale_policy_type>(
-                geometry, strategy);
-
     detail::overlay::overlay_null_visitor visitor;
 
     resolve_strategy::dissolve
         <
             geometry_out, Strategy
-        >::apply(geometry, robust_policy,
+        >::apply(geometry,
                  std::back_inserter(output_collection),
                  strategy, visitor);
 }

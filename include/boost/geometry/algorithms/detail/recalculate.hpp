@@ -48,20 +48,20 @@ namespace detail { namespace recalculate
 template <std::size_t Dimension>
 struct recalculate_point
 {
-    template <typename Point1, typename Point2, typename Strategy>
-    static inline void apply(Point1& point1, Point2 const& point2, Strategy const& strategy)
+    template <typename Point1, typename Point2>
+    static inline void apply(Point1& point1, Point2 const& point2)
     {
         std::size_t const dim = Dimension - 1;
-        geometry::set<dim>(point1, strategy.template apply<dim>(geometry::get<dim>(point2)));
-        recalculate_point<dim>::apply(point1, point2, strategy);
+        geometry::set<dim>(point1, geometry::get<dim>(point2));
+        recalculate_point<dim>::apply(point1, point2);
     }
 };
 
 template <>
 struct recalculate_point<0>
 {
-    template <typename Point1, typename Point2, typename Strategy>
-    static inline void apply(Point1&, Point2 const&, Strategy const&)
+    template <typename Point1, typename Point2>
+    static inline void apply(Point1&, Point2 const&)
     {
     }
 };
@@ -70,14 +70,14 @@ struct recalculate_point<0>
 template <std::size_t Dimension>
 struct recalculate_indexed
 {
-    template <typename Geometry1, typename Geometry2, typename Strategy>
-    static inline void apply(Geometry1& geometry1, Geometry2 const& geometry2, Strategy const& strategy)
+    template <typename Geometry1, typename Geometry2>
+    static inline void apply(Geometry1& geometry1, Geometry2 const& geometry2)
     {
         // Do it for both indices in one dimension
         static std::size_t const dim = Dimension - 1;
-        geometry::set<0, dim>(geometry1, strategy.template apply<dim>(geometry::get<0, dim>(geometry2)));
-        geometry::set<1, dim>(geometry1, strategy.template apply<dim>(geometry::get<1, dim>(geometry2)));
-        recalculate_indexed<dim>::apply(geometry1, geometry2, strategy);
+        geometry::set<0, dim>(geometry1,geometry::get<0, dim>(geometry2));
+        geometry::set<1, dim>(geometry1,geometry::get<1, dim>(geometry2));
+        recalculate_indexed<dim>::apply(geometry1, geometry2);
     }
 };
 
@@ -85,8 +85,8 @@ template <>
 struct recalculate_indexed<0>
 {
 
-    template <typename Geometry1, typename Geometry2, typename Strategy>
-    static inline void apply(Geometry1& , Geometry2 const& , Strategy const& )
+    template <typename Geometry1, typename Geometry2>
+    static inline void apply(Geometry1& , Geometry2 const&)
     {
     }
 };
@@ -96,11 +96,9 @@ struct range_to_range
     template
     <
         typename Range1,
-        typename Range2,
-        typename Strategy
+        typename Range2
     >
-    static inline void apply(Range1& destination, Range2 const& source,
-            Strategy const& strategy)
+    static inline void apply(Range1& destination, Range2 const& source)
     {
         typedef typename geometry::point_type<Range2>::type point_type;
         typedef recalculate_point<geometry::dimension<point_type>::value> per_point;
@@ -109,7 +107,7 @@ struct range_to_range
         for (auto const& source_point : source)
         {
             point_type p;
-            per_point::apply(p, source_point, strategy);
+            per_point::apply(p, source_point);
             geometry::append(destination, p);
         }
     }
@@ -122,15 +120,13 @@ private:
     <
         typename IteratorIn,
         typename IteratorOut,
-        typename Strategy
+        typename
     >
-    static inline void iterate(IteratorIn begin, IteratorIn end,
-                    IteratorOut it_out,
-                    Strategy const& strategy)
+    static inline void iterate(IteratorIn begin, IteratorIn end, IteratorOut it_out)
     {
         for (IteratorIn it_in = begin; it_in != end;  ++it_in, ++it_out)
         {
-            range_to_range::apply(*it_out, *it_in, strategy);
+            range_to_range::apply(*it_out, *it_in);
         }
     }
 
@@ -138,20 +134,17 @@ private:
     <
         typename InteriorRingsOut,
         typename InteriorRingsIn,
-        typename Strategy
+        typename
     >
-    static inline void apply_interior_rings(
-                    InteriorRingsOut& interior_rings_out,
-                    InteriorRingsIn const& interior_rings_in,
-                    Strategy const& strategy)
+    static inline void apply_interior_rings(InteriorRingsOut& interior_rings_out,
+                                            InteriorRingsIn const& interior_rings_in)
     {
         traits::resize<InteriorRingsOut>::apply(interior_rings_out,
             boost::size(interior_rings_in));
 
         iterate(
             boost::begin(interior_rings_in), boost::end(interior_rings_in),
-            boost::begin(interior_rings_out),
-            strategy);
+            boost::begin(interior_rings_out));
     }
 
 public:
@@ -159,16 +152,15 @@ public:
     <
         typename Polygon1,
         typename Polygon2,
-        typename Strategy
+        typename
     >
-    static inline void apply(Polygon1& destination, Polygon2 const& source,
-            Strategy const& strategy)
+    static inline void apply(Polygon1& destination, Polygon2 const& source)
     {
         range_to_range::apply(geometry::exterior_ring(destination),
-            geometry::exterior_ring(source), strategy);
+            geometry::exterior_ring(source));
 
         apply_interior_rings(geometry::interior_rings(destination),
-            geometry::interior_rings(source), strategy);
+            geometry::interior_rings(source));
     }
 };
 
@@ -214,15 +206,15 @@ struct recalculate<Polygon1, Polygon2, polygon_tag, polygon_tag>
 
 
 
-template <typename Geometry1, typename Geometry2, typename Strategy>
-inline void recalculate(Geometry1& geometry1, Geometry2 const& geometry2, Strategy const& strategy)
+template <typename Geometry1, typename Geometry2>
+inline void recalculate(Geometry1& geometry1, Geometry2 const& geometry2)
 {
     concepts::check<Geometry1>();
     concepts::check<Geometry2 const>();
 
     // static assert dimensions (/types) are the same
 
-    dispatch::recalculate<Geometry1, Geometry2>::apply(geometry1, geometry2, strategy);
+    dispatch::recalculate<Geometry1, Geometry2>::apply(geometry1, geometry2);
 }
 
 

@@ -408,7 +408,7 @@ void test_dissolve(std::string const& caseid, Geometry const& geometry,
                 Geometry,
                 GeometryOut,
                 false
-            >::apply(geometry, robust_policy, std::back_inserter(dissolved1),
+            >::apply(geometry, std::back_inserter(dissolved1),
                      strategy, visitor);
 
 #if defined(TEST_WITH_SVG)

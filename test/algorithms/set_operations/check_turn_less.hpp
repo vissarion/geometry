@@ -81,8 +81,6 @@ struct check_turn_less
                 Geometry1, Geometry2
             >::type strategy_type;
 
-        typedef bg::detail::no_rescale_policy robust_policy_type;
-
         typedef bg::detail::relate::turns::get_turns
             <
                 Geometry1,
@@ -95,7 +93,7 @@ struct check_turn_less
 
         typedef typename get_turns_type::template turn_info_type
             <
-                strategy_type, robust_policy_type
+                strategy_type
             >::type turn_info;
 
         typedef std::vector<turn_info> turns_container;
@@ -104,10 +102,7 @@ struct check_turn_less
 
         bg::detail::get_turns::no_interrupt_policy interrupt_policy;
 
-        get_turns_type::apply(turns, geometry1, geometry2,
-                              interrupt_policy,
-                              strategy_type(), robust_policy_type());
-
+        get_turns_type::apply(turns, geometry1, geometry2, interrupt_policy, strategy_type());
 
         typedef bg::detail::turns::less_seg_fraction_other_op<> turn_less_type;
 

@@ -60,8 +60,7 @@ public:
             point_type,
             typename segment_ratio_type
                 <
-                    point_type,
-                    rescale_policy_type
+                    point_type
                 >::type
         > turn_type;
 
@@ -74,9 +73,6 @@ public:
     {
         boost::ignore_unused(visitor);
 
-        rescale_policy_type robust_policy
-            = geometry::get_rescale_policy<rescale_policy_type>(geometry, strategy);
-
         detail::overlay::stateless_predicate_based_interrupt_policy
             <
                 is_acceptable_turn<Geometry>
@@ -86,7 +82,7 @@ public:
         detail::self_get_turn_points::self_turns
             <
                 false, detail::overlay::assign_null_policy
-            >(geometry, strategy, robust_policy, turns, interrupt_policy,
+            >(geometry, strategy, turns, interrupt_policy,
               0, true);
 
         if (interrupt_policy.has_intersections)

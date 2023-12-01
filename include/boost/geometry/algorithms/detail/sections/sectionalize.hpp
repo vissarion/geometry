@@ -386,19 +386,15 @@ struct sectionalize_part
     template
     <
         typename Iterator,
-        typename RobustPolicy,
         typename Sections,
         typename Strategy
     >
     static inline void apply(Sections& sections,
                              Iterator begin, Iterator end,
-                             RobustPolicy const& robust_policy,
                              Strategy const& strategy,
                              ring_identifier ring_id,
                              std::size_t max_count)
     {
-        boost::ignore_unused(robust_policy);
-
         using section_type = typename boost::range_value<Sections>::type;
         using box_type = typename section_type::box_type;
         using point_type = typename geometry::point_type<box_type>::type;
@@ -411,8 +407,7 @@ struct sectionalize_part
 
         using robust_point_type = typename geometry::robust_point_type
             <
-                point_type,
-                RobustPolicy
+                point_type
             >::type;
 
         std::size_t const count = std::distance(begin, end);
@@ -430,14 +425,14 @@ struct sectionalize_part
 
         Iterator it = begin;
         robust_point_type previous_robust_point;
-        geometry::recalculate(previous_robust_point, *it, robust_policy);
+        geometry::recalculate(previous_robust_point, *it);
 
         for(Iterator previous = it++;
             it != end;
             ++previous, ++it, index++)
         {
             robust_point_type current_robust_point;
-            geometry::recalculate(current_robust_point, *it, robust_policy);
+            geometry::recalculate(current_robust_point, *it);
             model::referring_segment<robust_point_type> robust_segment(
                     previous_robust_point, current_robust_point);
 
@@ -564,12 +559,10 @@ struct sectionalize_range
     template
     <
         typename Range,
-        typename RobustPolicy,
         typename Sections,
         typename Strategy
     >
     static inline void apply(Range const& range,
-                             RobustPolicy const& robust_policy,
                              Sections& sections,
                              Strategy const& strategy,
                              ring_identifier ring_id,
@@ -597,7 +590,7 @@ struct sectionalize_range
 
         sectionalize_part<DimensionVector>::apply(sections,
             boost::begin(view), boost::end(view),
-            robust_policy, strategy,
+            strategy,
             ring_id, max_count);
     }
 };
@@ -612,12 +605,10 @@ struct sectionalize_polygon
     template
     <
         typename Polygon,
-        typename RobustPolicy,
         typename Sections,
         typename Strategy
     >
     static inline void apply(Polygon const& poly,
-                RobustPolicy const& robust_policy,
                 Sections& sections,
                 Strategy const& strategy,
                 ring_identifier ring_id,
@@ -629,7 +620,7 @@ struct sectionalize_polygon
             >;
 
         ring_id.ring_index = -1;
-        sectionalizer::apply(exterior_ring(poly), robust_policy, sections,
+        sectionalizer::apply(exterior_ring(poly), sections,
                          strategy, ring_id, max_count);
 
         ring_id.ring_index++;
@@ -637,7 +628,7 @@ struct sectionalize_polygon
         for (auto it = boost::begin(rings); it != boost::end(rings);
              ++it, ++ring_id.ring_index)
         {
-            sectionalizer::apply(*it, robust_policy, sections,
+            sectionalizer::apply(*it, sections,
                              strategy, ring_id, max_count);
         }
     }
@@ -649,12 +640,10 @@ struct sectionalize_box
     template
     <
         typename Box,
-        typename RobustPolicy,
         typename Sections,
         typename Strategy
     >
     static inline void apply(Box const& box,
-                RobustPolicy const& robust_policy,
                 Sections& sections,
                 Strategy const& strategy,
                 ring_identifier const& ring_id, std::size_t max_count)
@@ -686,7 +675,7 @@ struct sectionalize_box
         sectionalize_range
             <
                 closed, false, DimensionVector
-            >::apply(points, robust_policy, sections,
+            >::apply(points, sections,
                      strategy, ring_id, max_count);
     }
 };
@@ -697,12 +686,10 @@ struct sectionalize_multi
     template
     <
         typename MultiGeometry,
-        typename RobustPolicy,
         typename Sections,
         typename Strategy
     >
     static inline void apply(MultiGeometry const& multi,
-                RobustPolicy const& robust_policy,
                 Sections& sections,
                 Strategy const& strategy,
                 ring_identifier ring_id,
@@ -711,7 +698,7 @@ struct sectionalize_multi
         ring_id.multi_index = 0;
         for (auto it = boost::begin(multi); it != boost::end(multi); ++it, ++ring_id.multi_index)
         {
-            Policy::apply(*it, robust_policy, sections,
+            Policy::apply(*it, sections,
                           strategy,
                           ring_id, max_count);
         }
@@ -862,7 +849,6 @@ struct sectionalize<multi_linestring_tag, MultiLinestring, Reverse, DimensionVec
     \tparam Geometry type of geometry to check
     \tparam Sections type of sections to create
     \param geometry geometry to create sections from
-    \param robust_policy policy to handle robustness issues
     \param sections structure with sections
     \param strategy strategy for envelope calculation
     \param expand_strategy strategy for partitions
@@ -877,11 +863,9 @@ template
     typename DimensionVector,
     typename Geometry,
     typename Sections,
-    typename RobustPolicy,
     typename Strategy
 >
 inline void sectionalize(Geometry const& geometry,
-                RobustPolicy const& robust_policy,
                 Sections& sections,
                 Strategy const& strategy,
                 int source_index = 0,
@@ -900,7 +884,7 @@ inline void sectionalize(Geometry const& geometry,
             Geometry,
             Reverse,
             DimensionVector
-        >::apply(geometry, robust_policy, sections,
+        >::apply(geometry, sections,
                  strategy,
                  ring_id, max_count);
 
@@ -913,11 +897,9 @@ template
     bool Reverse,
     typename DimensionVector,
     typename Geometry,
-    typename Sections,
-    typename RobustPolicy
+    typename Sections
 >
 inline void sectionalize(Geometry const& geometry,
-                         RobustPolicy const& robust_policy,
                          Sections& sections,
                          int source_index = 0,
                          std::size_t max_count = 10)
@@ -932,7 +914,7 @@ inline void sectionalize(Geometry const& geometry,
     boost::geometry::sectionalize
         <
             Reverse, DimensionVector
-        >(geometry, robust_policy, sections,
+        >(geometry, sections,
           strategy_type(),
           source_index, max_count);
 }

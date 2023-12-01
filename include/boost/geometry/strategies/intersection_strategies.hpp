@@ -41,7 +41,6 @@ template
     typename Geometry1,
     typename Geometry2,
     typename IntersectionPoint,
-    typename RobustPolicy,
     typename CalculationType = void
 >
 struct intersection_strategies
@@ -54,7 +53,7 @@ private :
         IntersectionPoint,
         typename detail::segment_ratio_type
         <
-            IntersectionPoint, RobustPolicy
+            IntersectionPoint
         >::type
     > ip_type;
 
@@ -76,7 +75,7 @@ public:
             CalculationType
         >::type side_strategy_type;
 
-    typedef RobustPolicy rescale_policy_type;
+    typedef detail::no_rescale_policy rescale_policy_type;
 };
 
 

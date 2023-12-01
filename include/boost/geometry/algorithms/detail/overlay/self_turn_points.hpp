@@ -66,14 +66,12 @@ template
     typename Turns,
     typename TurnPolicy,
     typename Strategy,
-    typename RobustPolicy,
     typename InterruptPolicy
 >
 struct self_section_visitor
 {
     Geometry const& m_geometry;
     Strategy const& m_strategy;
-    RobustPolicy const& m_rescale_policy;
     Turns& m_turns;
     InterruptPolicy& m_interrupt_policy;
     int m_source_index;
@@ -81,14 +79,12 @@ struct self_section_visitor
 
     inline self_section_visitor(Geometry const& g,
                                 Strategy const& s,
-                                RobustPolicy const& rp,
                                 Turns& turns,
                                 InterruptPolicy& ip,
                                 int source_index,
                                 bool skip_adjacent)
         : m_geometry(g)
         , m_strategy(s)
-        , m_rescale_policy(rp)
         , m_turns(turns)
         , m_interrupt_policy(ip)
         , m_source_index(source_index)
@@ -115,7 +111,6 @@ struct self_section_visitor
                              m_source_index, m_geometry, sec2,
                              false, m_skip_adjacent,
                              m_strategy,
-                             m_rescale_policy,
                              m_turns, m_interrupt_policy);
         }
 
@@ -129,11 +124,10 @@ struct self_section_visitor
 template <bool Reverse, typename TurnPolicy>
 struct get_turns
 {
-    template <typename Geometry, typename Strategy, typename RobustPolicy, typename Turns, typename InterruptPolicy>
+    template <typename Geometry, typename Strategy, typename Turns, typename InterruptPolicy>
     static inline bool apply(
             Geometry const& geometry,
             Strategy const& strategy,
-            RobustPolicy const& robust_policy,
             Turns& turns,
             InterruptPolicy& interrupt_policy,
             int source_index, bool skip_adjacent)
@@ -142,8 +136,7 @@ struct get_turns
             <
                 typename geometry::robust_point_type
                 <
-                    typename geometry::point_type<Geometry>::type,
-                    RobustPolicy
+                    typename geometry::point_type<Geometry>::type
                 >::type
             > box_type;
 
@@ -154,14 +147,14 @@ struct get_turns
         typedef std::integer_sequence<std::size_t, 0, 1> dimensions;
 
         sections_type sec;
-        geometry::sectionalize<Reverse, dimensions>(geometry, robust_policy,
+        geometry::sectionalize<Reverse, dimensions>(geometry,
                                                     sec, strategy);
 
         self_section_visitor
             <
                 Reverse, Geometry,
-                Turns, TurnPolicy, Strategy, RobustPolicy, InterruptPolicy
-            > visitor(geometry, strategy, robust_policy, turns, interrupt_policy,
+                Turns, TurnPolicy, Strategy, InterruptPolicy
+            > visitor(geometry, strategy, turns, interrupt_policy,
                       source_index, skip_adjacent);
 
         // false if interrupted
@@ -224,11 +217,10 @@ struct self_get_turn_points
         TurnPolicy
     >
 {
-    template <typename Strategy, typename RobustPolicy, typename Turns, typename InterruptPolicy>
+    template <typename Strategy, typename Turns, typename InterruptPolicy>
     static inline bool apply(
             Box const& ,
             Strategy const& ,
-            RobustPolicy const& ,
             Turns& ,
             InterruptPolicy& ,
             int /*source_index*/,
@@ -288,13 +280,11 @@ struct self_get_turn_points
     template
     <
         typename Geometry,
-        typename RobustPolicy,
         typename Turns,
         typename InterruptPolicy
     >
     static inline void apply(Geometry const& geometry,
                              Strategies const& strategies,
-                             RobustPolicy const& robust_policy,
                              Turns& turns,
                              InterruptPolicy& interrupt_policy,
                              int source_index,
@@ -308,7 +298,7 @@ struct self_get_turn_points
                     typename tag<Geometry>::type,
                     Geometry,
                     turn_policy
-                >::apply(geometry, strategies, robust_policy, turns, interrupt_policy,
+                >::apply(geometry, strategies, turns, interrupt_policy,
                          source_index, skip_adjacent);
     }
 };
@@ -319,13 +309,11 @@ struct self_get_turn_points<Reverse, AssignPolicy, Strategy, false>
     template
     <
         typename Geometry,
-        typename RobustPolicy,
         typename Turns,
         typename InterruptPolicy
     >
     static inline void apply(Geometry const& geometry,
                              Strategy const& strategy,
-                             RobustPolicy const& robust_policy,
                              Turns& turns,
                              InterruptPolicy& interrupt_policy,
                              int source_index,
@@ -340,7 +328,6 @@ struct self_get_turn_points<Reverse, AssignPolicy, Strategy, false>
                 decltype(strategy_converter<Strategy>::get(strategy))
             >::apply(geometry,
                      strategy_converter<Strategy>::get(strategy),
-                     robust_policy,
                      turns,
                      interrupt_policy,
                      source_index,
@@ -364,13 +351,11 @@ template
     typename AssignPolicy,
     typename Geometry,
     typename Strategy,
-    typename RobustPolicy,
     typename Turns,
     typename InterruptPolicy
 >
 inline void self_turns(Geometry const& geometry,
                        Strategy const& strategy,
-                       RobustPolicy const& robust_policy,
                        Turns& turns,
                        InterruptPolicy& interrupt_policy,
                        int source_index = 0,
@@ -381,7 +366,7 @@ inline void self_turns(Geometry const& geometry,
     resolve_strategy::self_get_turn_points
             <
                 Reverse, AssignPolicy, Strategy
-            >::apply(geometry, strategy, robust_policy, turns, interrupt_policy,
+            >::apply(geometry, strategy, turns, interrupt_policy,
                      source_index, skip_adjacent);
 }
 
@@ -396,7 +381,6 @@ inline void self_turns(Geometry const& geometry,
                 (e.g. vector of "intersection/turn point"'s)
     \param geometry geometry
     \param strategy strategy to be used
-    \param robust_policy policy to handle robustness issues
     \param turns container which will contain intersection points
     \param interrupt_policy policy determining if process is stopped
         when intersection is found
@@ -408,13 +392,11 @@ template
     typename AssignPolicy,
     typename Geometry,
     typename Strategy,
-    typename RobustPolicy,
     typename Turns,
     typename InterruptPolicy
 >
 inline void self_turns(Geometry const& geometry,
                        Strategy const& strategy,
-                       RobustPolicy const& robust_policy,
                        Turns& turns,
                        InterruptPolicy& interrupt_policy,
                        int source_index = 0,
@@ -430,7 +412,7 @@ inline void self_turns(Geometry const& geometry,
     resolve_strategy::self_get_turn_points
             <
                 reverse, AssignPolicy, Strategy
-            >::apply(geometry, strategy, robust_policy, turns, interrupt_policy,
+            >::apply(geometry, strategy, turns, interrupt_policy,
                      source_index, skip_adjacent);
 }
 

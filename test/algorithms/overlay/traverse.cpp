@@ -145,24 +145,18 @@ struct test_traverse
             >::type strategy;
 
         typedef typename bg::point_type<G2>::type point_type;
-        typedef typename bg::rescale_policy_type<point_type>::type
-            rescale_policy_type;
-
-        rescale_policy_type rescale_policy
-                = bg::get_rescale_policy<rescale_policy_type>(g1, g2);
-
         typedef bg::detail::overlay::traversal_turn_info
         <
             point_type,
-            typename bg::detail::segment_ratio_type<point_type, rescale_policy_type>::type
+            typename bg::detail::segment_ratio_type<point_type>::type
         > turn_info;
         std::vector<turn_info> turns;
 
         std::map<bg::signed_size_type, bg::detail::overlay::cluster_info> clusters;
 
         bg::detail::get_turns::no_interrupt_policy policy;
-        bg::get_turns<Reverse1, Reverse2, bg::detail::overlay::assign_null_policy>(g1, g2, strategy, rescale_policy, turns, policy);
-        bg::enrich_intersection_points<Reverse1, Reverse2, OverlayType>(turns, clusters, g1, g2, rescale_policy, strategy);
+        bg::get_turns<Reverse1, Reverse2, bg::detail::overlay::assign_null_policy>(g1, g2, strategy, turns, policy);
+        bg::enrich_intersection_points<Reverse1, Reverse2, OverlayType>(turns, clusters, g1, g2, strategy);
 
         typedef bg::model::ring<typename bg::point_type<G2>::type> ring_type;
         typedef std::vector<ring_type> out_vector;
@@ -176,7 +170,7 @@ struct test_traverse
                 Reverse1, Reverse2,
                 G1, G2,
                 OverlayType
-            >::apply(g1, g2, strategy, rescale_policy, turns, v, visitor);
+            >::apply(g1, g2, strategy, turns, v, visitor);
 
         // Check number of resulting rings
         BOOST_CHECK_MESSAGE(expected_count == boost::size(v),

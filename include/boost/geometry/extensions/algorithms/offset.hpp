@@ -58,15 +58,13 @@ struct offset_range
         typename DistanceStrategy,
         typename SideStrategy,
         typename JoinStrategy,
-        typename EndStrategy,
-        typename RobustPolicy
+        typename EndStrategy
     >
     static inline void apply(Collection& collection, Range const& range,
                 DistanceStrategy const& distance_strategy,
                 SideStrategy const& side_strategy,
                 JoinStrategy const& join_strategy,
                 EndStrategy const& end_strategy,
-                RobustPolicy const& robust_policy,
                 bool reverse)
     {
         collection.start_new_ring();
@@ -77,14 +75,14 @@ struct offset_range
         {
             per_range::iterate(collection, 0, boost::rbegin(range), boost::rend(range),
                 strategy::buffer::buffer_side_left,
-                distance_strategy, side_strategy, join_strategy, end_strategy, robust_policy,
+                distance_strategy, side_strategy, join_strategy, end_strategy,
                 first_p1, first_p2, last_p1, last_p2);
         }
         else
         {
             per_range::iterate(collection, 0, boost::begin(range), boost::end(range),
                 strategy::buffer::buffer_side_left,
-                distance_strategy, side_strategy, join_strategy, end_strategy, robust_policy,
+                distance_strategy, side_strategy, join_strategy, end_strategy,
                 first_p1, first_p2, last_p1, last_p2);
         }
         collection.finish_ring(strategy::buffer::result_normal);
@@ -151,13 +149,11 @@ inline void offset(Geometry const& geometry, GeometryOut& out,
 
     typedef typename geometry::point_type<Geometry>::type point_type;
 
-    detail::no_rescale_policy robust_policy;
-
     detail::buffer::buffered_piece_collection
         <
             model::ring<point_type>,
             detail::no_rescale_policy
-        > collection(robust_policy);
+        > collection();
 
     bool reverse = distance < 0;
     strategy::buffer::distance_asymmetric
@@ -186,7 +182,6 @@ inline void offset(Geometry const& geometry, GeometryOut& out,
                  side_strategy,
                  join_strategy,
                  end_strategy,
-                robust_policy,
                  reverse);
 
     // TODO collection.template assign<GeometryOut>(out);

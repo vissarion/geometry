@@ -43,7 +43,7 @@ void do_test(std::string const& case_id,
     using turn_info = bg::detail::overlay::turn_info
         <
             Point,
-            typename bg::detail::segment_ratio_type<Point, policy_type>::type
+            typename bg::detail::segment_ratio_type<Point>::type
         >;
 
     using cluster_type = std::map

@@ -119,8 +119,7 @@ template
 <
     typename Ring,
     typename Strategy,
-    typename DistanceStrategy,
-    typename RobustPolicy
+    typename DistanceStrategy
 >
 struct buffered_piece_collection
 {
@@ -135,13 +134,13 @@ struct buffered_piece_collection
     typedef buffer_turn_info
     <
         point_type,
-        typename segment_ratio_type<point_type, RobustPolicy>::type
+        typename segment_ratio_type<point_type>::type
     > buffer_turn_info_type;
 
     typedef buffer_turn_operation
     <
         point_type,
-        typename segment_ratio_type<point_type, RobustPolicy>::type
+        typename segment_ratio_type<point_type>::type
     > buffer_turn_operation_type;
 
     typedef std::vector<buffer_turn_info_type> turn_vector_type;
@@ -261,7 +260,7 @@ struct buffered_piece_collection
     // which is using rescaling.
     typedef geometry::model::box
     <
-        typename geometry::robust_point_type<point_type, RobustPolicy>::type
+        typename geometry::robust_point_type<point_type>::type
     > robust_box_type;
     typedef geometry::sections <robust_box_type, 2> robust_sections_type;
     robust_sections_type monotonic_sections;
@@ -277,17 +276,14 @@ struct buffered_piece_collection
 
     Strategy m_strategy;
     DistanceStrategy m_distance_strategy;
-    RobustPolicy const& m_robust_policy;
 
     buffered_piece_collection(Strategy const& strategy,
-                              DistanceStrategy const& distance_strategy,
-                              RobustPolicy const& robust_policy)
+                              DistanceStrategy const& distance_strategy)
         : m_first_piece_index(-1)
         , m_deflate(false)
         , m_has_deflated(false)
         , m_strategy(strategy)
         , m_distance_strategy(distance_strategy)
-        , m_robust_policy(robust_policy)
     {}
 
     inline void check_linear_endpoints(buffer_turn_info_type& turn) const
@@ -454,10 +450,9 @@ struct buffered_piece_collection
                     piece_vector_type,
                     buffered_ring_collection<buffered_ring<Ring> >,
                     turn_vector_type,
-                    Strategy,
-                    RobustPolicy
+                    Strategy
                 > visitor(m_pieces, offsetted_rings, m_turns,
-                          m_strategy, m_robust_policy);
+                          m_strategy);
 
             detail::sectionalize::enlarge_sections(monotonic_sections, m_strategy);
 
@@ -725,7 +720,6 @@ struct buffered_piece_collection
         sectionalizer::apply(monotonic_sections,
             boost::begin(ring) + pc.first_seg_id.segment_index,
             boost::begin(ring) + pc.beyond_last_segment_index,
-            m_robust_policy,
             m_strategy,
             ring_id, 10);
     }
@@ -902,7 +896,6 @@ struct buffered_piece_collection
     {
         enrich_intersection_points<false, false, overlay_buffer>(m_turns,
             m_clusters, offsetted_rings, offsetted_rings,
-            m_robust_policy,
             m_strategy);
     }
 
@@ -1018,7 +1011,7 @@ struct buffered_piece_collection
         traversed_rings.clear();
         buffer_overlay_visitor visitor;
         traverser::apply(offsetted_rings, offsetted_rings,
-                        m_strategy, m_robust_policy,
+                        m_strategy,
                         m_turns, traversed_rings,
                         turn_info_per_ring,
                         m_clusters, visitor);

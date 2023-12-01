@@ -180,12 +180,10 @@ template
     typename OutputLinestring,
     typename OutputIterator,
     typename Range,
-    typename RobustPolicy,
     typename Box,
     typename Strategy
 >
 OutputIterator clip_range_with_box(Box const& b, Range const& range,
-            RobustPolicy const&,
             OutputIterator out, Strategy const& strategy)
 {
     if (boost::begin(range) == boost::end(range))

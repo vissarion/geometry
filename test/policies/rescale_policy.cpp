@@ -34,7 +34,6 @@
 
 template
 <
-    typename RescalePolicy,
     typename Geometry1,
     typename Geometry2
 >
@@ -47,18 +46,15 @@ void test_one(std::string const& wkt1, std::string const& wkt2,
     Geometry2 geometry2;
     bg::read_wkt(wkt2, geometry2);
 
-    RescalePolicy rescale_policy
-            = bg::get_rescale_policy<RescalePolicy>(geometry1, geometry2);
-
     typedef typename bg::point_type<Geometry1>::type point_type;
     typedef typename bg::robust_point_type
         <
-            point_type, RescalePolicy
+            point_type
         >::type robust_point_type;
 
     {
         robust_point_type robust_point;
-        bg::recalculate(robust_point, *bg::points_begin(geometry1), rescale_policy);
+        bg::recalculate(robust_point, *bg::points_begin(geometry1));
 
         std::ostringstream out;
         out << bg::get<0>(robust_point) << " " << bg::get<1>(robust_point);
@@ -69,7 +65,7 @@ void test_one(std::string const& wkt1, std::string const& wkt2,
         // Assuming Geometry1 is a polygon:
         typedef bg::model::polygon<robust_point_type> polygon_type;
         polygon_type geometry_out;
-        bg::recalculate(geometry_out, geometry1, rescale_policy);
+        bg::recalculate(geometry_out, geometry1);
         robust_point_type p = *bg::points_begin(geometry_out);
 
         std::ostringstream out;

@@ -108,11 +108,9 @@ struct cluster_with_point
 template
 <
     typename Turns,
-    typename Clusters,
-    typename RobustPolicy
+    typename Clusters
 >
-inline void get_clusters(Turns& turns, Clusters& clusters,
-                         RobustPolicy const& robust_policy)
+inline void get_clusters(Turns& turns, Clusters& clusters)
 {
     using turn_type = typename boost::range_value<Turns>::type;
     using cluster_type = typename Clusters::mapped_type;
@@ -121,8 +119,7 @@ inline void get_clusters(Turns& turns, Clusters& clusters,
     // For now still use robust points for rescaled, otherwise points do not match
     using point_type = typename geometry::robust_point_type
     <
-        typename turn_type::point_type,
-        RobustPolicy
+        typename turn_type::point_type
     >::type;
 #else
     using point_type = typename turn_type::point_type;
@@ -130,7 +127,7 @@ inline void get_clusters(Turns& turns, Clusters& clusters,
 
     sweep_equal_policy
         <
-            typename rescale_policy_type<RobustPolicy>::type,
+            detail::no_rescale_policy,
             std::is_integral<typename coordinate_type<point_type>::type>::value
         > equal_policy;
 
@@ -142,7 +139,7 @@ inline void get_clusters(Turns& turns, Clusters& clusters,
         {
 #ifdef BOOST_GEOMETRY_USE_RESCALING_IN_GET_CLUSTERS
             point_type pnt;
-            geometry::recalculate(pnt, turn.point, robust_policy);
+            geometry::recalculate(pnt, turn.point);
             points.push_back({turn_index, pnt});
 #else
             points.push_back({turn_index, turn.point});

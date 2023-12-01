@@ -54,24 +54,21 @@ static void test_self_intersection_points(std::string const& case_id,
             double /*precision*/ = 0.001)
 {
     typedef typename bg::point_type<Geometry>::type point_type;
-    //typedef typename bg::rescale_policy_type<point_type>::type rescale_policy_type;
     typedef typename bg::strategies::relate::services::default_strategy
         <
             Geometry, Geometry
         >::type strategy_type;
-    typedef bg::detail::no_rescale_policy rescale_policy_type;
     typedef bg::detail::overlay::turn_info<point_type> turn_info;
 
     std::vector<turn_info> turns;
 
     strategy_type strategy;
-    rescale_policy_type rescale_policy;
 
     bg::detail::self_get_turn_points::no_interrupt_policy policy;
     bg::self_turns
         <
             bg::detail::overlay::assign_null_policy
-        >(geometry, strategy, rescale_policy, turns, policy);
+        >(geometry, strategy, turns, policy);
 
 
     typedef typename bg::coordinate_type<Geometry>::type ct;
