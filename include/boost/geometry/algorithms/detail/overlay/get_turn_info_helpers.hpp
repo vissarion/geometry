@@ -2,9 +2,8 @@
 
 // Copyright (c) 2007-2012 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2013-2020.
-// Modifications copyright (c) 2013-2020 Oracle and/or its affiliates.
-
+// This file was modified by Oracle on 2013-2021.
+// Modifications Copyright (c) 2013, 2024, Oracle and/or its affiliates.
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
@@ -20,6 +19,7 @@
 #include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/policies/relate/intersection_policy.hpp>
 #include <boost/geometry/policies/robustness/rescale_policy_tags.hpp>
+#include <boost/geometry/policies/robustness/robust_type.hpp>
 #include <boost/geometry/strategies/intersection_result.hpp>
 
 namespace boost { namespace geometry {
@@ -241,10 +241,13 @@ class intersection_info_base<UniqueSubRange1, UniqueSubRange2,
 
 public:
     typedef segment_intersection_points
-    <
-        TurnPoint,
-        geometry::segment_ratio<boost::long_long_type>
-    > intersection_point_type;
+        <
+            TurnPoint,
+            geometry::segment_ratio
+                <
+                    geometry::detail::robust_signed_integral_type
+                >
+        > intersection_point_type;
     typedef policies::relate::segments_intersection_policy
         <
             intersection_point_type

@@ -5,8 +5,8 @@
 // Copyright (c) 2013 Mateusz Loskot, London, UK.
 // Copyright (c) 2013 Adam Wulkiewicz, Lodz, Poland.
 
-// This file was modified by Oracle on 2020.
-// Modifications copyright (c) 2020 Oracle and/or its affiliates.
+// This file was modified by Oracle on 2020-2021.
+// Modifications Copyright (c) 2020, 2024, Oracle and/or its affiliates.
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
@@ -22,6 +22,8 @@
 
 #include <boost/geometry/core/coordinate_type.hpp>
 #include <boost/geometry/policies/robustness/rescale_policy_tags.hpp>
+#include <boost/geometry/policies/robustness/robust_type.hpp>
+
 
 namespace boost { namespace geometry { namespace detail
 {
@@ -40,7 +42,7 @@ struct segment_ratio_type
                     no_rescale_policy_tag
                 >::value,
             typename geometry::coordinate_type<Point>::type,
-            boost::long_long_type
+            geometry::detail::robust_signed_integral_type
         > coordinate_type;
 
     // Define segment ratio based on the coordinate type

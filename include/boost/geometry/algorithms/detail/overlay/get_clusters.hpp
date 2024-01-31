@@ -2,6 +2,10 @@
 
 // Copyright (c) 2021 Barend Gehrels, Amsterdam, the Netherlands.
 
+// This file was modified by Oracle on 2021.
+// Modifications Copyright (c) 2021, 2024, Oracle and/or its affiliates.
+// Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
+
 // Use, modification and distribution is subject to the Boost Software License,
 // Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
 // http://www.boost.org/LICENSE_1_0.txt)
@@ -19,6 +23,7 @@
 #include <boost/geometry/algorithms/detail/overlay/get_ring.hpp>
 #include <boost/geometry/algorithms/detail/recalculate.hpp>
 #include <boost/geometry/policies/robustness/rescale_policy_tags.hpp>
+#include <boost/geometry/policies/robustness/robust_type.hpp>
 #include <boost/range/value_type.hpp>
 #include <boost/geometry/util/math.hpp>
 
@@ -43,7 +48,7 @@ struct sweep_equal_policy
     }
 
     template <typename T>
-    static inline bool exceeds(T value)
+    static inline bool exceeds(T const& value)
     {
         // This threshold is an arbitrary value
         // as long as it is than the used kilo-epsilon
@@ -62,7 +67,7 @@ struct sweep_equal_policy<no_rescale_policy_tag, true>
     }
 
     template <typename T>
-    static inline bool exceeds(T value)
+    static inline bool exceeds(T const& value)
     {
         return value > 0;
     }
@@ -81,7 +86,7 @@ struct sweep_equal_policy<rescale_policy_tag, true>
     }
 
     template <typename T>
-    static inline bool exceeds(T value)
+    static inline bool exceeds(T const& value)
     {
         return value > 1;
     }
@@ -129,7 +134,8 @@ inline void get_clusters(Turns& turns, Clusters& clusters,
     sweep_equal_policy
         <
             typename rescale_policy_type<RobustPolicy>::type,
-            std::is_integral<typename coordinate_type<point_type>::type>::value
+            (std::is_integral<typename coordinate_type<point_type>::type>::value
+          || std::is_same<typename coordinate_type<point_type>::type, robust_signed_integral_type>::value)
         > equal_policy;
 
     std::vector<turn_with_point<point_type>> points;

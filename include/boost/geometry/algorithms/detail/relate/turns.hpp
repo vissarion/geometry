@@ -2,9 +2,8 @@
 
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 
-// This file was modified by Oracle on 2013-2020.
-// Modifications copyright (c) 2013-2020 Oracle and/or its affiliates.
-
+// This file was modified by Oracle on 2013-2021.
+// Modifications Copyright (c) 2013, 2024, Oracle and/or its affiliates.
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 
@@ -21,6 +20,7 @@
 #include <boost/geometry/algorithms/detail/overlay/get_turn_info.hpp>
 
 #include <boost/geometry/policies/robustness/get_rescale_policy.hpp>
+#include <boost/geometry/policies/robustness/no_rescale_policy.hpp>
 #include <boost/geometry/policies/robustness/segment_ratio_type.hpp>
 
 #include <boost/geometry/strategies/cartesian/point_in_point.hpp>
@@ -57,13 +57,15 @@ struct get_turns
 
     template <typename Strategy>
     struct robust_policy_type
-        : geometry::rescale_overlay_policy_type
+        /*: geometry::rescale_overlay_policy_type
             <
                 Geometry1,
                 Geometry2,
                 typename Strategy::cs_tag
-            >
-    {};
+            >*/
+    {
+        typedef detail::no_rescale_policy type;
+    };
 
     template
     <

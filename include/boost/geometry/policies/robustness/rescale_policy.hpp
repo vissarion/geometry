@@ -5,9 +5,8 @@
 // Copyright (c) 2014-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2014-2015 Adam Wulkiewicz, Lodz, Poland.
 
-// This file was modified by Oracle on 2015, 2018.
-// Modifications copyright (c) 2015-2018, Oracle and/or its affiliates.
-
+// This file was modified by Oracle on 2015-2021.
+// Modifications Copyright (c) 2015, 2024, Oracle and/or its affiliates.
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
 // Use, modification and distribution is subject to the Boost Software License,
@@ -19,9 +18,12 @@
 
 #include <cstddef>
 
+#include <boost/config.hpp>
+
 #include <boost/geometry/core/coordinate_type.hpp>
 
 #include <boost/geometry/policies/robustness/segment_ratio.hpp>
+#include <boost/geometry/policies/robustness/segment_ratio_type.hpp>
 #include <boost/geometry/policies/robustness/robust_point_type.hpp>
 
 #include <boost/geometry/util/math.hpp>

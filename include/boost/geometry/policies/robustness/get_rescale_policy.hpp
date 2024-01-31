@@ -5,9 +5,8 @@
 // Copyright (c) 2014-2015 Mateusz Loskot, London, UK.
 // Copyright (c) 2014-2015 Adam Wulkiewicz, Lodz, Poland.
 
-// This file was modified by Oracle on 2015-2020.
-// Modifications copyright (c) 2015-2020, Oracle and/or its affiliates.
-
+// This file was modified by Oracle on 2015-2021.
+// Modifications Copyright (c) 2015, 2024, Oracle and/or its affiliates.
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -82,15 +81,15 @@ inline void scale_box_to_integer_range(Box const& box,
     else
     {
         factor = boost::numeric_cast<num_type>(
-            boost::numeric_cast<boost::long_long_type>(half + range / diff));
+            boost::numeric_cast<robust_signed_integral_type>(half + range / diff));
         BOOST_GEOMETRY_ASSERT(factor >= 1);
     }
 
     // Assign input/output minimal points
     detail::assign_point_from_index<0>(box, min_point);
     num_type const two = 2;
-    boost::long_long_type const min_coordinate
-        = boost::numeric_cast<boost::long_long_type>(-range / two);
+    robust_signed_integral_type const min_coordinate
+        = boost::numeric_cast<robust_signed_integral_type>(-range / two);
     assign_values(min_robust_point, min_coordinate, min_coordinate);
 }
 
