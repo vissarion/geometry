@@ -1,0 +1,91 @@
+##############################################################################
+# GitHub Actions Workflow to run gis tests on mysql with boost geometry develop
+#
+# Copyright (c) 2024 Oracle and/or its affiliates.
+# Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
+#
+# Use, modification and distribution is subject to the Boost Software License,
+# Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+##############################################################################
+
+name: mysql_gis
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up environment
+        id: setenv
+        run: |
+          if [[ "$GITHUB_REF" == *master ]]; then
+            echo "BOOST_BRANCH=master" >> $GITHUB_ENV
+          else
+            echo "BOOST_BRANCH=develop" >> $GITHUB_ENV
+          fi
+          echo "BOOST_SELF=$(basename $GITHUB_WORKSPACE)" >> $GITHUB_ENV
+          echo "BOOST_ROOT=$GITHUB_WORKSPACE/boost-root" >> $GITHUB_ENV
+          echo "boost_self=$(basename $GITHUB_WORKSPACE)" >> "$GITHUB_OUTPUT"
+          echo "boost_root=$GITHUB_WORKSPACE/boost-root" >> "$GITHUB_OUTPUT"
+
+      - name: Clone boostorg/boost
+        run: |
+          git clone -b $BOOST_BRANCH --depth 1 https://github.com/boostorg/boost.git $BOOST_ROOT
+          cd $BOOST_ROOT
+          git submodule update -q --init libs/headers
+          git submodule update -q --init tools/boost_install
+          git submodule update -q --init tools/boostdep
+          git submodule update -q --init tools/build
+          mkdir -p libs/$BOOST_SELF
+
+      - uses: actions/checkout@v2
+        with:
+          path: ${{ steps.setenv.outputs.boost_root }}/libs/${{ steps.setenv.outputs.boost_self }}
+
+      - name: Run tools/boostdep/depinst/depinst.py
+        run: |
+          cd $BOOST_ROOT
+          python tools/boostdep/depinst/depinst.py --include benchmark --include example --include examples --include tools $BOOST_SELF
+
+      - name: Bootstrap boostorg/boost
+        run: |
+          gcc --version
+          cd $BOOST_ROOT
+          ./bootstrap.sh --with-toolset=gcc
+          ./b2 headers
+
+      - name: Clone mysql-server and copy boost develop (possibly with patches)
+        run: |
+          echo $GITHUB_WORKSPACE/boost-root/boost
+          pwd
+          ls
+          git clone https://github.com/mysql/mysql-server.git
+          rm mysql-server/extra/boost/boost_*/boost/ -rf
+          cp -R -L $GITHUB_WORKSPACE/boost-root/boost mysql-server/extra/boost/boost_*/
+
+      - name: Build mysql with boost develop (possibly with patches)
+        run: |
+          cd mysql-server
+          mkdir bld
+          cd bld
+          cmake ..
+          make -j8
+
+      - name: Delete mysql build and boost patches
+        if: ${{ always() }}
+        run: |
+          cd mysql-server
+          rm -rf bld
+          rm include/boost_*/patches/boost/ -rf
+
+      - name: Try rebuilding mysql without boost patches
+        if: ${{ always() }}
+        run: |
+          cd mysql-server
+          mkdir bld
+          cd bld
+          cmake ..
+          make -j8
+
