@@ -3,11 +3,10 @@
 // Copyright (c) 2007-2015 Barend Gehrels, Amsterdam, the Netherlands.
 // Copyright (c) 2008-2015 Bruno Lalande, Paris, France.
 // Copyright (c) 2009-2015 Mateusz Loskot, London, UK.
-// Copyright (c) 2013-2015 Adam Wulkiewicz, Lodz, Poland.
+// Copyright (c) 2013-2023 Adam Wulkiewicz, Lodz, Poland.
 
 // This file was modified by Oracle on 2015, 2017, 2019.
 // Modifications copyright (c) 2015-2019 Oracle and/or its affiliates.
-
 // Contributed and/or modified by Menelaos Karavelas, on behalf of Oracle
 // Contributed and/or modified by Adam Wulkiewicz, on behalf of Oracle
 
@@ -23,7 +22,7 @@
 #include <boost/geometry/core/cs.hpp>
 #include <boost/geometry/policies/robustness/robust_point_type.hpp>
 #include <boost/geometry/strategies/side.hpp>
-#include <boost/geometry/util/condition.hpp>
+#include <boost/geometry/util/constexpr.hpp>
 #include <boost/geometry/util/math.hpp>
 
 
@@ -73,6 +72,26 @@ template
     typename Point3,
     typename SideStrategy
 >
+inline bool point_is_spike_or_equal(Point1 const& last_point,
+            Point2 const& segment_a,
+            Point3 const& segment_b,
+            SideStrategy const& strategy)
+{
+    if (point_is_spike_or_equal(last_point, segment_a, segment_b, strategy))
+    {
+        return true;
+    }
+    return false;
+}
+
+template
+<
+    typename Point1,
+    typename Point2,
+    typename Point3,
+    typename SideStrategy,
+    typename RobustPolicy
+>
 inline bool point_is_collinear(Point1 const& last_point,
             Point2 const& segment_a,
             Point3 const& segment_b,
@@ -83,20 +102,7 @@ inline bool point_is_collinear(Point1 const& last_point,
     {
         return true;
     }
-
-    // Redo, using specified robust policy
-    typedef typename geometry::robust_point_type
-    <
-        Point1
-    >::type robust_point_type;
-
-    robust_point_type last_point_rob, segment_a_rob, segment_b_rob;
-    geometry::recalculate(last_point_rob, last_point);
-    geometry::recalculate(segment_a_rob, segment_a);
-    geometry::recalculate(segment_b_rob, segment_b);
-
-    int const side_rob = strategy.apply(segment_a_rob, segment_b_rob, last_point_rob);
-    return side_rob == 0;
+    return false;
 }
 
 

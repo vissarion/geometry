@@ -59,7 +59,7 @@
 #include <boost/geometry/algorithms/detail/sections/section_box_policies.hpp>
 
 #include <boost/geometry/views/detail/closed_clockwise_view.hpp>
-#include <boost/geometry/util/for_each_with_index.hpp>
+#include <boost/geometry/views/enumerate_view.hpp>
 #include <boost/geometry/util/range.hpp>
 
 
@@ -248,7 +248,8 @@ struct buffered_piece_collection
 
     // Offsetted rings, and representations of original ring(s)
     // both indexed by multi_index
-    buffered_ring_collection<buffered_ring<Ring> > offsetted_rings;
+    using ring_collection_t = buffered_ring_collection<buffered_ring<Ring>>;
+    ring_collection_t offsetted_rings;
     std::vector<original_ring> original_rings;
     std::vector<point_type> m_linear_end_points;
 
@@ -298,29 +299,6 @@ struct buffered_piece_collection
             {
                 turn.is_linear_end_point = true;
             }
-        }
-    }
-
-    inline void verify_turns()
-    {
-        typedef detail::overlay::indexed_turn_operation
-            <
-                buffer_turn_operation_type
-            > indexed_turn_operation;
-        typedef std::map
-            <
-                ring_identifier,
-                std::vector<indexed_turn_operation>
-            > mapped_vector_type;
-        mapped_vector_type mapped_vector;
-
-        detail::overlay::create_map(m_turns, mapped_vector,
-                                    enriched_map_buffer_include_policy());
-
-        // Sort turns over offsetted ring(s)
-        for (auto& pair : mapped_vector)
-        {
-            std::sort(pair.second.begin(), pair.second.end(), buffer_less());
         }
     }
 
@@ -394,16 +372,18 @@ struct buffered_piece_collection
 
     inline void update_turn_administration()
     {
-        for_each_with_index(m_turns, [this](std::size_t index, auto& turn)
+        for (auto const& enumerated : util::enumerate(m_turns))
         {
-            turn.turn_index = index;
+            // enumerated is const, but its value is a non-const reference
+            auto& turn = enumerated.value;
+            turn.turn_index = enumerated.index;
 
             // Verify if a turn is a linear endpoint
             if (! turn.is_linear_end_point)
             {
                 this->check_linear_endpoints(turn);
             }
-        });
+        }
     }
 
     // Calculate properties of piece borders which are not influenced
@@ -465,24 +445,25 @@ struct buffered_piece_collection
         }
 
         update_turn_administration();
+    }
 
-        {
-            // Check if turns are inside pieces
-            turn_in_piece_visitor
-                <
-                    typename geometry::cs_tag<point_type>::type,
-                    turn_vector_type, piece_vector_type, DistanceStrategy, Strategy
-                > visitor(m_turns, m_pieces, m_distance_strategy, m_strategy);
+    inline void check_turn_in_pieces()
+    {
+        // Check if turns are inside pieces
+        turn_in_piece_visitor
+            <
+                typename geometry::cs_tag<point_type>::type,
+                turn_vector_type, piece_vector_type, DistanceStrategy, Strategy
+            > visitor(m_turns, m_pieces, m_distance_strategy, m_strategy);
 
-            geometry::partition
-                <
-                    box_type
-                >::apply(m_turns, m_pieces, visitor,
-                         turn_get_box<Strategy>(m_strategy),
-                         turn_overlaps_box<Strategy>(m_strategy),
-                         piece_get_box<Strategy>(m_strategy),
-                         piece_overlaps_box<Strategy>(m_strategy));
-        }
+        geometry::partition
+            <
+                box_type
+            >::apply(m_turns, m_pieces, visitor,
+                        turn_get_box<Strategy>(m_strategy),
+                        turn_overlaps_box<Strategy>(m_strategy),
+                        piece_get_box<Strategy>(m_strategy),
+                        piece_overlaps_box<Strategy>(m_strategy));
     }
 
     inline void start_new_ring(bool deflate)
@@ -693,7 +674,7 @@ struct buffered_piece_collection
         BOOST_GEOMETRY_ASSERT(pc.offsetted_count >= 0);
     }
 
-    inline void add_piece_point(piece& pc, const point_type& point, bool add_to_original)
+    inline void add_piece_point(piece& pc, point_type const& point, bool add_to_original)
     {
         if (add_to_original && pc.type != strategy::buffer::buffered_concave)
         {
@@ -892,6 +873,61 @@ struct buffered_piece_collection
 
     //-------------------------------------------------------------------------
 
+    inline void handle_colocations()
+    {
+        if (! detail::overlay::handle_colocations
+                <
+                    false, false, overlay_buffer,
+                    ring_collection_t, ring_collection_t
+                >(m_turns, m_clusters, m_robust_policy))
+        {
+            return;
+        }
+
+        detail::overlay::gather_cluster_properties
+            <
+                false, false, overlay_buffer
+            >(m_clusters, m_turns, detail::overlay::operation_union,
+            offsetted_rings, offsetted_rings, m_strategy);
+
+        for (auto const& cluster : m_clusters)
+        {
+            if (cluster.second.open_count == 0 && cluster.second.spike_count == 0)
+            {
+                // If the cluster is completely closed, mark it as not traversable.
+                for (auto const& index : cluster.second.turn_indices)
+                {
+                    m_turns[index].is_turn_traversable = false;
+                }
+            }
+        }
+    }
+
+    inline void make_traversable_consistent_per_cluster()
+    {
+        for (auto const& cluster : m_clusters)
+        {
+            bool is_traversable = false;
+            for (auto const& index : cluster.second.turn_indices)
+            {
+                if (m_turns[index].is_turn_traversable)
+                {
+                    // If there is one turn traversable in the cluster,
+                    // then all turns should be traversable.
+                    is_traversable = true;
+                    break;
+                }
+            }
+            if (is_traversable)
+            {
+                for (auto const& index : cluster.second.turn_indices)
+                {
+                    m_turns[index].is_turn_traversable = true;
+                }
+            }
+        }
+    }
+
     inline void enrich()
     {
         enrich_intersection_points<false, false, overlay_buffer>(m_turns,
@@ -1050,30 +1086,32 @@ struct buffered_piece_collection
         // Inner rings, for deflate, which do not have intersections, and
         // which are outside originals, are skipped
         // (other ones should be traversed)
-        for_each_with_index(offsetted_rings, [&](std::size_t index, auto const& ring)
+        for (auto const& enumerated : util::enumerate(offsetted_rings))
+        {
+            auto const& ring = enumerated.value;
+            if (! ring.has_intersections()
+                && ! ring.is_untouched_outside_original)
             {
-                if (! ring.has_intersections()
-                    && ! ring.is_untouched_outside_original)
-                {
-                    properties p = properties(ring, m_strategy);
-                    if (p.valid)
-                    {
-                        ring_identifier id(0, index, -1);
-                        selected[id] = p;
-                    }
-                }
-            });
-
-        // Select all created rings
-        for_each_with_index(traversed_rings, [&](std::size_t index, auto const& ring)
-            {
-                properties p = properties(ring, m_strategy);
+                properties const p = properties(ring, m_strategy);
                 if (p.valid)
                 {
-                    ring_identifier id(2, index, -1);
+                    ring_identifier id(0, enumerated.index, -1);
                     selected[id] = p;
                 }
-            });
+            }
+        }
+
+        // Select all created rings
+        for (auto const& enumerated : util::enumerate(traversed_rings))
+        {
+            auto const& ring = enumerated.value;
+            properties p = properties(ring, m_strategy);
+            if (p.valid)
+            {
+                ring_identifier id(2, enumerated.index, -1);
+                selected[id] = p;
+            }
+        }
 
         detail::overlay::assign_parents<overlay_buffer>(offsetted_rings, traversed_rings,
                 selected, m_strategy);

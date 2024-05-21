@@ -16,13 +16,13 @@
 #include <cstddef>
 
 #include <boost/range/value_type.hpp>
+#include <boost/range/size.hpp>
 
 #include <boost/geometry/algorithms/detail/overlay/backtrack_check_si.hpp>
 #include <boost/geometry/algorithms/detail/overlay/copy_segments.hpp>
 #include <boost/geometry/algorithms/detail/overlay/turn_info.hpp>
 #include <boost/geometry/algorithms/detail/overlay/traversal.hpp>
 #include <boost/geometry/algorithms/num_points.hpp>
-#include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/assert.hpp>
 #include <boost/geometry/core/closure.hpp>
 
@@ -54,7 +54,7 @@ struct traversal_ring_creator
             <
                 Reverse1, Reverse2, OverlayType,
                 Geometry1, Geometry2, Turns, Clusters,
-                decltype(std::declval<Strategy>().side()),
+                Strategy,
                 Visitor
             > traversal_type;
 
@@ -69,8 +69,7 @@ struct traversal_ring_creator
             Clusters const& clusters,
             Strategy const& strategy,
             Visitor& visitor)
-        : m_trav(geometry1, geometry2, turns, clusters,
-                 strategy.side(), visitor)
+        : m_trav(geometry1, geometry2, turns, clusters, strategy, visitor)
         , m_geometry1(geometry1)
         , m_geometry2(geometry2)
         , m_turns(turns)
@@ -146,8 +145,8 @@ struct traversal_ring_creator
 
         {
             // Check operation (TODO: this might be redundant or should be catched before)
-            const turn_type& current_turn = m_turns[turn_index];
-            const turn_operation_type& op = current_turn.operations[op_index];
+            turn_type const& current_turn = m_turns[turn_index];
+            turn_operation_type const& op = current_turn.operations[op_index];
             if (op.visited.finalized()
                 || m_trav.is_visited(current_turn, op, turn_index, op_index))
             {
