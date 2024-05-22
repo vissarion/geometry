@@ -69,7 +69,7 @@ struct self_intersects
         detail::self_get_turn_points::get_turns
             <
                 false, turn_policy
-            >::apply(geometry, strategy, detail::no_rescale_policy(), turns, policy, 0, true);
+            >::apply(geometry, strategy, turns, policy, 0, true);
         return policy.has_intersections;
     }
 };

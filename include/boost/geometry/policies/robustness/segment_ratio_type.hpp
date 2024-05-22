@@ -27,24 +27,11 @@ namespace boost { namespace geometry { namespace detail
 {
 
 // Temporary meta-function to access segment-ratio for a policy
-template <typename Point, typename Policy>
+template <typename Point>
 struct segment_ratio_type
 {
-    // Type in segment ratio is either the coordinate type, or for
-    // deprecated robust point types it is a long_long type
-    typedef std::conditional_t
-        <
-            std::is_same
-                <
-                    typename rescale_policy_type<Policy>::type,
-                    no_rescale_policy_tag
-                >::value,
-            typename geometry::coordinate_type<Point>::type,
-            boost::long_long_type
-        > coordinate_type;
-
     // Define segment ratio based on the coordinate type
-    typedef geometry::segment_ratio<coordinate_type> type;
+    typedef geometry::segment_ratio<typename geometry::coordinate_type<Point>::type> type;
 };
 
 

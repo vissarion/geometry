@@ -60,24 +60,13 @@ struct get_turns
             typename geometry::point_type<Geometry1>::type
         >::type;
 
-    template <typename Strategy>
-    struct robust_policy_type
-        : geometry::rescale_overlay_policy_type
-            <
-                Geometry1,
-                Geometry2,
-                typename Strategy::cs_tag
-            >
-    {};
-
     template
     <
-        typename Strategy,
-        typename RobustPolicy = typename robust_policy_type<Strategy>::type
+        typename Strategy
     >
     struct turn_info_type
     {
-        using ratio_type = typename segment_ratio_type<turn_point_type, RobustPolicy>::type;
+        using ratio_type = typename segment_ratio_type<turn_point_type>::type;
         using type = overlay::turn_info
             <
                 turn_point_type,
@@ -95,23 +84,6 @@ struct get_turns
                              Geometry2 const& geometry2,
                              InterruptPolicy & interrupt_policy,
                              Strategy const& strategy)
-    {
-        typedef typename robust_policy_type<Strategy>::type robust_policy_t;
-
-        robust_policy_t robust_policy
-                = geometry::get_rescale_policy<robust_policy_t>(
-                    geometry1, geometry2, strategy);
-
-        apply(turns, geometry1, geometry2, interrupt_policy, strategy, robust_policy);
-    }
-
-    template <typename Turns, typename InterruptPolicy, typename Strategy, typename RobustPolicy>
-    static inline void apply(Turns & turns,
-                             Geometry1 const& geometry1,
-                             Geometry2 const& geometry2,
-                             InterruptPolicy & interrupt_policy,
-                             Strategy const& strategy,
-                             RobustPolicy const& robust_policy)
     {
         static const bool reverse1 = detail::overlay::do_reverse
             <
@@ -132,9 +104,7 @@ struct get_turns
                 reverse1,
                 reverse2,
                 GetTurnPolicy
-            >::apply(0, geometry1, 1, geometry2,
-                     strategy, robust_policy,
-                     turns, interrupt_policy);
+            >::apply(0, geometry1, 1, geometry2, strategy, turns, interrupt_policy);
     }
 };
 

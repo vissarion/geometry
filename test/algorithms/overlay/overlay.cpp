@@ -410,9 +410,6 @@ void test_overlay(std::string const& caseid,
         Geometry
     >::type;
 
-    rescale_policy_type robust_policy
-        = bg::get_rescale_policy<rescale_policy_type>(g1, g2);
-
 #if defined(TEST_WITH_SVG)
     map_visitor<svg_mapper> visitor(mapper);
 #else
@@ -420,8 +417,7 @@ void test_overlay(std::string const& caseid,
 #endif
 
     Geometry result;
-    overlay::apply(g1, g2, robust_policy, std::back_inserter(result),
-                   strategy, visitor);
+    overlay::apply(g1, g2, std::back_inserter(result), strategy, visitor);
 
     std::string message;
     bool const valid = check_validity<Geometry>::apply(result, caseid, g1, g2, message);

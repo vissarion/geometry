@@ -117,8 +117,7 @@ template
     typename Pieces,
     typename Rings,
     typename Turns,
-    typename Strategy,
-    typename RobustPolicy
+    typename Strategy
 >
 class piece_turn_visitor
 {
@@ -126,7 +125,6 @@ class piece_turn_visitor
     Rings const& m_rings;
     Turns& m_turns;
     Strategy const& m_strategy;
-    RobustPolicy const& m_robust_policy;
 
     template <typename Piece>
     inline bool is_adjacent(Piece const& piece1, Piece const& piece2) const
@@ -161,8 +159,7 @@ class piece_turn_visitor
                 && it_begin + 1 != it_beyond
                 && detail::section::preceding<Dimension>(dir, *(it_begin + 1),
                                                          this_bounding_box,
-                                                         other_bounding_box,
-                                                         m_robust_policy);
+                                                         other_bounding_box);
             ++it_begin, index++)
         {}
     }
@@ -177,7 +174,7 @@ class piece_turn_visitor
             && it_beyond - 2 != it_begin)
         {
             if (detail::section::exceeding<Dimension>(dir, *(it_beyond - 2),
-                        this_bounding_box, other_bounding_box, m_robust_policy))
+                        this_bounding_box, other_bounding_box))
             {
                 --it_beyond;
             }
@@ -271,7 +268,6 @@ class piece_turn_visitor
                 turn_policy::apply(unique_sub_range1, unique_sub_range2,
                                    the_model,
                                    m_strategy,
-                                   m_robust_policy,
                                    std::back_inserter(m_turns));
             }
         }
@@ -282,13 +278,11 @@ public:
     piece_turn_visitor(Pieces const& pieces,
             Rings const& ring_collection,
             Turns& turns,
-            Strategy const& strategy,
-            RobustPolicy const& robust_policy)
+            Strategy const& strategy)
         : m_pieces(pieces)
         , m_rings(ring_collection)
         , m_turns(turns)
         , m_strategy(strategy)
-        , m_robust_policy(robust_policy)
     {}
 
     template <typename Section>

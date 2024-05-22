@@ -128,7 +128,7 @@ struct disjoint_linear
                         Geometry1, Geometry2, assign_disjoint_policy
                     >
             >::apply(0, geometry1, 1, geometry2,
-                     strategy, detail::no_rescale_policy(), turns, interrupt_policy);
+                     strategy, turns, interrupt_policy);
 
         return !interrupt_policy.has_intersections;
     }

@@ -83,7 +83,6 @@ template
     typename Geometry2,
     typename Turns,
     typename Clusters,
-    typename RobustPolicy,
     typename Visitor
 >
 struct traversal_switch_detector
@@ -138,12 +137,11 @@ struct traversal_switch_detector
     inline traversal_switch_detector(Geometry1 const& geometry1,
             Geometry2 const& geometry2,
             Turns& turns, Clusters const& clusters,
-            RobustPolicy const& robust_policy, Visitor& visitor)
+            Visitor& visitor)
         : m_geometry1(geometry1)
         , m_geometry2(geometry2)
         , m_turns(turns)
         , m_clusters(clusters)
-        , m_robust_policy(robust_policy)
         , m_visitor(visitor)
     {
     }
@@ -736,7 +734,6 @@ private:
     Clusters const& m_clusters;
     merge_map m_turns_per_ring;
     region_connection_map m_connected_regions;
-    RobustPolicy const& m_robust_policy;
     Visitor& m_visitor;
 };
 

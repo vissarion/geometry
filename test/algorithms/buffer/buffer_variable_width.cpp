@@ -159,7 +159,6 @@ void test_buffer(std::string const& caseid, std::string const& wkt, std::vector<
           distance_strategy, buffer_side_strategy, join_strategy,
           end_strategy, point_strategy,
           strategy,
-          bg::detail::no_rescale_policy(),
           visitor);
 
 #if defined(TEST_WITH_SVG)

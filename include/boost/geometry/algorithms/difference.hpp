@@ -62,12 +62,10 @@ struct call_intersection_insert
     template
     <
         typename OutputIterator,
-        typename RobustPolicy,
         typename Strategy
     >
     static inline OutputIterator apply(Geometry1 const& geometry1,
                                        Geometry2 const& geometry2,
-                                       RobustPolicy const& robust_policy,
                                        OutputIterator out,
                                        Strategy const& strategy)
     {
@@ -78,7 +76,7 @@ struct call_intersection_insert
                 overlay_difference,
                 geometry::detail::overlay::do_reverse<geometry::point_order<Geometry1>::value>::value,
                 geometry::detail::overlay::do_reverse<geometry::point_order<Geometry2>::value, true>::value
-            >::apply(geometry1, geometry2, robust_policy, out, strategy);
+            >::apply(geometry1, geometry2, out, strategy);
     }
 };
 
@@ -86,10 +84,9 @@ struct call_intersection_insert
 template <typename Geometry1, typename Geometry2, typename SingleOut, typename OutTag>
 struct call_intersection_insert<Geometry1, Geometry2, SingleOut, OutTag, true>
 {
-    template <typename OutputIterator, typename RobustPolicy, typename Strategy>
+    template <typename OutputIterator, typename Strategy>
     static inline OutputIterator apply(Geometry1 const& geometry1,
                                        Geometry2 const& ,
-                                       RobustPolicy const& ,
                                        OutputIterator out,
                                        Strategy const& )
     {
@@ -149,12 +146,10 @@ struct call_intersection_insert
     template
     <
         typename OutputIterator,
-        typename RobustPolicy,
         typename Strategy
     >
     static inline OutputIterator apply(Geometry1 const& geometry1,
                                        Geometry2 const& geometry2,
-                                       RobustPolicy const& robust_policy,
                                        OutputIterator out,
                                        Strategy const& strategy)
     {
@@ -162,8 +157,7 @@ struct call_intersection_insert
             <
                 Geometry1, Geometry2,
                 typename base_t::access::type
-            >::apply(geometry1, geometry2, robust_policy,
-                     base_t::access::get(out), strategy);
+            >::apply(geometry1, geometry2, base_t::access::get(out), strategy);
 
         return out;
     }
@@ -188,12 +182,10 @@ struct call_intersection_insert
     template
     <
         typename OutputIterator,
-        typename RobustPolicy,
         typename Strategy
     >
     static inline OutputIterator apply(Geometry1 const& geometry1,
                                        Geometry2 const& ,
-                                       RobustPolicy const& ,
                                        OutputIterator out,
                                        Strategy const& )
     {
@@ -244,21 +236,10 @@ inline OutputIterator difference_insert(Geometry1 const& geometry1,
     //concepts::check<GeometryOut>();
     geometry::detail::output_geometry_concept_check<GeometryOut>::apply();
 
-    typedef typename geometry::rescale_overlay_policy_type
-        <
-            Geometry1,
-            Geometry2,
-            typename Strategy::cs_tag
-        >::type rescale_policy_type;
-
-    rescale_policy_type robust_policy
-        = geometry::get_rescale_policy<rescale_policy_type>(
-            geometry1, geometry2, strategy);
-
     return geometry::detail::difference::call_intersection_insert
         <
             Geometry1, Geometry2, GeometryOut
-        >::apply(geometry1, geometry2, robust_policy, out, strategy);
+        >::apply(geometry1, geometry2, out, strategy);
 }
 
 /*!

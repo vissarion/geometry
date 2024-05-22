@@ -58,7 +58,6 @@ public :
     template
     <
         typename IntersectionStrategy,
-        typename RobustPolicy,
         typename Turns,
         typename Rings,
         typename TurnInfoMap,
@@ -68,7 +67,6 @@ public :
     static inline void apply(Geometry1 const& geometry1,
                 Geometry2 const& geometry2,
                 IntersectionStrategy const& intersection_strategy,
-                RobustPolicy const& robust_policy,
                 Turns& turns, Rings& rings,
                 TurnInfoMap& turn_info_map,
                 Clusters& clusters,
@@ -79,9 +77,8 @@ public :
                 Reverse1, Reverse2, OverlayType,
                 Geometry1, Geometry2,
                 Turns, Clusters,
-                RobustPolicy, Visitor
-            > switch_detector(geometry1, geometry2, turns, clusters,
-                   robust_policy, visitor);
+                Visitor
+            > switch_detector(geometry1, geometry2, turns, clusters, visitor);
 
         switch_detector.iterate();
         reset_visits(turns);
@@ -92,10 +89,10 @@ public :
                 Geometry1, Geometry2,
                 Turns, TurnInfoMap, Clusters,
                 IntersectionStrategy,
-                RobustPolicy, Visitor,
+                Visitor,
                 Backtrack
             > trav(geometry1, geometry2, turns, turn_info_map, clusters,
-                   intersection_strategy, robust_policy, visitor);
+                   intersection_strategy, visitor);
 
         std::size_t finalized_ring_size = boost::size(rings);
 

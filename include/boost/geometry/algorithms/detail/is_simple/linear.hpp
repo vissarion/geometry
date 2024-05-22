@@ -218,7 +218,6 @@ inline bool has_self_intersections(Linear const& linear, Strategy const& strateg
             false, turn_policy
         >::apply(linear,
                  strategy,
-                 detail::no_rescale_policy(),
                  turns,
                  interrupt_policy, 0, true);
 

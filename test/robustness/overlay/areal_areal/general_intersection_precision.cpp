@@ -86,13 +86,9 @@ bool test_overlay(std::string const& caseid,
         Geometry
     >::type rescale_policy_type;
 
-    rescale_policy_type robust_policy
-        = bg::get_rescale_policy<rescale_policy_type>(g1, g2);
-
     Geometry result;
     bg::detail::overlay::overlay_null_visitor visitor;
-    overlay::apply(g1, g2, robust_policy, std::back_inserter(result),
-                   strategy, visitor);
+    overlay::apply(g1, g2, std::back_inserter(result), strategy, visitor);
 
     auto const detected_area = bg::area(result);
     if (std::fabs(detected_area - expected_area) > 0.1)

@@ -70,14 +70,14 @@ struct robust_policy
 
 
 // Implement meta-functions for this policy
-
+/*
 // Define the IntPoint as a robust-point type
-template <typename Point, typename FpPoint, typename IntPoint, typename CalculationType>
-struct robust_point_type<Point, detail::robust_policy<FpPoint, IntPoint, CalculationType> >
+template <typename Point>
+struct robust_point_type<Point>
 {
-    typedef IntPoint type;
+    typedef Point type;
 };
-
+*/
 
 }} // namespace boost::geometry
 

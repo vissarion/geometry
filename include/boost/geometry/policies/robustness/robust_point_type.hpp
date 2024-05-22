@@ -16,7 +16,7 @@ namespace boost { namespace geometry
 {
 
 // Meta-function to typedef a robust point type for a policy
-template <typename Point, typename Policy>
+template <typename Point>
 struct robust_point_type
 {
     // By default, the point itself is the robust type

@@ -48,23 +48,14 @@ struct get_turn_without_info
         typename UniqueSubRange1,
         typename UniqueSubRange2,
         typename Strategy,
-        typename RobustPolicy,
         typename OutputIterator
     >
     static inline OutputIterator apply(UniqueSubRange1 const& range_p,
                 UniqueSubRange2 const& range_q,
                 TurnInfo const& ,
                 Strategy const& strategy,
-                RobustPolicy const& ,
                 OutputIterator out)
     {
-        // Make sure this is only called with no rescaling
-        BOOST_STATIC_ASSERT((std::is_same
-           <
-               no_rescale_policy_tag,
-               typename rescale_policy_type<RobustPolicy>::type
-           >::value));
-
         typedef typename TurnInfo::point_type turn_point_type;
 
         typedef policies::relate::segments_intersection_points
@@ -96,13 +87,11 @@ template
 <
     typename Geometry1,
     typename Geometry2,
-    typename RobustPolicy,
     typename Turns,
     typename Strategy
 >
 inline void get_intersection_points(Geometry1 const& geometry1,
             Geometry2 const& geometry2,
-            RobustPolicy const& robust_policy,
             Turns& turns,
             Strategy const& strategy)
 {
@@ -139,7 +128,6 @@ inline void get_intersection_points(Geometry1 const& geometry1,
         >::apply(0, geometry1,
                  1, geometry2,
                  strategy,
-                 robust_policy,
                  turns, interrupt_policy);
 }
 

@@ -47,7 +47,6 @@ public :
             typename Turns,
             typename Geometry,
             typename Strategy,
-            typename RobustPolicy,
             typename Visitor
         >
     static inline void apply(std::size_t size_at_start,
@@ -59,7 +58,6 @@ public :
                 Geometry const& ,
                 Geometry const& ,
                 Strategy const& ,
-                RobustPolicy const& ,
                 state_type& state,
                 Visitor& /*visitor*/
                 )
