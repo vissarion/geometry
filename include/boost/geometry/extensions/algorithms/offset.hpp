@@ -58,15 +58,13 @@ struct offset_range
         typename DistanceStrategy,
         typename SideStrategy,
         typename JoinStrategy,
-        typename EndStrategy,
-        typename RobustPolicy
+        typename EndStrategy
     >
     static inline void apply(Collection& collection, Range const& range,
                 DistanceStrategy const& distance_strategy,
                 SideStrategy const& side_strategy,
                 JoinStrategy const& join_strategy,
                 EndStrategy const& end_strategy,
-                RobustPolicy const& robust_policy,
                 bool reverse)
     {
         collection.start_new_ring();

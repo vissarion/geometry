@@ -87,7 +87,6 @@ public :
             typename Rings,
             typename Turns,
             typename IntersectionStrategy,
-            typename RobustPolicy,
             typename Visitor
         >
     static inline void apply(std::size_t size_at_start,
@@ -100,7 +99,6 @@ public :
                 Geometry const& ,
                 Geometry const& ,
                 IntersectionStrategy const& ,
-                RobustPolicy const& ,
                 state_type& state,
                 Visitor const& /*visitor*/
                 )
@@ -170,7 +168,7 @@ struct dissolve_ring
         using turn_info = detail::overlay::traversal_turn_info
             <
                 point_type,
-                typename segment_ratio_type<point_type, RescalePolicy>::type
+                typename segment_ratio_type<point_type>::type
             >;
 
         std::deque<turn_info> turns;

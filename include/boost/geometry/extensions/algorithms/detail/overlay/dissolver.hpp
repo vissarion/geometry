@@ -137,7 +137,7 @@ class plusmin_policy
         typedef overlay::turn_info
             <
                 point_type,
-                typename segment_ratio_type<point_type, RescalePolicy>::type
+                typename segment_ratio_type<point_type>::type
             > turn_info;
         std::deque<turn_info> turns;
 
