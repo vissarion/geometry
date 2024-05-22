@@ -39,7 +39,7 @@ void test_sectionalize(std::string const /*caseid*/, Geometry const& geometry, s
     typedef std::integer_sequence<std::size_t, 0> dim2;
 
     sections s;
-    bg::sectionalize<Reverse, dim2>(geometry, bg::detail::no_rescale_policy(), s);
+    bg::sectionalize<Reverse, dim2>(geometry, s);
 
     BOOST_CHECK_EQUAL(s.size(), section_count);
 

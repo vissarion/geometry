@@ -220,8 +220,7 @@ struct action_selector<overlay_intersection, RemoveSpikes>
         typename LineString,
         typename Point,
         typename Operation,
-        typename Strategy,
-        typename RobustPolicy
+        typename Strategy
     >
     static inline void enter(LineStringOut& current_piece,
                 LineString const& ,
@@ -229,7 +228,6 @@ struct action_selector<overlay_intersection, RemoveSpikes>
                 signed_size_type , Point const& point,
                 Operation const& operation,
                 Strategy const& strategy,
-                RobustPolicy const& ,
                 OutputIterator& )
     {
         // On enter, append the intersection point and remember starting point
@@ -245,8 +243,7 @@ struct action_selector<overlay_intersection, RemoveSpikes>
         typename LineString,
         typename Point,
         typename Operation,
-        typename Strategy,
-        typename RobustPolicy
+        typename Strategy
     >
     static inline void leave(LineStringOut& current_piece,
                 LineString const& linestring,
@@ -254,7 +251,6 @@ struct action_selector<overlay_intersection, RemoveSpikes>
                 signed_size_type index, Point const& point,
                 Operation const& ,
                 Strategy const& strategy,
-                RobustPolicy const& robust_policy,
                 OutputIterator& out)
     {
         // On leave, copy all segments from starting point, append the intersection point
@@ -262,7 +258,7 @@ struct action_selector<overlay_intersection, RemoveSpikes>
         detail::copy_segments::copy_segments_linestring
             <
                 false, RemoveSpikes
-            >::apply(linestring, segment_id, index, strategy, robust_policy, current_piece);
+            >::apply(linestring, segment_id, index, strategy, current_piece);
         detail::overlay::append_no_duplicates(current_piece, point, strategy);
         if (::boost::size(current_piece) > 1)
         {
@@ -309,8 +305,7 @@ struct action_selector<overlay_difference, RemoveSpikes>
         typename LineString,
         typename Point,
         typename Operation,
-        typename Strategy,
-        typename RobustPolicy
+        typename Strategy
     >
     static inline void enter(LineStringOut& current_piece,
                 LineString const& linestring,
@@ -318,11 +313,10 @@ struct action_selector<overlay_difference, RemoveSpikes>
                 signed_size_type index, Point const& point,
                 Operation const& operation,
                 Strategy const& strategy,
-                RobustPolicy const& robust_policy,
                 OutputIterator& out)
     {
         normal_action::leave(current_piece, linestring, segment_id, index,
-                    point, operation, strategy, robust_policy, out);
+                    point, operation, strategy, out);
     }
 
     template
@@ -332,8 +326,7 @@ struct action_selector<overlay_difference, RemoveSpikes>
         typename LineString,
         typename Point,
         typename Operation,
-        typename Strategy,
-        typename RobustPolicy
+        typename Strategy
     >
     static inline void leave(LineStringOut& current_piece,
                 LineString const& linestring,
@@ -341,11 +334,10 @@ struct action_selector<overlay_difference, RemoveSpikes>
                 signed_size_type index, Point const& point,
                 Operation const& operation,
                 Strategy const& strategy,
-                RobustPolicy const& robust_policy,
                 OutputIterator& out)
     {
         normal_action::enter(current_piece, linestring, segment_id, index,
-                    point, operation, strategy, robust_policy, out);
+                    point, operation, strategy, out);
     }
 
     template
@@ -412,13 +404,11 @@ public :
     <
         typename Turns,
         typename OutputIterator,
-        typename RobustPolicy,
         typename Strategy
     >
     static inline OutputIterator apply(LineString const& linestring, Polygon const& polygon,
                 detail::overlay::operation_type ,  // TODO: this parameter might be redundant
                 Turns& turns,
-                RobustPolicy const& robust_policy,
                 OutputIterator out,
                 Strategy const& strategy)
     {
@@ -464,7 +454,7 @@ public :
                 entered = true;
                 action::enter(current_piece, linestring, current_segment_id,
                     op.seg_id.segment_index, turn.point, op,
-                    strategy, robust_policy,
+                    strategy,
                     linear::get(out));
             }
             else if (following::is_leaving(turn, op, entered, first, linestring, polygon, strategy))
@@ -474,7 +464,7 @@ public :
                 entered = false;
                 action::leave(current_piece, linestring, current_segment_id,
                     op.seg_id.segment_index, turn.point, op,
-                    strategy, robust_policy,
+                    strategy,
                     linear::get(out));
             }
             else if (BOOST_GEOMETRY_CONDITION(FollowIsolatedPoints)
@@ -499,7 +489,7 @@ public :
                 >::apply(linestring,
                          current_segment_id,
                          static_cast<signed_size_type>(boost::size(linestring) - 1),
-                         strategy, robust_policy,
+                         strategy,
                          current_piece);
         }
 

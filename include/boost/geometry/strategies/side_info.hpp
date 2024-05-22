@@ -17,7 +17,7 @@
 #include <cmath>
 #include <utility>
 
-#if defined(BOOST_GEOMETRY_DEBUG_INTERSECTION) || defined(BOOST_GEOMETRY_DEBUG_ROBUSTNESS)
+#if defined(BOOST_GEOMETRY_DEBUG_INTERSECTION)
 #  include <iostream>
 #endif
 
@@ -146,7 +146,7 @@ public :
         return sides[Which].first == 0 ? 0 : 1;
     }
 
-#if defined(BOOST_GEOMETRY_DEBUG_INTERSECTION) || defined(BOOST_GEOMETRY_DEBUG_ROBUSTNESS)
+#if defined(BOOST_GEOMETRY_DEBUG_INTERSECTION)
     inline void debug() const
     {
         std::cout << sides[0].first << " "

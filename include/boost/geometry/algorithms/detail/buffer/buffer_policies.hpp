@@ -47,7 +47,6 @@ public :
             typename Turns,
             typename Geometry,
             typename Strategy,
-            typename RobustPolicy,
             typename Visitor
         >
     static inline void apply(std::size_t size_at_start,
@@ -59,7 +58,6 @@ public :
                 Geometry const& ,
                 Geometry const& ,
                 Strategy const& ,
-                RobustPolicy const& ,
                 state_type& state,
                 Visitor& /*visitor*/
                 )
@@ -131,11 +129,11 @@ struct buffer_turn_operation
     : public detail::overlay::traversal_turn_operation<Point, SegmentRatio>
 {
     signed_size_type piece_index;
-    signed_size_type index_in_robust_ring;
+    signed_size_type index_in_ring;
 
     inline buffer_turn_operation()
         : piece_index(-1)
-        , index_in_robust_ring(-1)
+        , index_in_ring(-1)
     {}
 };
 

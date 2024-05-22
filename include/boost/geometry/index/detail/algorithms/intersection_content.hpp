@@ -57,7 +57,7 @@ inline typename default_content_result<Box>::type intersection_content(Box const
         bool const ok = geometry::detail::intersection::intersection_box_box
                             <
                                 0, geometry::dimension<Box>::value
-                            >::apply(box1, box2, 0, box_intersection, 0);
+                            >::apply(box1, box2, box_intersection, 0);
         if ( ok )
         {
             return index::detail::content(box_intersection);

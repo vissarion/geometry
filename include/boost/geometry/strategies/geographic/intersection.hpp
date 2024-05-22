@@ -23,7 +23,6 @@
 #include <boost/geometry/algorithms/detail/assign_values.hpp>
 #include <boost/geometry/algorithms/detail/assign_indexed_point.hpp>
 #include <boost/geometry/algorithms/detail/equals/point_point.hpp>
-#include <boost/geometry/algorithms/detail/recalculate.hpp>
 
 #include <boost/geometry/formulas/andoyer_inverse.hpp>
 #include <boost/geometry/formulas/sjoberg_intersection.hpp>
@@ -114,8 +113,8 @@ struct geographic_segments
 
         CoordinateType lon;
         CoordinateType lat;
-        SegmentRatio robust_ra;
-        SegmentRatio robust_rb;
+        SegmentRatio ra;
+        SegmentRatio rb;
         intersection_point_flag ip_flag;
     };
 
@@ -489,8 +488,8 @@ private:
 
                 sinfo.lon = lon;
                 sinfo.lat = lat;
-                sinfo.robust_ra.assign(dist_a1_i1, dist_a1_a2);
-                sinfo.robust_rb.assign(dist_b1_i1, dist_b1_b2);
+                sinfo.ra.assign(dist_a1_i1, dist_a1_a2);
+                sinfo.rb.assign(dist_b1_i1, dist_b1_b2);
                 sinfo.ip_flag = ip_flag;
 
                 return Policy::segments_crosses(sides, sinfo, a, b);

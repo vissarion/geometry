@@ -51,7 +51,7 @@ inline expected_pusher expected(std::string const& ex)
 struct equal_turn
 {
     equal_turn(std::string const& s) : turn_ptr(&s) {}
-    
+
     template <typename T>
     bool operator()(T const& t) const
     {
@@ -168,12 +168,11 @@ void check_geometry_range(Geometry1 const& g1,
                           Expected const& expected,
                           Strategy const& strategy)
 {
-    typedef bg::detail::no_rescale_policy robust_policy_type;
     typedef typename bg::point_type<Geometry2>::type point_type;
 
-    typedef typename bg::detail::segment_ratio_type
+    typedef typename bg::segment_ratio_type
         <
-            point_type, robust_policy_type
+            point_type
         >::type segment_ratio_type;
 
     typedef bg::detail::overlay::turn_info
@@ -193,8 +192,7 @@ void check_geometry_range(Geometry1 const& g1,
 
     std::vector<turn_info> detected;
     interrupt_policy_t interrupt_policy;
-    robust_policy_type robust_policy;
-    
+
     // Don't switch the geometries
     typedef bg::detail::get_turns::get_turn_info_type
         <
@@ -206,7 +204,7 @@ void check_geometry_range(Geometry1 const& g1,
             typename bg::tag<Geometry1>::type, typename bg::tag<Geometry2>::type,
             Geometry1, Geometry2, false, false,
             turn_policy_t
-        >::apply(0, g1, 1, g2, strategy, robust_policy, detected, interrupt_policy);
+        >::apply(0, g1, 1, g2, strategy, detected, interrupt_policy);
 
     bool ok = boost::size(expected) == detected.size();
 

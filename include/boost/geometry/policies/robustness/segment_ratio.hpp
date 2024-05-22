@@ -347,6 +347,11 @@ private :
     }
 };
 
+template <typename Point>
+struct segment_ratio_type
+{
+    using type = segment_ratio<typename geometry::coordinate_type<Point>::type>;
+};
 
 }} // namespace boost::geometry
 

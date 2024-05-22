@@ -54,8 +54,6 @@
 #  include <boost/geometry/io/svg/svg_mapper.hpp>
 #endif
 
-#include <boost/geometry/policies/robustness/get_rescale_policy.hpp>
-
 #include <boost/geometry/strategies/strategies.hpp>
 
 #include <algorithms/overlay/overlay_cases.hpp>
@@ -145,16 +143,11 @@ struct test_traverse
             >::type strategy;
 
         typedef typename bg::point_type<G2>::type point_type;
-        typedef typename bg::rescale_policy_type<point_type>::type
-            rescale_policy_type;
-
-        rescale_policy_type rescale_policy
-                = bg::get_rescale_policy<rescale_policy_type>(g1, g2);
 
         typedef bg::detail::overlay::traversal_turn_info
         <
             point_type,
-            typename bg::detail::segment_ratio_type<point_type, rescale_policy_type>::type
+            typename bg::detail::segment_ratio_type<point_type>::type
         > turn_info;
         std::vector<turn_info> turns;
 

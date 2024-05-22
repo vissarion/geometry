@@ -28,7 +28,6 @@
 #include <boost/geometry/algorithms/intersects.hpp>
 //#include <boost/geometry/algorithms/detail/overlay/self_intersection_points.hpp>
 #include <boost/geometry/algorithms/detail/overlay/self_turn_points.hpp>
-#include <boost/geometry/policies/robustness/get_rescale_policy.hpp>
 
 #include <boost/geometry/geometries/point_xy.hpp>
 #include <boost/geometry/geometries/linestring.hpp>
@@ -54,24 +53,21 @@ static void test_self_intersection_points(std::string const& case_id,
             double /*precision*/ = 0.001)
 {
     typedef typename bg::point_type<Geometry>::type point_type;
-    //typedef typename bg::rescale_policy_type<point_type>::type rescale_policy_type;
     typedef typename bg::strategies::relate::services::default_strategy
         <
             Geometry, Geometry
         >::type strategy_type;
-    typedef bg::detail::no_rescale_policy rescale_policy_type;
     typedef bg::detail::overlay::turn_info<point_type> turn_info;
 
     std::vector<turn_info> turns;
 
     strategy_type strategy;
-    rescale_policy_type rescale_policy;
 
     bg::detail::self_get_turn_points::no_interrupt_policy policy;
     bg::self_turns
         <
             bg::detail::overlay::assign_null_policy
-        >(geometry, strategy, rescale_policy, turns, policy);
+        >(geometry, strategy, turns, policy);
 
 
     typedef typename bg::coordinate_type<Geometry>::type ct;
@@ -91,12 +87,6 @@ static void test_self_intersection_points(std::string const& case_id,
 
     BOOST_CHECK_EQUAL(expected_count, n);
 
-    typedef typename bg::rescale_policy_type<point_type>::type
-        default_rescale_policy_type;
-
-    default_rescale_policy_type default_robust_policy
-        = bg::get_rescale_policy<default_rescale_policy_type>(geometry, strategy);
-
     if (expected_count > 0)
     {
         BOOST_CHECK_EQUAL(bg::intersects(geometry), true);
@@ -105,7 +95,7 @@ static void test_self_intersection_points(std::string const& case_id,
         {
             try
             {
-                bg::detail::overlay::has_self_intersections(geometry, strategy, default_robust_policy);
+                bg::detail::overlay::has_self_intersections(geometry, strategy);
                 BOOST_CHECK_MESSAGE(false, "Case " << case_id << " there are no self-intersections detected!");
             }
             catch(...)
@@ -119,7 +109,7 @@ static void test_self_intersection_points(std::string const& case_id,
         {
             try
             {
-                bg::detail::overlay::has_self_intersections(geometry, strategy, default_robust_policy);
+                bg::detail::overlay::has_self_intersections(geometry, strategy);
             }
             catch(...)
             {

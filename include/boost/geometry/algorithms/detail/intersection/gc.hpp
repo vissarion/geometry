@@ -216,22 +216,12 @@ private:
     template <typename Out, typename Strategy, std::enable_if_t<! util::is_pointlike<Out>::value, int> = 0>
     static void merge_two(Out const& g1, Out const& g2, Out& out, Strategy const& strategy)
     {
-        using rescale_policy_type = typename geometry::rescale_overlay_policy_type
-            <
-                Out, Out, typename Strategy::cs_tag
-            >::type;
-
-        rescale_policy_type robust_policy
-            = geometry::get_rescale_policy<rescale_policy_type>(
-                    g1, g2, strategy);
-
         geometry::dispatch::intersection_insert
             <
                 Out, Out, typename boost::range_value<Out>::type,
                 overlay_union
             >::apply(g1,
                      g2,
-                     robust_policy,
                      geometry::range::back_inserter(out),
                      strategy);
     }
@@ -244,7 +234,6 @@ private:
                 Out, Out, typename boost::range_value<Out>::type
             >::apply(g1,
                      g2,
-                     0, // dummy robust policy
                      geometry::range::back_inserter(out),
                      strategy);
     }

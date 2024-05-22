@@ -138,8 +138,8 @@ struct base_turn_handler
         BOOST_GEOMETRY_ASSERT(index < info.count);
 
         geometry::convert(info.intersections[index], ti.point);
-        ti.operations[0].fraction = info.fractions[index].robust_ra;
-        ti.operations[1].fraction = info.fractions[index].robust_rb;
+        ti.operations[0].fraction = info.fractions[index].ra;
+        ti.operations[1].fraction = info.fractions[index].rb;
     }
 
     template <typename TurnInfo, typename IntersectionInfo, typename DirInfo>
@@ -170,8 +170,8 @@ struct base_turn_handler
             }
             else
             {
-                ti.operations[i].fraction = i == 0 ? info.fractions[index].robust_ra
-                                                   : info.fractions[index].robust_rb;
+                ti.operations[i].fraction = i == 0 ? info.fractions[index].ra
+                                                   : info.fractions[index].rb;
             }
         }
     }
@@ -179,7 +179,7 @@ struct base_turn_handler
     template <typename IntersectionInfo>
     static inline unsigned int non_opposite_to_index(IntersectionInfo const& info)
     {
-        return info.fractions[0].robust_rb < info.fractions[1].robust_rb
+        return info.fractions[0].rb < info.fractions[1].rb
             ? 1 : 0;
     }
 
@@ -1394,7 +1394,6 @@ struct get_turn_info
         typename UniqueSubRange2,
         typename TurnInfo,
         typename UmbrellaStrategy,
-        typename RobustPolicy,
         typename OutputIterator
     >
     static inline OutputIterator apply(
@@ -1402,18 +1401,16 @@ struct get_turn_info
                 UniqueSubRange2 const& range_q,
                 TurnInfo const& tp_model,
                 UmbrellaStrategy const& umbrella_strategy,
-                RobustPolicy const& robust_policy,
                 OutputIterator out)
     {
         typedef intersection_info
             <
                 UniqueSubRange1, UniqueSubRange2,
                 typename TurnInfo::point_type,
-                UmbrellaStrategy,
-                RobustPolicy
+                UmbrellaStrategy
             > inters_info;
 
-        inters_info inters(range_p, range_q, umbrella_strategy, robust_policy);
+        inters_info inters(range_p, range_q, umbrella_strategy);
 
         char const method = inters.d_info().how;
 

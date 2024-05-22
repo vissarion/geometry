@@ -23,7 +23,6 @@
 #include <boost/geometry/algorithms/detail/assign_values.hpp>
 #include <boost/geometry/algorithms/detail/assign_indexed_point.hpp>
 #include <boost/geometry/algorithms/detail/equals/point_point.hpp>
-#include <boost/geometry/algorithms/detail/recalculate.hpp>
 
 #include <boost/geometry/arithmetic/arithmetic.hpp>
 #include <boost/geometry/arithmetic/cross_product.hpp>
@@ -133,8 +132,8 @@ struct ecef_segments
         }
 
         Vector3d intersection_point;
-        SegmentRatio robust_ra;
-        SegmentRatio robust_rb;
+        SegmentRatio ra;
+        SegmentRatio rb;
         intersection_point_flag ip_flag;
 
         CalcPolicy const& calc_policy;
@@ -424,8 +423,8 @@ struct ecef_segments
                         vec3d_t
                     > sinfo(calc_policy);
 
-                sinfo.robust_ra.assign(dist_a1_i1, dist_a1_a2);
-                sinfo.robust_rb.assign(dist_b1_i1, dist_b1_b2);
+                sinfo.ra.assign(dist_a1_i1, dist_a1_a2);
+                sinfo.rb.assign(dist_b1_i1, dist_b1_b2);
                 sinfo.intersection_point = i1;
                 sinfo.ip_flag = ip_flag;
 

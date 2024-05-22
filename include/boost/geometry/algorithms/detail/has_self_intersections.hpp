@@ -26,9 +26,6 @@
 #include <boost/geometry/algorithms/detail/overlay/self_turn_points.hpp>
 
 #include <boost/geometry/policies/disjoint_interrupt_policy.hpp>
-#include <boost/geometry/policies/robustness/robust_point_type.hpp>
-#include <boost/geometry/policies/robustness/segment_ratio_type.hpp>
-#include <boost/geometry/policies/robustness/get_rescale_policy.hpp>
 
 #ifdef BOOST_GEOMETRY_DEBUG_HAS_SELF_INTERSECTIONS
 #  include <boost/geometry/algorithms/detail/overlay/debug_turn_info.hpp>
@@ -67,17 +64,16 @@ namespace detail { namespace overlay
 {
 
 
-template <typename Geometry, typename Strategy, typename RobustPolicy>
+template <typename Geometry, typename Strategy>
 inline bool has_self_intersections(Geometry const& geometry,
         Strategy const& strategy,
-        RobustPolicy const& robust_policy,
         bool throw_on_self_intersection = true)
 {
     typedef typename point_type<Geometry>::type point_type;
     typedef turn_info
     <
         point_type,
-        typename segment_ratio_type<point_type, RobustPolicy>::type
+        typename segment_ratio_type<point_type>::type
     > turn_info;
     std::deque<turn_info> turns;
     detail::disjoint::disjoint_interrupt_policy policy;
@@ -86,7 +82,7 @@ inline bool has_self_intersections(Geometry const& geometry,
         <
             false,
             detail::overlay::assign_null_policy
-        >(geometry, strategy, robust_policy, turns, policy, 0, false);
+        >(geometry, strategy, turns, policy, 0, false);
 
 #ifdef BOOST_GEOMETRY_DEBUG_HAS_SELF_INTERSECTIONS
     bool first = true;

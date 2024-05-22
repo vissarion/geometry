@@ -15,8 +15,6 @@
 
 #include <boost/geometry/core/access.hpp>
 #include <boost/geometry/core/coordinate_type.hpp>
-#include <boost/geometry/algorithms/detail/recalculate.hpp>
-#include <boost/geometry/policies/robustness/robust_point_type.hpp>
 
 // For spherical/geographic longitudes covered_by point/box
 #include <boost/geometry/strategies/cartesian/point_in_box.hpp>
@@ -121,41 +119,28 @@ template
 <
     std::size_t Dimension,
     typename Point,
-    typename Box,
-    typename RobustPolicy
+    typename Box
 >
 inline bool preceding(int dir,
                       Point const& point,
                       Box const& point_box,
-                      Box const& other_box,
-                      RobustPolicy const& robust_policy)
+                      Box const& other_box)
 {
-    using box_point_type = typename geometry::point_type<Box>::type;
-    typename geometry::robust_point_type<box_point_type, RobustPolicy>::type robust_point;
-    geometry::recalculate(robust_point, point, robust_policy);
-
-    // After recalculate() to prevent warning: 'robust_point' may be used uninitialized
-    assert_coordinate_type_equal(robust_point, point_box);
-
-    return preceding_check<Dimension, Box>::apply(dir, robust_point,
-                                                    point_box,
-                                                    other_box);
+    return preceding_check<Dimension, Box>::apply(dir, point, point_box, other_box);
 }
 
 template
 <
     std::size_t Dimension,
     typename Point,
-    typename Box,
-    typename RobustPolicy
+    typename Box
 >
 inline bool exceeding(int dir,
                       Point const& point,
                       Box const& point_box,
-                      Box const& other_box,
-                      RobustPolicy const& robust_policy)
+                      Box const& other_box)
 {
-    return preceding<Dimension>(-dir, point, point_box, other_box, robust_policy);
+    return preceding<Dimension>(-dir, point, point_box, other_box);
 }
 
 

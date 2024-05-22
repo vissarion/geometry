@@ -28,7 +28,6 @@
 
 #include <boost/geometry/algorithms/detail/overlay/self_turn_points.hpp>
 #include <boost/geometry/policies/disjoint_interrupt_policy.hpp>
-#include <boost/geometry/policies/robustness/no_rescale_policy.hpp>
 
 #include <boost/geometry/strategies/relate/services.hpp>
 
@@ -69,7 +68,7 @@ struct self_intersects
         detail::self_get_turn_points::get_turns
             <
                 false, turn_policy
-            >::apply(geometry, strategy, detail::no_rescale_policy(), turns, policy, 0, true);
+            >::apply(geometry, strategy, turns, policy, 0, true);
         return policy.has_intersections;
     }
 };

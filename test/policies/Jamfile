@@ -12,5 +12,4 @@
 test-suite boost-geometry-policies
     :
     [ run compare.cpp        : : : : policies_compare ]
-    [ run rescale_policy.cpp : : : : policies_rescale_policy ]
     ;

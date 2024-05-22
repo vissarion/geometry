@@ -145,17 +145,6 @@ void test_union(std::string const& caseid, G1 const& g1, G2 const& g2,
     }
 #endif
 
-
-
-#if defined(BOOST_GEOMETRY_DEBUG_ROBUSTNESS)
-    std::cout << "*** case: " << caseid
-        << " area: " << area
-        << " points: " << n
-        << " polygons: " << boost::size(clip)
-        << " holes: " << holes
-        << std::endl;
-#endif
-
     if (! expected_count.empty())
     {
         BOOST_CHECK_MESSAGE(expected_count.has(clip.size()),

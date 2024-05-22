@@ -31,8 +31,6 @@
 #include <boost/geometry/io/wkt/read.hpp>
 #include <boost/geometry/io/wkt/write.hpp>
 
-#include <boost/geometry/policies/robustness/get_rescale_policy.hpp>
-
 #include <boost/geometry/strategies/strategies.hpp>
 
 
