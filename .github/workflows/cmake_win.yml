@@ -1,0 +1,97 @@
+##############################################################################
+# GitHub Actions Workflow for Boost.Geometry to build tests with cmake
+#
+# Copyright (c) 2024 Oracle and/or its affiliates.
+# Contributed and/or modified by Vissarion Fysikopoulos, on behalf of Oracle
+#
+# Use, modification and distribution is subject to the Boost Software License,
+# Version 1.0. (See accompanying file LICENSE_1_0.txt or copy at
+# http://www.boost.org/LICENSE_1_0.txt)
+##############################################################################
+name: cmake
+
+on: [push]
+
+jobs:
+  msvc:
+    name: ${{ matrix.b2_toolset }}
+    runs-on: windows-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        b2_toolset: [
+          msvc-14.3,
+          msvc-15,
+          msvc-16,
+        ]
+
+        include:
+          - b2_toolset: msvc-14.3
+            b2_cxxstd: 14,17,2a
+          - b2_toolset: msvc-15
+            b2_cxxstd: 14,17,2a
+          - b2_toolset: msvc-16
+            b2_cxxstd: 14,17,2a
+
+
+    steps:
+      - name: Set up environment
+        id: setenv
+        shell: pwsh
+        run: |
+          if ("$env:GITHUB_REF" -contains "master") {
+            echo "BOOST_BRANCH=master" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          } else {
+            echo "BOOST_BRANCH=develop" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          }
+          echo "BOOST_SELF=$((Get-Item $env:GITHUB_WORKSPACE).BaseName)" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "BOOST_ROOT=$env:GITHUB_WORKSPACE\boost-root" | Out-File -FilePath $env:GITHUB_ENV -Encoding utf8 -Append
+          echo "boost_self=$((Get-Item $env:GITHUB_WORKSPACE).BaseName)" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+          echo "boost_root=$env:GITHUB_WORKSPACE\boost-root" | Out-File -FilePath $Env:GITHUB_OUTPUT -Encoding utf8 -Append
+
+      - name: Clone boostorg/boost
+        shell: pwsh
+        run: |
+          git clone -b $env:BOOST_BRANCH --depth 1 https://github.com/boostorg/boost.git $env:BOOST_ROOT
+          cd $env:BOOST_ROOT
+          git submodule update -q --init libs/headers
+          git submodule update -q --init tools/boost_install
+          git submodule update -q --init tools/boostdep
+          git submodule update -q --init tools/build
+          New-Item -Path libs\$env:BOOST_SELF -ItemType Directory -ErrorAction SilentlyContinue
+
+      - uses: actions/checkout@v2
+        with:
+          path: ${{ steps.setenv.outputs.boost_root }}/libs/${{ steps.setenv.outputs.boost_self }}
+
+      - name: Run tools/boostdep/depinst/depinst.py
+        shell: pwsh
+        run: |
+          cd $env:BOOST_ROOT
+          python tools/boostdep/depinst/depinst.py --include benchmark --include example --include examples --include tools $env:BOOST_SELF
+
+      - name: Bootstrap boostorg/boost
+        shell: pwsh
+        run: |
+          cd $env:BOOST_ROOT
+          .\bootstrap.bat --with-toolset=msvc
+          .\b2 headers
+          .\b2 -v
+
+      - name: Build tests with cmake
+        shell: pwsh
+        run: |
+          mkdir $env:BOOST_ROOT/libs/geometry/__build
+          cd $env:BOOST_ROOT/libs/geometry/__build
+          Remove-Item -Recurse -Force -Path *
+          cmake -DBUILD_TESTING=ON -DCMAKE_CXX_FLAGS=/bigobj -S .. -B .
+          cmake --build . --target test/tests
+
+
+      - name: Run tests
+        shell: pwsh
+        run: |
+          cd $env:BOOST_ROOT/libs/geometry/__build
+          ctest --output-on-failure --no-tests=error -C Release
+
