@@ -82,18 +82,13 @@ struct promote_to_larger
 {
     // if promotion fails, keep the number T
     // (and cross fingers that overflow will not occur)
-    typedef T type;
+    using type = T;
 };
 
 template <typename T, std::size_t MinSize, typename CurrentT, typename ...Ts>
 struct promote_to_larger<T, MinSize, CurrentT, Ts...>
 {
-    typedef std::conditional_t
-        <
-            (bit_size<CurrentT>::value >= MinSize),
-            CurrentT,
-            typename promote_to_larger<T, MinSize, Ts...>::type
-        > type;
+    using type = int;
 };
 
 template <typename ...Ts>
@@ -290,7 +285,7 @@ class promote_integral
     >
 {
 public:
-    typedef T type;
+    using type = T;
 };
 
 

@@ -96,27 +96,18 @@ class WithinStrategyPolygonal
     typedef typename geometry::point_type<Polygonal>::type point_of_segment;
 
     // 0)
-    typedef typename concepts::detail::relate_strategy_dispatch
-        <
-            Point, Polygonal, Strategy
-        >::type strategy_type;
+    using strategy_type = typename concepts::detail::relate_strategy_dispatch<Point, Polygonal, Strategy>::type;
 
     // 1) must define state_type
-    typedef typename strategy_type::state_type state_type;
+    using state_type = typename strategy_type::state_type;
 
     struct checker
     {
         template <typename ApplyMethod, typename ResultMethod>
         static void apply(ApplyMethod, ResultMethod)
         {
-            typedef typename parameter_type_of
-                <
-                    ApplyMethod, 0
-                >::type point_type;
-            typedef typename parameter_type_of
-                <
-                    ApplyMethod, 1
-                >::type segment_point_type;
+            using point_type = int;
+            using segment_point_type = int;
 
             // CHECK: apply-arguments should both fulfill point concept
             BOOST_CONCEPT_ASSERT
@@ -179,24 +170,15 @@ class WithinStrategyPointBox
 #ifndef DOXYGEN_NO_CONCEPT_MEMBERS
 
     // 0)
-    typedef typename concepts::detail::within_strategy_dispatch
-        <
-            Point, Box, Strategy
-        >::type strategy_type;
+    using strategy_type = typename concepts::detail::within_strategy_dispatch<Point, Box, Strategy>::type;
 
     struct checker
     {
         template <typename ApplyMethod>
         static void apply(ApplyMethod)
         {
-            typedef typename parameter_type_of
-                <
-                    ApplyMethod, 0
-                >::type point_type;
-            typedef typename parameter_type_of
-                <
-                    ApplyMethod, 1
-                >::type box_type;
+            using point_type = int;
+            using box_type = int;
 
             // CHECK: apply-arguments should fulfill point/box concept
             BOOST_CONCEPT_ASSERT
@@ -258,14 +240,8 @@ class WithinStrategyBoxBox
         template <typename ApplyMethod>
         static void apply(ApplyMethod const&)
         {
-            typedef typename parameter_type_of
-                <
-                    ApplyMethod, 0
-                >::type box_type1;
-            typedef typename parameter_type_of
-                <
-                    ApplyMethod, 1
-                >::type box_type2;
+            using box_type1 = int;
+            using box_type2 = int;
 
             // CHECK: apply-arguments should both fulfill box concept
             BOOST_CONCEPT_ASSERT

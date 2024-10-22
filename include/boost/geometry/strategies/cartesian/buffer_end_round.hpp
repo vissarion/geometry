@@ -91,7 +91,7 @@ private :
     template <typename T, typename P1, typename P2>
     static inline T calculate_angle(P1 const& from_point, P2 const& to_point)
     {
-        typedef P1 vector_type;
+        using vector_type = P1;
         vector_type v = from_point;
         geometry::subtract_point(v, to_point);
         return atan2(geometry::get<1>(v), geometry::get<0>(v));
@@ -118,7 +118,7 @@ public :
                 RangeOut& range_out) const
     {
         boost::ignore_unused(perp_left_point);
-        typedef typename coordinate_type<Point>::type coordinate_type;
+        using coordinate_type = int;
 
         typedef typename geometry::select_most_precise
         <

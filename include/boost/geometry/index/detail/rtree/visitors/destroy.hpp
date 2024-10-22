@@ -29,12 +29,12 @@ class destroy
     : public MembersHolder::visitor
 {
 public:
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
-    typedef typename MembersHolder::allocators_type allocators_type;
-    typedef typename MembersHolder::node_pointer node_pointer;
+    using allocators_type = typename MembersHolder::allocators_type;
+    using node_pointer = typename MembersHolder::node_pointer;
 
     inline destroy(node_pointer node, allocators_type & allocators)
         : m_current_node(node)

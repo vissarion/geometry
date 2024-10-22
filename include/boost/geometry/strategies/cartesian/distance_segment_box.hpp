@@ -45,7 +45,7 @@ struct cartesian_segment_box
           >
     {};
 
-    typedef cartesian_tag cs_tag;
+    using cs_tag = int;
 
     template
     <
@@ -91,7 +91,7 @@ namespace services
 template <typename CalculationType, typename Strategy>
 struct tag<cartesian_segment_box<CalculationType, Strategy> >
 {
-    typedef strategy_tag_distance_segment_box type;
+    using type = int;
 };
 
 template <typename CalculationType, typename Strategy, typename PS, typename PB>
@@ -104,21 +104,14 @@ struct comparable_type<cartesian_segment_box<CalculationType, Strategy> >
 {
     // Define a cartesian_segment_box strategy with its underlying point-point
     // strategy being comparable
-    typedef cartesian_segment_box
-        <
-            CalculationType,
-            typename comparable_type<Strategy>::type
-        > type;
+    using type = int;
 };
 
 
 template <typename CalculationType, typename Strategy>
 struct get_comparable<cartesian_segment_box<CalculationType, Strategy> >
 {
-    typedef typename comparable_type
-        <
-            cartesian_segment_box<CalculationType, Strategy>
-        >::type comparable_type;
+    using comparable_type = int;
 public :
     static inline comparable_type apply(cartesian_segment_box<CalculationType, Strategy> const& )
     {
@@ -130,15 +123,7 @@ template <typename CalculationType, typename Strategy, typename PS, typename PB>
 struct result_from_distance<cartesian_segment_box<CalculationType, Strategy>, PS, PB>
 {
 private :
-    typedef typename return_type<
-                                    cartesian_segment_box
-                                    <
-                                        CalculationType,
-                                        Strategy
-                                    >,
-                                    PS,
-                                    PB
-                                 >::type return_type;
+    using return_type = int;
 public :
     template <typename T>
     static inline return_type apply(cartesian_segment_box<CalculationType,
@@ -157,7 +142,7 @@ struct default_strategy
         cartesian_tag, cartesian_tag
     >
 {
-    typedef cartesian_segment_box<> type;
+    using type = int;
 };
 
 template <typename Box, typename Segment>

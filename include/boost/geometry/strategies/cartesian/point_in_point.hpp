@@ -76,7 +76,7 @@ namespace strategy { namespace within
 
 struct cartesian_point_point
 {
-    typedef cartesian_tag cs_tag;
+    using cs_tag = int;
 
     template <typename Point1, typename Point2>
     static inline bool apply(Point1 const& point1, Point2 const& point2)
@@ -96,7 +96,7 @@ namespace services
 template <typename PointLike1, typename PointLike2, typename Tag1, typename Tag2>
 struct default_strategy<PointLike1, PointLike2, Tag1, Tag2, pointlike_tag, pointlike_tag, cartesian_tag, cartesian_tag>
 {
-    typedef strategy::within::cartesian_point_point type;
+    using type = strategy::within::cartesian_point_point;
 };
 
 } // namespace services
@@ -113,7 +113,7 @@ namespace strategy { namespace covered_by { namespace services
 template <typename PointLike1, typename PointLike2, typename Tag1, typename Tag2>
 struct default_strategy<PointLike1, PointLike2, Tag1, Tag2, pointlike_tag, pointlike_tag, cartesian_tag, cartesian_tag>
 {
-    typedef strategy::within::cartesian_point_point type;
+    using type = strategy::within::cartesian_point_point;
 };
 
 }}} // namespace strategy::covered_by::services

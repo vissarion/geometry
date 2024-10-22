@@ -60,7 +60,7 @@ public :
     {
         friend class precise_cartesian;
 
-        typedef typename result_type<Geometry>::type return_type;
+        using return_type = typename result_type<Geometry>::type;
 
     public:
         inline state()
@@ -87,7 +87,7 @@ public :
                              PointOfSegment const& p2,
                              state<Geometry>& st)
     {
-        typedef typename state<Geometry>::return_type return_type;
+        using return_type = typename state<Geometry>::return_type;
 
         auto const det = (return_type(get<0>(p1)) + return_type(get<0>(p2)))
                 * (return_type(get<1>(p1)) - return_type(get<1>(p2)));

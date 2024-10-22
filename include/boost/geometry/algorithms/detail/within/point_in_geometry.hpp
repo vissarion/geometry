@@ -83,7 +83,7 @@ struct point_in_geometry<Point2, point_tag>
     template <typename Point1, typename Strategy> static inline
     int apply(Point1 const& point1, Point2 const& point2, Strategy const& strategy)
     {
-        typedef decltype(strategy.relate(point1, point2)) strategy_type;
+        using strategy_type = decltype(strategy.relate(point1, point2));
         return strategy_type::apply(point1, point2) ? 1 : -1;
     }
 };

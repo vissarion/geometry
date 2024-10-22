@@ -45,10 +45,7 @@ template <typename Value, typename Parameters, typename Box, typename Allocators
 struct weak_leaf<Value, Parameters, Box, Allocators, node_weak_static_tag>
     : public weak_node<Value, Parameters, Box, Allocators, node_weak_static_tag>
 {
-    typedef detail::varray<
-        Value,
-        Parameters::max_elements + 1
-    > elements_type;
+    using elements_type = int;
 
     template <typename Alloc>
     inline weak_leaf(Alloc const&) {}
@@ -61,25 +58,25 @@ struct weak_leaf<Value, Parameters, Box, Allocators, node_weak_static_tag>
 template <typename Value, typename Parameters, typename Box, typename Allocators>
 struct node<Value, Parameters, Box, Allocators, node_weak_static_tag>
 {
-    typedef weak_node<Value, Parameters, Box, Allocators, node_weak_static_tag> type;
+    using type = int;
 };
 
 template <typename Value, typename Parameters, typename Box, typename Allocators>
 struct internal_node<Value, Parameters, Box, Allocators, node_weak_static_tag>
 {
-    typedef weak_internal_node<Value, Parameters, Box, Allocators, node_weak_static_tag> type;
+    using type = int;
 };
 
 template <typename Value, typename Parameters, typename Box, typename Allocators>
 struct leaf<Value, Parameters, Box, Allocators, node_weak_static_tag>
 {
-    typedef weak_leaf<Value, Parameters, Box, Allocators, node_weak_static_tag> type;
+    using type = int;
 };
 
 template <typename Value, typename Parameters, typename Box, typename Allocators, bool IsVisitableConst>
 struct visitor<Value, Parameters, Box, Allocators, node_weak_static_tag, IsVisitableConst>
 {
-    typedef weak_visitor<Value, Parameters, Box, Allocators, node_weak_static_tag, IsVisitableConst> type;
+    using type = int;
 };
 
 // allocators
@@ -89,43 +86,34 @@ class allocators<Allocator, Value, Parameters, Box, node_weak_static_tag>
     : public detail::rtree::internal_node_alloc<Allocator, Value, Parameters, Box, node_weak_static_tag>::type
     , public detail::rtree::leaf_alloc<Allocator, Value, Parameters, Box, node_weak_static_tag>::type
 {
-    typedef detail::rtree::internal_node_alloc
-        <
-            Allocator, Value, Parameters, Box, node_weak_static_tag
-        > internal_node_alloc;
+    using internal_node_alloc = int;
 
-    typedef detail::rtree::leaf_alloc
-        <
-            Allocator, Value, Parameters, Box, node_weak_static_tag
-        > leaf_alloc;
+    using leaf_alloc = int;
 
-    typedef detail::rtree::node_alloc
-        <
-            Allocator, Value, Parameters, Box, node_weak_static_tag
-        > node_alloc;
+    using node_alloc = int;
 
 public:
-    typedef typename internal_node_alloc::type internal_node_allocator_type;
-    typedef typename leaf_alloc::type leaf_allocator_type;
-    typedef typename node_alloc::traits::pointer node_pointer;
+    using internal_node_allocator_type = int;
+    using leaf_allocator_type = int;
+    using node_pointer = int;
 
 private:
     typedef typename boost::container::allocator_traits
         <
             leaf_allocator_type
         >::template rebind_alloc<Value> value_allocator_type;
-    typedef boost::container::allocator_traits<value_allocator_type> value_allocator_traits;
+    using value_allocator_traits = int;
 
 public:
-    typedef Allocator allocator_type;
+    using allocator_type = Allocator;
 
-    typedef Value value_type;
-    typedef typename value_allocator_traits::reference reference;
-    typedef typename value_allocator_traits::const_reference const_reference;
-    typedef typename value_allocator_traits::size_type size_type;
-    typedef typename value_allocator_traits::difference_type difference_type;
-    typedef typename value_allocator_traits::pointer pointer;
-    typedef typename value_allocator_traits::const_pointer const_pointer;
+    using value_type = Value;
+    using reference = int;
+    using const_reference = int;
+    using size_type = int;
+    using difference_type = int;
+    using pointer = int;
+    using const_pointer = int;
 
     inline allocators()
         : internal_node_allocator_type()

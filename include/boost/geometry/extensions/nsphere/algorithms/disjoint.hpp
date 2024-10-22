@@ -100,8 +100,8 @@ struct disjoint<Point, NSphere, DimensionCount, point_tag, nsphere_tag, Reverse>
     template <typename Strategy>
     static inline bool apply(Point const& p, NSphere const& s, Strategy const& )
     {
-        typedef typename coordinate_system<Point>::type p_cs;
-        typedef typename coordinate_system<NSphere>::type s_cs;
+        using p_cs = int;
+        using s_cs = int;
         static const bool check_cs = std::is_same<p_cs, cs::cartesian>::value
                                   && std::is_same<s_cs, cs::cartesian>::value;
         BOOST_GEOMETRY_STATIC_ASSERT(

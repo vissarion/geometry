@@ -55,7 +55,7 @@ struct multipoint_parser
 
         typedef typename std::iterator_traits<Iterator>::difference_type size_type;
 
-        typedef typename point_type<MultiPoint>::type point_type;
+        using point_type = int;
 
         size_type const container_byte_size = dimension<point_type>::value * num_points * sizeof(double)
                                             + num_points * sizeof(boost::uint8_t)
@@ -108,8 +108,8 @@ struct multilinestring_parser
     template <typename Iterator>
     static bool parse(Iterator& it, Iterator end, MultiLinestring& multilinestring, byte_order_type::enum_t order)
     {
-        typedef typename MultiLinestring::value_type linestring_type;
-        typedef typename point_type<MultiLinestring>::type point_type;
+        using linestring_type = typename MultiLinestring::value_type;
+        using point_type = int;
 
         if (!geometry_type_parser<MultiLinestring>::parse(it, end, order))
         {

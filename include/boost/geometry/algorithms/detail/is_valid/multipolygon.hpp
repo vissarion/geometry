@@ -183,10 +183,7 @@ private:
             {
                 has_multi_index index_predicate(multi_index);
 
-                typedef boost::filter_iterator
-                    <
-                        has_multi_index, TurnIterator
-                    > filtered_turn_iterator;
+                using filtered_turn_iterator = int;
 
                 filtered_turn_iterator filtered_turns_first(index_predicate,
                                                             turns_first,

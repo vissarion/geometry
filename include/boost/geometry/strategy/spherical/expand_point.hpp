@@ -202,7 +202,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<point_tag, spherical_equatorial_tag, CalculationType>
 {
-    typedef spherical_point type;
+    using type = spherical_point;
 };
 
 template <typename CalculationType>

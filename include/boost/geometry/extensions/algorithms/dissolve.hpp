@@ -79,7 +79,7 @@ template<typename Geometry>
 class backtrack_for_dissolve
 {
 public :
-    typedef detail::overlay::backtrack_state state_type;
+    using state_type = int;
 
     template
         <
@@ -126,7 +126,7 @@ struct dissolve_ring
     static void adapt_turns(Turns& turns)
     {
         typedef typename boost::range_value<Turns>::type turn_type;
-        typedef typename turn_type::turn_operation_type turn_operation_type;
+        using turn_operation_type = int;
 
         for (typename Turns::iterator it = turns.begin();
              it != turns.end(); ++it)
@@ -274,7 +274,7 @@ struct dissolve_ring
 template <typename Polygon, typename GeometryOut, bool Reverse>
 struct dissolve_polygon
 {
-    typedef typename ring_type<Polygon>::type ring_type;
+    using ring_type = int;
 
     template
     <

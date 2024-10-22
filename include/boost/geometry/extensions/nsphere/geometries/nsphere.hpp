@@ -51,8 +51,8 @@ class nsphere
 
 public:
 
-    typedef T radius_type;
-    typedef typename coordinate_type<P>::type coordinate_type;
+    using radius_type = T;
+    using coordinate_type = int;
 
     nsphere()
         : m_radius(0)
@@ -89,25 +89,25 @@ namespace traits
 template <typename Point, typename RadiusType>
 struct tag<model::nsphere<Point, RadiusType> >
 {
-    typedef nsphere_tag type;
+    using type = int;
 };
 
 template <typename Point, typename RadiusType>
 struct point_type<model::nsphere<Point, RadiusType> >
 {
-    typedef Point type;
+    using type = Point;
 };
 
 template <typename Point, typename RadiusType>
 struct radius_type<model::nsphere<Point, RadiusType> >
 {
-    typedef RadiusType type;
+    using type = RadiusType;
 };
 
 template <typename Point, typename CoordinateType, std::size_t Dimension>
 struct access<model::nsphere<Point, CoordinateType>,  Dimension>
 {
-    typedef model::nsphere<Point, CoordinateType> nsphere_type;
+    using nsphere_type = model::nsphere<Point, CoordinateType>;
 
     static inline CoordinateType get(nsphere_type const& s)
     {
@@ -123,7 +123,7 @@ struct access<model::nsphere<Point, CoordinateType>,  Dimension>
 template <typename Point, typename RadiusType>
 struct radius_access<model::nsphere<Point, RadiusType>, 0>
 {
-    typedef model::nsphere<Point, RadiusType> nsphere_type;
+    using nsphere_type = model::nsphere<Point, RadiusType>;
 
     static inline RadiusType get(nsphere_type const& s)
     {

@@ -67,7 +67,7 @@ namespace traits
 template<>
 struct cs_tag<cs::ecef>
 {
-    typedef cartesian_tag type;
+    using type = int;
 };
 
 template <std::size_t C>

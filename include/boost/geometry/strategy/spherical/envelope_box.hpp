@@ -34,7 +34,7 @@ namespace strategy { namespace envelope
 struct spherical_box
     : geometry::detail::envelope::envelope_box_on_spheroid
 {
-    typedef spherical_tag cs_tag;
+    using cs_tag = int;
 };
 
 
@@ -46,7 +46,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<box_tag, spherical_equatorial_tag, CalculationType>
 {
-    typedef strategy::envelope::spherical_box type;
+    using type = strategy::envelope::spherical_box;
 };
 
 template <typename CalculationType>

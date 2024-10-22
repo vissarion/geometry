@@ -208,14 +208,14 @@ public:
         : services::return_type<Strategy, Point, point_type_t<Box>>
     {};
 
-    typedef typename Strategy::radius_type radius_type;
+    using radius_type = typename Strategy::radius_type;
 
     // strategy getters
 
     // point-segment strategy getters
     struct distance_ps_strategy
     {
-        typedef cross_track<CalculationType, Strategy> type;
+        using type = int;
     };
 
     typedef typename strategy::distance::services::comparable_type
@@ -223,13 +223,7 @@ public:
             Strategy
         >::type pp_comparable_strategy;
 
-    typedef std::conditional_t
-        <
-            std::is_same
-                <
-                    pp_comparable_strategy,
-                    Strategy
-                >::value,
+    using value = int,
             typename strategy::distance::services::comparable_type
                 <
                     typename distance_ps_strategy::type
@@ -270,7 +264,7 @@ public:
                     >)
             );
 #endif
-        typedef typename return_type<Point, Box>::type return_type;
+        using return_type = typename return_type<Point, Box>::type;
         return details::cross_track_point_box_generic
                     <return_type>::apply(point, box,
                                          ps_strategy_type(m_strategy));
@@ -294,7 +288,7 @@ namespace services
 template <typename CalculationType, typename Strategy>
 struct tag<cross_track_point_box<CalculationType, Strategy> >
 {
-    typedef strategy_tag_distance_point_box type;
+    using type = int;
 };
 
 
@@ -310,18 +304,15 @@ struct return_type<cross_track_point_box<CalculationType, Strategy>, P, Box>
 template <typename CalculationType, typename Strategy>
 struct comparable_type<cross_track_point_box<CalculationType, Strategy> >
 {
-    typedef cross_track_point_box
-        <
-            CalculationType, typename comparable_type<Strategy>::type
-        > type;
+    using type = int;
 };
 
 
 template <typename CalculationType, typename Strategy>
 struct get_comparable<cross_track_point_box<CalculationType, Strategy> >
 {
-    typedef cross_track_point_box<CalculationType, Strategy> this_strategy;
-    typedef typename comparable_type<this_strategy>::type comparable_type;
+    using this_strategy = cross_track_point_box<CalculationType, Strategy>;
+    using comparable_type = int;
 
 public:
     static inline comparable_type apply(this_strategy const& strategy)
@@ -338,12 +329,9 @@ struct result_from_distance
     >
 {
 private:
-    typedef cross_track_point_box<CalculationType, Strategy> this_strategy;
+    using this_strategy = cross_track_point_box<CalculationType, Strategy>;
 
-    typedef typename this_strategy::template return_type
-        <
-            P, Box
-        >::type return_type;
+    using return_type = typename this_strategy::template return_type<P, Box>::type;
 
 public:
     template <typename T>

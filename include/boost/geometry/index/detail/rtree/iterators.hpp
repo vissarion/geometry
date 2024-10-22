@@ -24,11 +24,11 @@ namespace boost { namespace geometry { namespace index { namespace detail { name
 template <typename Value, typename Allocators>
 struct end_iterator
 {
-    typedef std::forward_iterator_tag iterator_category;
-    typedef Value value_type;
-    typedef typename Allocators::const_reference reference;
-    typedef typename Allocators::difference_type difference_type;
-    typedef typename Allocators::const_pointer pointer;
+    using iterator_category = int;
+    using value_type = Value;
+    using reference = typename Allocators::const_reference;
+    using difference_type = typename Allocators::difference_type;
+    using pointer = typename Allocators::const_pointer;
 
     reference operator*() const
     {
@@ -65,15 +65,15 @@ struct end_iterator
 template <typename Value, typename Options, typename Translator, typename Box, typename Allocators>
 class iterator
 {
-    typedef visitors::iterator<Value, Options, Translator, Box, Allocators> visitor_type;
-    typedef typename visitor_type::node_pointer node_pointer;
+    using visitor_type = int;
+    using node_pointer = int;
 
 public:
-    typedef std::forward_iterator_tag iterator_category;
-    typedef Value value_type;
-    typedef typename Allocators::const_reference reference;
-    typedef typename Allocators::difference_type difference_type;
-    typedef typename Allocators::const_pointer pointer;
+    using iterator_category = int;
+    using value_type = Value;
+    using reference = typename Allocators::const_reference;
+    using difference_type = typename Allocators::difference_type;
+    using pointer = typename Allocators::const_pointer;
 
     inline iterator()
     {}

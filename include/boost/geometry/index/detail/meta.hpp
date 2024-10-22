@@ -45,32 +45,25 @@ namespace boost { namespace geometry { namespace index { namespace detail {
 template <typename T, typename Value, typename Indexable, typename ResultType, int Ver>
 struct convertible_type_impl
 {
-    typedef ResultType type;
+    using type = ResultType;
 };
 
 template <typename T, typename Value, typename Indexable>
 struct convertible_type_impl<T, Value, Indexable, void, 0>
 {
-    typedef std::conditional_t
-        <
-            std::is_convertible<T, Indexable>::value,
-            Indexable,
+    using value = int;
+using Indexable = int,
             void
         > result_type;
 
-    typedef typename convertible_type_impl
-        <
-            T, Value, Indexable, result_type, 1
-        >::type type;
+    using type = int;
 };
 
 template <typename T, typename Value, typename Indexable>
 struct convertible_type_impl<T, Value, Indexable, void, 1>
 {
-    typedef std::conditional_t
-        <
-            std::is_convertible<T, Value>::value,
-            Value,
+    using value = int;
+using Value = int,
             void
         > type;
 };
@@ -78,10 +71,8 @@ struct convertible_type_impl<T, Value, Indexable, void, 1>
 template <typename T, typename Value, typename Indexable>
 struct convertible_type
 {
-    typedef std::conditional_t
-        <
-            std::is_same<T, Value>::value,
-            Value,
+    using value = int;
+using Value = int,
             std::conditional_t
                 <
                     std::is_same<T, Indexable>::value,
@@ -90,10 +81,7 @@ struct convertible_type
                 >
         > result_type;
 
-    typedef typename convertible_type_impl
-        <
-            T, Value, Indexable, result_type, 0
-        >::type type;
+    using type = int;
 };
 
 }}}} // namespace boost::geometry::index::detail

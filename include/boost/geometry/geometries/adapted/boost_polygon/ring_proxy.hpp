@@ -243,14 +243,14 @@ namespace traits
 template <typename Polygon>
 struct tag<adapt::bp::ring_proxy<Polygon> >
 {
-    typedef ring_tag type;
+    using type = int;
 };
 
 
 template <typename Polygon>
 struct rvalue_type<adapt::bp::ring_proxy<Polygon> >
 {
-    typedef adapt::bp::ring_proxy<Polygon> type;
+    using type = adapt::bp::ring_proxy<Polygon>;
 };
 
 template <typename Polygon>
@@ -293,13 +293,13 @@ namespace boost
     template<typename Polygon>
     struct range_mutable_iterator<geometry::adapt::bp::ring_proxy<Polygon> >
     {
-        typedef typename geometry::adapt::bp::ring_proxy<Polygon>::iterator_type type;
+        using type = typename geometry::adapt::bp::ring_proxy<Polygon>::iterator_type;
     };
 
     template<typename Polygon>
     struct range_const_iterator<geometry::adapt::bp::ring_proxy<Polygon> >
     {
-        typedef typename geometry::adapt::bp::ring_proxy<Polygon const>::iterator_type type;
+        using type = typename geometry::adapt::bp::ring_proxy<const Polygon>::iterator_type;
     };
 
 } // namespace boost

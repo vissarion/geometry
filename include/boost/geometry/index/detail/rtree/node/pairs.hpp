@@ -19,8 +19,8 @@ template <typename First, typename Pointer>
 class ptr_pair
 {
 public:
-    typedef First first_type;
-    typedef Pointer second_type;
+    using first_type = First;
+    using second_type = Pointer;
     ptr_pair(First const& f, Pointer s) : first(f), second(s) {}
 
     first_type first;

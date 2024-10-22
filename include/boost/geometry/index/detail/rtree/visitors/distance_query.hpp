@@ -155,31 +155,30 @@ private:
 template <typename MembersHolder, typename Predicates>
 class distance_query
 {
-    typedef typename MembersHolder::value_type value_type;
-    typedef typename MembersHolder::box_type box_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
+    using value_type = typename MembersHolder::value_type;
+    using box_type = typename MembersHolder::box_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
 
     typedef typename index::detail::strategy_type<parameters_type>::type strategy_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
-    typedef index::detail::predicates_element
-        <
-            index::detail::predicates_find_distance<Predicates>::value, Predicates
+    using value = int;
+using Predicates = int
         > nearest_predicate_access;
-    typedef typename nearest_predicate_access::type nearest_predicate_type;
-    typedef typename indexable_type<translator_type>::type indexable_type;
+    using nearest_predicate_type = int;
+    using indexable_type = int;
 
-    typedef index::detail::calculate_distance<nearest_predicate_type, indexable_type, strategy_type, value_tag> calculate_value_distance;
-    typedef index::detail::calculate_distance<nearest_predicate_type, box_type, strategy_type, bounds_tag> calculate_node_distance;
-    typedef typename calculate_value_distance::result_type value_distance_type;
-    typedef typename calculate_node_distance::result_type node_distance_type;
+    using calculate_value_distance = int;
+    using calculate_node_distance = int;
+    using value_distance_type = int;
+    using node_distance_type = int;
 
-    typedef typename MembersHolder::size_type size_type;
-    typedef typename MembersHolder::node_pointer node_pointer;
+    using size_type = typename MembersHolder::size_type;
+    using node_pointer = typename MembersHolder::node_pointer;
 
     using neighbor_data = std::pair<value_distance_type, const value_type *>;
     using neighbors_type = std::vector<neighbor_data>;
@@ -332,36 +331,35 @@ private:
 template <typename MembersHolder, typename Predicates>
 class distance_query_incremental
 {
-    typedef typename MembersHolder::value_type value_type;
-    typedef typename MembersHolder::box_type box_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using value_type = typename MembersHolder::value_type;
+    using box_type = typename MembersHolder::box_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
     typedef typename index::detail::strategy_type<parameters_type>::type strategy_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
-    typedef index::detail::predicates_element
-        <
-            index::detail::predicates_find_distance<Predicates>::value, Predicates
+    using value = int;
+using Predicates = int
         > nearest_predicate_access;
-    typedef typename nearest_predicate_access::type nearest_predicate_type;
-    typedef typename indexable_type<translator_type>::type indexable_type;
+    using nearest_predicate_type = int;
+    using indexable_type = int;
 
-    typedef index::detail::calculate_distance<nearest_predicate_type, indexable_type, strategy_type, value_tag> calculate_value_distance;
-    typedef index::detail::calculate_distance<nearest_predicate_type, box_type, strategy_type, bounds_tag> calculate_node_distance;
-    typedef typename calculate_value_distance::result_type value_distance_type;
-    typedef typename calculate_node_distance::result_type node_distance_type;
+    using calculate_value_distance = int;
+    using calculate_node_distance = int;
+    using value_distance_type = int;
+    using node_distance_type = int;
 
-    typedef typename allocators_type::size_type size_type;
-    typedef typename allocators_type::const_reference const_reference;
-    typedef typename allocators_type::node_pointer node_pointer;
+    using size_type = typename allocators_type::size_type;
+    using const_reference = typename allocators_type::const_reference;
+    using node_pointer = typename allocators_type::node_pointer;
 
     typedef typename rtree::elements_type<internal_node>::type internal_elements;
-    typedef typename internal_elements::const_iterator internal_iterator;
+    using internal_iterator = int;
     typedef typename rtree::elements_type<leaf>::type leaf_elements;
 
     using neighbor_data = std::pair<value_distance_type, const value_type *>;

@@ -39,7 +39,7 @@ namespace celestial
 template<typename DegreeOrRadian>
 struct ecliptic
 {
-    typedef DegreeOrRadian units;
+    using units = DegreeOrRadian;
 };
 
 

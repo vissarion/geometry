@@ -152,7 +152,7 @@ template <typename Value,
 struct equal_to
 {
     /*! \brief The type of result returned by function object. */
-    typedef bool result_type;
+    using result_type = bool;
 
     /*!
     \brief Compare values. If Value is a Geometry geometry::equals() function is used.
@@ -313,7 +313,7 @@ struct equal_to
     : detail::equal_to<Value>
 {
     /*! \brief The type of result returned by function object. */
-    typedef typename detail::equal_to<Value>::result_type result_type;
+    using result_type = int;
 
     /*!
     \brief Compare Values.

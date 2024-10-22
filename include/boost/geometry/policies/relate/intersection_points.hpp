@@ -40,7 +40,7 @@ template
 >
 struct segments_intersection_points
 {
-    typedef ReturnType return_type;
+    using return_type = ReturnType;
 
     template
     <

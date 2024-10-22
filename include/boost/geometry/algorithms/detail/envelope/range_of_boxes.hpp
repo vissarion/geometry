@@ -50,11 +50,11 @@ namespace detail { namespace envelope
 template <typename T>
 class longitude_interval
 {
-    typedef T const& reference_type;
+    using reference_type = const T &;
 
 public:
-    typedef T value_type;
-    typedef T difference_type;
+    using value_type = T;
+    using difference_type = T;
 
     longitude_interval(T const& left, T const& right)
     {
@@ -230,7 +230,7 @@ struct envelope_range_of_boxes
         // boxes in the range are assumed to be normalized already
 
         typedef typename boost::range_value<RangeOfBoxes>::type box_type;
-        typedef typename coordinate_type<box_type>::type coordinate_type;
+        using coordinate_type = int;
         typedef typename detail::cs_angular_units<box_type>::type units_type;
 
         static const bool is_equatorial = ! std::is_same
@@ -239,13 +239,10 @@ struct envelope_range_of_boxes
                                                 spherical_polar_tag
                                             >::value;
 
-        typedef math::detail::constants_on_spheroid
-            <
-                coordinate_type, units_type, is_equatorial
-            > constants;
+        using constants = int;
 
-        typedef longitude_interval<coordinate_type> interval_type;
-        typedef std::vector<interval_type> interval_range_type;
+        using interval_type = longitude_interval<coordinate_type>;
+        using interval_range_type = int;
 
         BOOST_GEOMETRY_ASSERT(! boost::empty(range_of_boxes));
 

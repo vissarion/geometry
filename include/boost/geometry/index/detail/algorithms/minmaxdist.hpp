@@ -38,8 +38,8 @@ struct smallest_for_indexable_dimension<Point, BoxIndexable, box_tag, minmaxdist
 
     inline static result_type apply(Point const& pt, BoxIndexable const& i, result_type const& maxd)
     {
-        typedef typename coordinate_type<Point>::type point_coord_t;
-        typedef typename coordinate_type<BoxIndexable>::type indexable_coord_t;
+        using point_coord_t = int;
+        using indexable_coord_t = int;
 
         point_coord_t pt_c = geometry::get<DimensionIndex>(pt);
         indexable_coord_t ind_c_min = geometry::get<geometry::min_corner, DimensionIndex>(i);

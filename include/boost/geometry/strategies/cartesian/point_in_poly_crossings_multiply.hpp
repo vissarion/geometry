@@ -80,14 +80,14 @@ class crossings_multiply
 
 public :
 
-    typedef flags state_type;
+    using state_type = flags;
 
     template <typename Point, typename PointOfSegment>
     static inline bool apply(Point const& point,
             PointOfSegment const& seg1, PointOfSegment const& seg2,
             flags& state)
     {
-        typedef typename calculation_type<Point, PointOfSegment>::type calc_t;
+        using calc_t = typename calculation_type<Point, PointOfSegment>::type;
 
         calc_t const tx = get<0>(point);
         calc_t const ty = get<1>(point);

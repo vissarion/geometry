@@ -43,10 +43,7 @@ class karney
             strategy::karney, Spheroid, CalculationType
         >
 {
-    typedef strategy::distance::geographic
-        <
-            strategy::karney, Spheroid, CalculationType
-        > base_type;
+    using base_type = int;
 
 public:
     inline karney()
@@ -65,7 +62,7 @@ namespace services
 template <typename Spheroid, typename CalculationType>
 struct tag<karney<Spheroid, CalculationType> >
 {
-    typedef strategy_tag_distance_point_point type;
+    using type = int;
 };
 
 
@@ -78,7 +75,7 @@ struct return_type<karney<Spheroid, CalculationType>, P1, P2>
 template <typename Spheroid, typename CalculationType>
 struct comparable_type<karney<Spheroid, CalculationType> >
 {
-    typedef karney<Spheroid, CalculationType> type;
+    using type = karney<Spheroid, CalculationType>;
 };
 
 

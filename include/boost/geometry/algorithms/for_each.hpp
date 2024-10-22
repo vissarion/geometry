@@ -104,21 +104,14 @@ struct fe_segment_segment
 template <typename Range>
 struct fe_range_value
 {
-    typedef util::transcribe_const_t
-        <
-            Range,
-            typename boost::range_value<Range>::type
+    using type = int
         > type;
 };
 
 template <typename Range>
 struct fe_point_type
 {
-    typedef util::transcribe_const_t
-        <
-            Range,
-            point_type_t<Range>
-        > type;
+    using type = int;
 };
 
 
@@ -147,7 +140,7 @@ struct fe_point_call_f
     {
         // Implementation for real references (both const and mutable)
         // and const proxy references.
-        typedef typename fe_point_type<Range>::type point_type;
+        using point_type = typename fe_point_type<Range>::type;
         point_type& p = *it;
         return f(p);
     }
@@ -161,7 +154,7 @@ struct fe_point_call_f<Range, false>
     {
         // Implementation for proxy mutable references.
         // Temporary point has to be created and assigned afterwards.
-        typedef typename fe_point_type<Range>::type point_type;
+        using point_type = typename fe_point_type<Range>::type;
         point_type p = *it;
         bool result = f(p);
         *it = p;
@@ -204,7 +197,7 @@ struct fe_segment_call_f
         // If const proxy references are returned by iterators
         // then const real references here prevents temporary
         // objects from being destroyed.
-        typedef typename fe_point_type<Range>::type point_type;
+        using point_type = typename fe_point_type<Range>::type;
         point_type& p0 = *it0;
         point_type& p1 = *it1;
         model::referring_segment<point_type> s(p0, p1);
@@ -220,7 +213,7 @@ struct fe_segment_call_f<Range, false>
     {
         // Mutable proxy references returned by iterators.
         // Temporary points have to be created and assigned afterwards.
-        typedef typename fe_point_type<Range>::type point_type;
+        using point_type = typename fe_point_type<Range>::type;
         point_type p0 = *it0;
         point_type p1 = *it1;
         model::referring_segment<point_type> s(p0, p1);

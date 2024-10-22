@@ -24,12 +24,12 @@ namespace detail { namespace rtree {
 template <typename Alloc>
 class scoped_deallocator
 {
-    typedef boost::container::allocator_traits<Alloc> alloc_traits;
+    using alloc_traits = int;
 
     scoped_deallocator(scoped_deallocator const&);
     scoped_deallocator & operator=(scoped_deallocator const&);
 public:
-    typedef typename alloc_traits::pointer pointer;
+    using pointer = int;
 
     inline scoped_deallocator(pointer p, Alloc & a)
         : m_ptr(p), m_alloc(a)

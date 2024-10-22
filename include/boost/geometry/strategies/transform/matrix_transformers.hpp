@@ -114,8 +114,8 @@ template
 class matrix_transformer
 {
 protected :
-    typedef CalculationType ct;
-    typedef boost::qvm::mat<ct, Dimension2 + 1, Dimension1 + 1> matrix_type;
+    using ct = CalculationType;
+    using matrix_type = int;
     matrix_type m_matrix;
 public :
     matrix_type const& matrix() const { return m_matrix; }
@@ -168,7 +168,7 @@ public:
 template <typename CalculationType>
 class matrix_transformer<CalculationType, 2, 2> : public detail::matrix_transformer::matrix_transformer<CalculationType, 2, 2>
 {
-    typedef CalculationType ct;
+    using ct = CalculationType;
 public :
     template<typename Matrix>
     inline matrix_transformer(Matrix const& matrix)
@@ -210,7 +210,7 @@ public :
 template <typename CalculationType>
 class matrix_transformer<CalculationType, 3, 2> : public detail::matrix_transformer::matrix_transformer<CalculationType, 3, 2>
 {
-    typedef CalculationType ct;
+    using ct = CalculationType;
 public :
     template<typename Matrix>
     inline matrix_transformer(Matrix const& matrix)
@@ -256,7 +256,7 @@ public :
 template <typename CalculationType>
 class matrix_transformer<CalculationType, 3, 3> : public detail::matrix_transformer::matrix_transformer<CalculationType, 3, 3>
 {
-    typedef CalculationType ct;
+    using ct = CalculationType;
 public :
     template<typename Matrix>
     inline matrix_transformer(Matrix const& matrix)

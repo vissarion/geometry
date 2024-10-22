@@ -257,7 +257,7 @@ struct linear_linear
     template <typename TurnInfo, std::size_t OpId>
     class turns_analyser
     {
-        typedef typename TurnInfo::point_type turn_point_type;
+        using turn_point_type = typename TurnInfo::point_type;
 
         static const std::size_t op_id = OpId;
         static const std::size_t other_op_id = (OpId + 1) % 2;

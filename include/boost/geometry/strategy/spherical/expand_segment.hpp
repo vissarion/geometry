@@ -92,7 +92,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<segment_tag, spherical_equatorial_tag, CalculationType>
 {
-    typedef spherical_segment<CalculationType> type;
+    using type = spherical_segment<CalculationType>;
 };
 
 template <typename CalculationType>

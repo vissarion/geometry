@@ -167,7 +167,7 @@ struct veshape_poly
     template <typename Char, typename Traits>
     static inline void stream(std::basic_ostream<Char, Traits>& os, P const& poly)
     {
-        typedef typename ring_type<P>::type ring;
+        using ring = int;
 
         veshape_range<ring, Policy>::stream(os, exterior_ring(poly));
 

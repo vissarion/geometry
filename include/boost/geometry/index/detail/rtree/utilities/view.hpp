@@ -23,15 +23,15 @@ template <typename Rtree>
 class view
 {
 public:
-    typedef typename Rtree::members_holder members_holder;
+    using members_holder = typename Rtree::members_holder;
 
-    typedef typename Rtree::size_type size_type;
+    using size_type = typename Rtree::size_type;
 
-    typedef typename Rtree::translator_type translator_type;
-    typedef typename Rtree::value_type value_type;
-    typedef typename Rtree::options_type options_type;
-    typedef typename Rtree::box_type box_type;
-    typedef typename Rtree::allocators_type allocators_type;
+    using translator_type = typename Rtree::translator_type;
+    using value_type = typename Rtree::value_type;
+    using options_type = typename Rtree::options_type;
+    using box_type = typename Rtree::box_type;
+    using allocators_type = typename Rtree::allocators_type;
 
     view(Rtree const& rt) : m_rtree(rt) {}
 

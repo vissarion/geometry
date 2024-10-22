@@ -133,11 +133,11 @@ template <typename MembersHolder>
 struct gl_draw
     : public MembersHolder::visitor_const
 {
-    typedef typename MembersHolder::box_type box_type;
-    typedef typename MembersHolder::translator_type translator_type;
+    using box_type = typename MembersHolder::box_type;
+    using translator_type = typename MembersHolder::translator_type;
 
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
     inline gl_draw(translator_type const& t,
                    size_t level_first = 0,
@@ -235,7 +235,7 @@ void gl_draw(Rtree const& tree,
                 >::type z_coord_level_multiplier = 1
              )
 {
-    typedef utilities::view<Rtree> RTV;
+    using RTV = utilities::view<Rtree>;
     RTV rtv(tree);
 
     if ( !tree.empty() )

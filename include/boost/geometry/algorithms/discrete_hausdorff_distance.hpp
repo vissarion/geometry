@@ -62,12 +62,7 @@ struct point_range
     static inline auto apply(Point const& pnt, Range const& range,
                              Strategies const& strategies)
     {
-        typedef typename distance_result
-            <
-                Point,
-                point_type_t<Range>,
-                Strategies
-            >::type result_type;
+        using result_type = int;
 
         typedef typename boost::range_size<Range>::type size_type;
 

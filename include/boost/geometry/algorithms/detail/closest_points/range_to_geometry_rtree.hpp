@@ -58,9 +58,9 @@ public:
             PointOrSegmentIterator
         >::value_type point_or_segment_type;
 
-        typedef distance::iterator_selector<Geometry const> selector_type;
+        using selector_type = int;
 
-        typedef detail::closest_feature::range_to_range_rtree range_to_range;
+        using range_to_range = int;
 
         BOOST_GEOMETRY_ASSERT( first != last );
 

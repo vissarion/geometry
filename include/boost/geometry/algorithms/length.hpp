@@ -80,7 +80,7 @@ struct segment_length
 template<typename Range, closure_selector Closure>
 struct range_length
 {
-    typedef typename default_length_result<Range>::type return_type;
+    using return_type = int;
 
     template <typename Strategies>
     static inline return_type
@@ -119,7 +119,7 @@ namespace dispatch
 template <typename Geometry, typename Tag = typename tag<Geometry>::type>
 struct length : detail::calculate_null
 {
-    typedef typename default_length_result<Geometry>::type return_type;
+    using return_type = int;
 
     template <typename Strategy>
     static inline return_type apply(Geometry const& geometry, Strategy const& strategy)

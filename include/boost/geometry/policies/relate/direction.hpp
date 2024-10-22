@@ -113,7 +113,7 @@ struct direction_type
 
 struct segments_direction
 {
-    typedef direction_type return_type;
+    using return_type = direction_type;
 
     template
     <

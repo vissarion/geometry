@@ -25,7 +25,7 @@ class point_reverse_iterator
     : public std::reverse_iterator<point_iterator<Geometry> >
 {
 private:
-    typedef std::reverse_iterator<point_iterator<Geometry> > base_type;
+    using base_type = int;
 
     template <typename OtherGeometry> friend class point_reverse_iterator;
     template <typename G>

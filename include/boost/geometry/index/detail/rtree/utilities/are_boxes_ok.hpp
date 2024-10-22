@@ -26,12 +26,12 @@ template <typename MembersHolder>
 class are_boxes_ok
     : public MembersHolder::visitor_const
 {
-    typedef typename MembersHolder::box_type box_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
+    using box_type = typename MembersHolder::box_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
 
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
 public:
     are_boxes_ok(parameters_type const& parameters, translator_type const& tr, bool exact_match)
@@ -118,7 +118,7 @@ private:
 template <typename Rtree> inline
 bool are_boxes_ok(Rtree const& tree, bool exact_match = true)
 {
-    typedef utilities::view<Rtree> RTV;
+    using RTV = utilities::view<Rtree>;
     RTV rtv(tree);
 
     visitors::are_boxes_ok<

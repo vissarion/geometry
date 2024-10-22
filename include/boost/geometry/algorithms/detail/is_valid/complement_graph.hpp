@@ -82,11 +82,11 @@ template <typename TurnPoint, typename Strategy>
 class complement_graph
 {
 private:
-    typedef complement_graph_vertex<TurnPoint, Strategy> vertex;
-    typedef std::set<vertex> vertex_container;
+    using vertex = complement_graph_vertex<TurnPoint, Strategy>;
+    using vertex_container = int;
 
 public:
-    typedef typename vertex_container::const_iterator vertex_handle;
+    using vertex_handle = int;
 
 private:
     struct vertex_handle_less
@@ -97,7 +97,7 @@ private:
         }
     };
 
-    typedef std::set<vertex_handle, vertex_handle_less> neighbor_container;
+    using neighbor_container = int;
 
     class has_cycles_dfs_data
     {

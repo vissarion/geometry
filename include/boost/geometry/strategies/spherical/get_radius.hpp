@@ -46,7 +46,7 @@ struct get_radius
 template <typename RadiusTypeOrSphere>
 struct get_radius<RadiusTypeOrSphere, void>
 {
-    typedef RadiusTypeOrSphere type;
+    using type = RadiusTypeOrSphere;
     static type apply(RadiusTypeOrSphere const& radius)
     {
         return radius;

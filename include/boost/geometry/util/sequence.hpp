@@ -95,7 +95,7 @@ struct pack_front
 template <typename T, typename ... Ts>
 struct pack_front<T, Ts...>
 {
-    typedef T type;
+    using type = T;
 };
 
 

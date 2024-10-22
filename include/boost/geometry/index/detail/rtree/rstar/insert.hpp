@@ -67,17 +67,17 @@ template <typename MembersHolder>
 class remove_elements_to_reinsert
 {
 public:
-    typedef typename MembersHolder::box_type box_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using box_type = typename MembersHolder::box_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
     //typedef typename Allocators::internal_node_pointer internal_node_pointer;
-    typedef internal_node * internal_node_pointer;
+    using internal_node_pointer = internal_node *;
 
     template <typename ResultElements, typename Node>
     static inline void apply(ResultElements & result_elements,
@@ -89,15 +89,12 @@ public:
                              allocators_type & allocators)
     {
         typedef typename rtree::elements_type<Node>::type elements_type;
-        typedef typename elements_type::value_type element_type;
+        using element_type = int;
         typedef typename geometry::point_type<box_type>::type point_type;
         typedef typename index::detail::strategy_type<parameters_type>::type strategy_type;
         // TODO: awulkiew - change second point_type to the point type of the Indexable?
-        typedef rstar::comparable_distance
-            <
-                point_type, point_type, strategy_type
-            > comparable_distance_pp;
-        typedef typename comparable_distance_pp::result_type comparable_distance_type;
+        using comparable_distance_pp = int;
+        using comparable_distance_type = int;
 
         elements_type & elements = rtree::elements(n);
 
@@ -236,24 +233,24 @@ template <size_t InsertIndex, typename Element, typename MembersHolder>
 struct level_insert_base
     : public detail::insert<Element, MembersHolder>
 {
-    typedef detail::insert<Element, MembersHolder> base;
-    typedef typename base::node node;
-    typedef typename base::internal_node internal_node;
-    typedef typename base::leaf leaf;
+    using base = int;
+    using node = int;
+    using internal_node = int;
+    using leaf = int;
 
-    typedef typename level_insert_elements_type<InsertIndex, Element, MembersHolder>::type elements_type;
+    using elements_type = int;
     typedef typename index::detail::rtree::container_from_elements_type<
         elements_type,
         typename elements_type::value_type
     >::type result_elements_type;
 
-    typedef typename MembersHolder::box_type box_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using box_type = typename MembersHolder::box_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
-    typedef typename allocators_type::node_pointer node_pointer;
-    typedef typename allocators_type::size_type size_type;
+    using node_pointer = typename allocators_type::node_pointer;
+    using size_type = typename allocators_type::size_type;
 
     inline level_insert_base(node_pointer & root,
                              size_type & leafs_level,
@@ -433,18 +430,18 @@ template <size_t InsertIndex, typename Value, typename MembersHolder>
 struct level_insert<InsertIndex, Value, MembersHolder, true>
     : public level_insert_base<InsertIndex, typename MembersHolder::value_type, MembersHolder>
 {
-    typedef level_insert_base<InsertIndex, typename MembersHolder::value_type, MembersHolder> base;
-    typedef typename base::node node;
-    typedef typename base::internal_node internal_node;
-    typedef typename base::leaf leaf;
+    using base = level_insert_base<InsertIndex, typename MembersHolder::value_type, MembersHolder>;
+    using node = typename base::node;
+    using internal_node = typename base::internal_node;
+    using leaf = typename base::leaf;
 
-    typedef typename MembersHolder::value_type value_type;
-    typedef typename base::parameters_type parameters_type;
-    typedef typename base::translator_type translator_type;
-    typedef typename base::allocators_type allocators_type;
+    using value_type = typename MembersHolder::value_type;
+    using parameters_type = typename base::parameters_type;
+    using translator_type = typename base::translator_type;
+    using allocators_type = typename base::allocators_type;
 
-    typedef typename base::node_pointer node_pointer;
-    typedef typename base::size_type size_type;
+    using node_pointer = typename base::node_pointer;
+    using size_type = typename base::size_type;
 
     inline level_insert(node_pointer & root,
                         size_type & leafs_level,
@@ -554,16 +551,16 @@ template <typename Element, typename MembersHolder>
 class insert<Element, MembersHolder, insert_reinsert_tag>
     : public MembersHolder::visitor
 {
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
-    typedef typename allocators_type::node_pointer node_pointer;
-    typedef typename allocators_type::size_type size_type;
+    using node_pointer = typename allocators_type::node_pointer;
+    using size_type = typename allocators_type::size_type;
 
 public:
     inline insert(node_pointer & root,
@@ -634,7 +631,7 @@ private:
     template <typename Elements>
     inline void recursive_reinsert(Elements & elements, size_t relative_level)
     {
-        typedef typename Elements::value_type element_type;
+        using element_type = typename Elements::value_type;
 
         // reinsert children starting from the minimum distance
         typename Elements::reverse_iterator it = elements.rbegin();

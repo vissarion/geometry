@@ -35,7 +35,7 @@ template
     >
 struct offset_appender
 {
-    typedef Range range_type;
+    using range_type = Range;
 
     typedef typename geometry::point_type<Range>::type point_type;
 

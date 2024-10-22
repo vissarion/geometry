@@ -85,7 +85,7 @@ namespace services
 template <typename Geometry>
 struct default_strategy<Geometry, geographic_tag>
 {
-    typedef geographic<> type;
+    using type = int;
 };
 
 } // namespace services

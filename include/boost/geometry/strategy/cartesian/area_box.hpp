@@ -40,7 +40,7 @@ public:
     template <typename Box>
     static inline auto apply(Box const& box)
     {
-        typedef typename result_type<Box>::type return_type;
+        using return_type = typename result_type<Box>::type;
 
         return return_type(get<max_corner, 0>(box) - get<min_corner, 0>(box))
              * return_type(get<max_corner, 1>(box) - get<min_corner, 1>(box));

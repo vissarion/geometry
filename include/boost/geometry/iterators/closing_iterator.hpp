@@ -53,18 +53,15 @@ struct closing_iterator
     >
 {
 private:
-    typedef boost::iterator_facade
-        <
-            closing_iterator<Range>,
-            typename boost::range_value<Range>::type const,
+    using type = int const,
             boost::random_access_traversal_tag,
             typename boost::range_reference<Range const>::type,
             typename boost::range_difference<Range>::type
         > base_type;
 
 public:
-    typedef typename base_type::reference reference;
-    typedef typename base_type::difference_type difference_type;
+    using reference = int;
+    using difference_type = int;
 
     /// Constructor including the range it is based on
     explicit inline closing_iterator(Range const& range)

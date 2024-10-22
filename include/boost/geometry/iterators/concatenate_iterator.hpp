@@ -43,8 +43,8 @@ private:
     Iterator2 m_begin2, m_it2;
 
 public:
-    typedef Iterator1 first_iterator_type;
-    typedef Iterator2 second_iterator_type;
+    using first_iterator_type = Iterator1;
+    using second_iterator_type = Iterator2;
 
     // default constructor
     concatenate_iterator() = default;

@@ -63,21 +63,15 @@ public:
                       Point & p,
                       Distance const& distance) const
     {
-        typedef typename select_calculation_type_alt
-            <
-                CalculationType,
-                Point
-            >::type calc_t;
+        using calc_t = int;
 
-        typedef typename FormulaPolicy::template inverse
-                <calc_t, false, true, false, false, false> inverse_t;
+        using inverse_t = typename FormulaPolicy::template inverse<calc_t, false, true, false, false, false>;
 
         calc_t azimuth = inverse_t::apply(get_as_radian<0>(p0), get_as_radian<1>(p0),
                                           get_as_radian<0>(p1), get_as_radian<1>(p1),
                                           m_spheroid).azimuth;
 
-        typedef typename FormulaPolicy::template direct
-                <calc_t, true, false, false, false> direct_t;
+        using direct_t = typename FormulaPolicy::template direct<calc_t, true, false, false, false>;
 
         typename direct_t::result_type
         dir_r = direct_t::apply(get_as_radian<0>(p0), get_as_radian<1>(p0),
@@ -105,7 +99,7 @@ namespace services
 template <>
 struct default_strategy<geographic_tag>
 {
-    typedef strategy::line_interpolate::geographic<> type;
+    using type = int;
 };
 
 

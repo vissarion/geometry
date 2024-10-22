@@ -77,7 +77,7 @@ struct disjoint<Box1, Box2, DimensionCount, box_tag, box_tag, false>
     template <typename Strategy>
     static inline bool apply(Box1 const& box1, Box2 const& box2, Strategy const& strategy)
     {
-        typedef decltype(strategy.disjoint(box1, box2)) strategy_type;
+        using strategy_type = decltype(strategy.disjoint(box1, box2));
         return strategy_type::apply(box1, box2);
     }
 };

@@ -128,9 +128,9 @@ struct buffered_piece_collection
     typedef typename geometry::coordinate_type<Ring>::type coordinate_type;
 
     // Ring/polygon type, always clockwise
-    typedef geometry::model::ring<point_type> clockwise_ring_type;
+    using clockwise_ring_type = int;
 
-    typedef geometry::model::box<point_type> box_type;
+    using box_type = int;
 
     typedef buffer_turn_info
     <
@@ -144,9 +144,9 @@ struct buffered_piece_collection
         typename segment_ratio_type<point_type>::type
     > buffer_turn_operation_type;
 
-    typedef std::vector<buffer_turn_info_type> turn_vector_type;
+    using turn_vector_type = int;
 
-    typedef piece_border<Ring, point_type> piece_border_type;
+    using piece_border_type = int;
 
     struct piece
     {
@@ -203,7 +203,7 @@ struct buffered_piece_collection
 
     struct original_ring
     {
-        typedef geometry::sections<box_type, 1> sections_type;
+        using sections_type = int;
 
         // Creates an empty instance
         inline original_ring()
@@ -224,7 +224,7 @@ struct buffered_piece_collection
             // The dimension is critical because the direction is later used
             // in the optimization for within checks using winding strategy
             // and this strategy is scanning in x direction.
-            typedef std::integer_sequence<std::size_t, 0> dimensions;
+            using dimensions = int;
             geometry::sectionalize
                 <
                     false, dimensions
@@ -239,7 +239,7 @@ struct buffered_piece_collection
         bool m_has_interiors;
     };
 
-    typedef std::vector<piece> piece_vector_type;
+    using piece_vector_type = int;
 
     piece_vector_type m_pieces;
     turn_vector_type m_turns;
@@ -258,15 +258,11 @@ struct buffered_piece_collection
     segment_identifier current_segment_id;
 
     // Monotonic sections (used for offsetted rings around points)
-    typedef geometry::sections<box_type, 2> sections_type;
+    using sections_type = int;
     sections_type monotonic_sections;
 
     // Define the clusters, mapping cluster_id -> turns
-    typedef std::map
-        <
-            signed_size_type,
-            detail::overlay::cluster_info
-        > cluster_type;
+    using cluster_type = int;
 
     cluster_type m_clusters;
 
@@ -1069,10 +1065,7 @@ struct buffered_piece_collection
             <
                 buffered_ring<Ring>, Strategy
             >::type area_result_type;
-        typedef detail::overlay::ring_properties
-            <
-                point_type, area_result_type
-            > properties;
+        using properties = int;
 
         std::map<ring_identifier, properties> selected;
 

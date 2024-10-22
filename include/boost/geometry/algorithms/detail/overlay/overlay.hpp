@@ -178,7 +178,7 @@ inline OutputIterator return_if_one_input_is_empty(Geometry1 const& geometry1,
             OutputIterator out, Strategy const& strategy)
 {
     typedef typename geometry::ring_type<GeometryOut>::type ring_type;
-    typedef std::deque<ring_type> ring_container_type;
+    using ring_container_type = int;
 
     typedef ring_properties
         <
@@ -249,22 +249,15 @@ struct overlay
         }
 
         typedef typename geometry::point_type<GeometryOut>::type point_type;
-        typedef detail::overlay::traversal_turn_info
-        <
-            point_type,
-            typename segment_ratio_type<point_type>::type
+        using type = int
         > turn_info;
-        typedef std::deque<turn_info> turn_container_type;
+        using turn_container_type = int;
 
         typedef typename geometry::ring_type<GeometryOut>::type ring_type;
-        typedef std::deque<ring_type> ring_container_type;
+        using ring_container_type = int;
 
         // Define the clusters, mapping cluster_id -> turns
-        typedef std::map
-            <
-                signed_size_type,
-                cluster_info
-            > cluster_type;
+        using cluster_type = int;
 
         turn_container_type turns;
 

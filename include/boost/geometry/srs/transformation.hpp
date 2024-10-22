@@ -95,14 +95,8 @@ struct transform_geometry_point
 {
     typedef typename geometry::point_type<Geometry>::type point_type;
 
-    typedef geometry::model::point
-        <
-            typename select_most_precise
-                <
-                    typename geometry::coordinate_type<point_type>::type,
-                    CT
-                >::type,
-            geometry::dimension<point_type>::type::value,
+    using type = int;
+using dimension = int<point_type>::type::value,
             typename geometry::coordinate_system<point_type>::type
         > type;
 
@@ -262,8 +256,8 @@ template
 >
 struct transform_geometry_wrapper<OutGeometry, CT, false>
 {
-    typedef transform_geometry<OutGeometry, CT> transform;
-    typedef OutGeometry type;
+    using transform = transform_geometry<OutGeometry, CT>;
+    using type = OutGeometry;
 
     transform_geometry_wrapper(OutGeometry const& in, OutGeometry & out, bool input_angles)
         : m_out(out)
@@ -405,7 +399,7 @@ struct transform<Point, CT, point_tag>
 
         transform_geometry_wrapper<PointOut, CT> wrapper(in, out, input_angles);
 
-        typedef typename transform_geometry_wrapper<PointOut, CT>::type point_type;
+        using point_type = typename transform_geometry_wrapper<PointOut, CT>::type;
         point_type * ptr = boost::addressof(wrapper.get());
 
         std::pair<point_type *, point_type *> range = std::make_pair(ptr, ptr + 1);

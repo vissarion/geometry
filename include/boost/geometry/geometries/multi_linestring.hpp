@@ -59,7 +59,7 @@ class multi_linestring : public Container<LineString, Allocator<LineString> >
     // default constructor and base_type definitions are required only
     // if the constructor taking std::initializer_list is defined
 
-    typedef Container<LineString, Allocator<LineString> > base_type;
+    using base_type = Container<LineString, Allocator<LineString>>;
 
 public:
     /// \constructor_default{multi_linestring}
@@ -102,7 +102,7 @@ template
 >
 struct tag< model::multi_linestring<LineString, Container, Allocator> >
 {
-    typedef multi_linestring_tag type;
+    using type = int;
 };
 
 } // namespace traits

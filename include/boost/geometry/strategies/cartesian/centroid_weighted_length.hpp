@@ -50,17 +50,14 @@ template
 class weighted_length
 {
 private :
-    typedef geometry::strategy::distance::pythagoras<CalculationType> pythagoras_strategy;
+    using pythagoras_strategy = int;
 
     template <typename GeometryPoint, typename ResultPoint>
     struct calculation_type
     {
         // Below the distance between two GeometryPoints is calculated.
         // ResultPoint is taken into account by passing them together here.
-        typedef typename pythagoras_strategy::template calculation_type
-            <
-                GeometryPoint, ResultPoint
-            >::type type;
+        using type = int;
     };
 
     template <typename GeometryPoint, typename ResultPoint>
@@ -69,7 +66,7 @@ private :
         friend class weighted_length;
         template <typename, typename> friend struct set_sum_div_length;
 
-        typedef typename calculation_type<GeometryPoint, ResultPoint>::type calc_type;
+        using calc_type = typename calculation_type<GeometryPoint, ResultPoint>::type;
         typedef typename geometry::model::point
             <
                 calc_type,
@@ -92,14 +89,14 @@ public :
     template <typename GeometryPoint, typename ResultPoint>
     struct state_type
     {
-        typedef sums<GeometryPoint, ResultPoint> type;
+        using type = sums<GeometryPoint, ResultPoint>;
     };
 
     template <typename GeometryPoint, typename ResultPoint>
     static inline void apply(GeometryPoint const& p1, GeometryPoint const& p2,
                              sums<GeometryPoint, ResultPoint>& state)
     {
-        typedef typename calculation_type<GeometryPoint, ResultPoint>::type distance_type;
+        using distance_type = typename calculation_type<GeometryPoint, ResultPoint>::type;
 
         distance_type const d = pythagoras_strategy::apply(p1, p2);
         state.length += d;
@@ -118,7 +115,7 @@ public :
     static inline bool result(sums<GeometryPoint, ResultPoint> const& state,
                               ResultPoint& centroid)
     {
-        typedef typename calculation_type<GeometryPoint, ResultPoint>::type distance_type;
+        using distance_type = typename calculation_type<GeometryPoint, ResultPoint>::type;
 
         distance_type const zero = distance_type();
         if (! geometry::math::equals(state.length, zero)
@@ -162,11 +159,7 @@ struct default_strategy
     Geometry
 >
 {
-    typedef weighted_length
-        <
-            Point,
-            point_type_t<Geometry>
-        > type;
+    using type = int;
 };
 
 

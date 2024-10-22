@@ -146,7 +146,7 @@ private :
     template <typename GeometryPoint, typename ResultPoint>
     class sums
     {
-        typedef typename calculation_type<GeometryPoint, ResultPoint>::type calc_type;
+        using calc_type = typename calculation_type<GeometryPoint, ResultPoint>::type;
 
         friend class bashein_detmer;
         std::size_t count;
@@ -167,7 +167,7 @@ public :
     template <typename GeometryPoint, typename ResultPoint>
     struct state_type
     {
-        typedef sums<GeometryPoint, ResultPoint> type;
+        using type = sums<GeometryPoint, ResultPoint>;
     };
 
     template <typename GeometryPoint, typename ResultPoint>
@@ -185,7 +185,7 @@ public :
         return POINT(sum_x / (3 * sum_a2), sum_y / (3 * sum_a2) )
         */
 
-        typedef typename calculation_type<GeometryPoint, ResultPoint>::type calc_type;
+        using calc_type = typename calculation_type<GeometryPoint, ResultPoint>::type;
 
         // Get coordinates and promote them to calculation_type
         calc_type const x1 = util::numeric_cast<calc_type>(get<0>(p1));
@@ -203,7 +203,7 @@ public :
     static inline bool result(sums<GeometryPoint, ResultPoint> const& state,
                               ResultPoint& centroid)
     {
-        typedef typename calculation_type<GeometryPoint, ResultPoint>::type calc_type;
+        using calc_type = typename calculation_type<GeometryPoint, ResultPoint>::type;
 
         calc_type const zero = calc_type();
         if (state.count > 0 && ! math::equals(state.sum_a2, zero))
@@ -244,11 +244,7 @@ namespace services
 template <typename Point, typename Geometry>
 struct default_strategy<cartesian_tag, areal_tag, 2, Point, Geometry>
 {
-    typedef bashein_detmer
-        <
-            Point,
-            point_type_t<Geometry>
-        > type;
+    using type = int;
 };
 
 

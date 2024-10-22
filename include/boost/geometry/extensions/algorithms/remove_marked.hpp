@@ -54,7 +54,7 @@ struct range_remove_marked
         typename cs_tag<Range>::type
     >::type side_strategy_type;
 
-    typedef typename coordinate_type<Range>::type coordinate_type;
+    using coordinate_type = int;
 
 
     static inline void apply(Range const& range_in, ring_identifier id,
@@ -66,7 +66,7 @@ struct range_remove_marked
             range_out = range_in;
             return;
         }
-        typedef typename MarkMap::mapped_type bit_vector_type;
+        using bit_vector_type = typename MarkMap::mapped_type;
 
         if (boost::size(range_in) != boost::size(mit->second))
         {
@@ -98,7 +98,7 @@ struct polygon_remove_marked
     {
         typedef typename geometry::ring_type<Polygon>::type ring_type;
 
-        typedef range_remove_marked<ring_type, MarkMap> per_range;
+        using per_range = int;
         id.ring_index = -1;
         per_range::apply(exterior_ring(polygon_in), id, exterior_ring(polygon_out), mark_map);
 

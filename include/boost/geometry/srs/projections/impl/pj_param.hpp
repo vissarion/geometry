@@ -81,7 +81,7 @@ template <typename Params, typename Name>
 inline typename Params::const_iterator
     pj_param_find(Params const& params, Name const& name)
 {
-    typedef typename Params::const_iterator iterator;
+    using iterator = typename Params::const_iterator;
     for (iterator it = params.begin(); it != params.end(); it++)
     {
         if (pj_param_pred(*it, name))

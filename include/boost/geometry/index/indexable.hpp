@@ -61,7 +61,7 @@ struct indexable
         Value);
 
     /*! \brief The type of result returned by function object. */
-    typedef Value const& result_type;
+    using result_type = const Value &;
 
     /*!
     \brief Return indexable extracted from the value.
@@ -154,7 +154,7 @@ This specialization translates from boost::tuple<Indexable, ...>
 template <typename Value, typename Indexable>
 struct indexable_boost_tuple
 {
-    typedef Value value_type;
+    using value_type = Value;
 
     BOOST_GEOMETRY_STATIC_ASSERT(
         (detail::is_indexable<Indexable>::value),
@@ -162,7 +162,7 @@ struct indexable_boost_tuple
         Indexable);
 
     /*! \brief The type of result returned by function object. */
-    typedef Indexable const& result_type;
+    using result_type = const Indexable &;
 
     /*!
     \brief Return indexable extracted from the value.
@@ -332,7 +332,7 @@ struct indexable
     : detail::indexable<Value>
 {
     /*! \brief The type of result returned by function object. It should be const Indexable reference. */
-    typedef typename detail::indexable<Value>::result_type result_type;
+    using result_type = int;
 
     /*!
     \brief Return indexable extracted from the value.

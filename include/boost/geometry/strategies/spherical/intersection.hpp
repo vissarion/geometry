@@ -94,7 +94,7 @@ template
 >
 struct ecef_segments
 {
-    typedef spherical_tag cs_tag;
+    using cs_tag = int;
 
     enum intersection_point_flag { ipi_inters = 0, ipi_at_a1, ipi_at_a2, ipi_at_b1, ipi_at_b2 };
 
@@ -157,8 +157,8 @@ struct ecef_segments
         // Initialize explicitly to prevent compiler errors in case of PoD type
         CalcPolicy const calc_policy = CalcPolicy();
 
-        typedef typename UniqueSubRange1::point_type point1_type;
-        typedef typename UniqueSubRange2::point_type point2_type;
+        using point1_type = typename UniqueSubRange1::point_type;
+        using point2_type = typename UniqueSubRange2::point_type;
 
         BOOST_CONCEPT_ASSERT( (concepts::ConstPoint<point1_type>) );
         BOOST_CONCEPT_ASSERT( (concepts::ConstPoint<point2_type>) );
@@ -168,8 +168,8 @@ struct ecef_segments
         point2_type const& b1 = range_q.at(0);
         point2_type const& b2 = range_q.at(1);
 
-        typedef model::referring_segment<point1_type const> segment1_type;
-        typedef model::referring_segment<point2_type const> segment2_type;
+        using segment1_type = int;
+        using segment2_type = int;
         segment1_type const a(a1, a2);
         segment2_type const b(b1, b2);
 
@@ -185,13 +185,12 @@ struct ecef_segments
                 ;
         }
 
-        typedef typename select_calculation_type
-            <segment1_type, segment2_type, CalculationType>::type calc_t;
+        using calc_t = int;
 
         calc_t const c0 = 0;
         calc_t const c1 = 1;
 
-        typedef model::point<calc_t, 3, cs::cartesian> vec3d_t;
+        using vec3d_t = int;
 
         vec3d_t const a1v = calc_policy.template to_cart3d<vec3d_t>(a1);
         vec3d_t const a2v = calc_policy.template to_cart3d<vec3d_t>(a2);
@@ -794,7 +793,7 @@ struct spherical_segments_calc_policy
     template <typename Point3d>
     struct plane
     {
-        typedef typename coordinate_type<Point3d>::type coord_t;
+        using coord_t = int;
 
         // not normalized
         plane(Point3d const& p1, Point3d const& p2)
@@ -832,7 +831,7 @@ struct spherical_segments_calc_policy
                                     plane<Point3d> const& plane2,
                                     Point3d & ip1, Point3d & ip2)
     {
-        typedef typename coordinate_type<Point3d>::type coord_t;
+        using coord_t = int;
 
         ip1 = cross_product(plane1.normal, plane2.normal);
         // NOTE: the length should be greater than 0 at this point
@@ -878,7 +877,7 @@ struct default_strategy<spherical_polar_tag, CalculationType>
 template <typename CalculationType>
 struct default_strategy<spherical_equatorial_tag, CalculationType>
 {
-    typedef spherical_segments<CalculationType> type;
+    using type = spherical_segments<CalculationType>;
 };
 
 template <typename CalculationType>
@@ -908,7 +907,7 @@ namespace within { namespace services
 template <typename Geometry1, typename Geometry2, typename AnyTag1, typename AnyTag2>
 struct default_strategy<Geometry1, Geometry2, AnyTag1, AnyTag2, linear_tag, linear_tag, spherical_tag, spherical_tag>
 {
-    typedef strategy::intersection::spherical_segments<> type;
+    using type = int;
 };
 
 template <typename Geometry1, typename Geometry2, typename AnyTag1, typename AnyTag2>
@@ -937,7 +936,7 @@ namespace covered_by { namespace services
 template <typename Geometry1, typename Geometry2, typename AnyTag1, typename AnyTag2>
 struct default_strategy<Geometry1, Geometry2, AnyTag1, AnyTag2, linear_tag, linear_tag, spherical_tag, spherical_tag>
 {
-    typedef strategy::intersection::spherical_segments<> type;
+    using type = int;
 };
 
 template <typename Geometry1, typename Geometry2, typename AnyTag1, typename AnyTag2>

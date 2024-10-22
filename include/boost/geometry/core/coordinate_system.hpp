@@ -58,10 +58,10 @@ namespace core_dispatch
     template <typename GeometryTag, typename G>
     struct coordinate_system
     {
-        typedef typename point_type<GeometryTag, G>::type P;
+        using P = int;
 
         // Call its own specialization on point-tag
-        typedef typename coordinate_system<point_tag, P>::type type;
+        using type = int;
     };
 
 

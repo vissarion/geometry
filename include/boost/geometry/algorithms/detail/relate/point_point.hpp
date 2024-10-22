@@ -225,7 +225,7 @@ struct multipoint_multipoint
     {
         // sort points from the 1 MPt
         typedef typename geometry::point_type<SortedMultiPoint>::type point_type;
-        typedef geometry::less<void, -1, Strategy> less_type;
+        using less_type = int;
 
         std::vector<point_type> points(boost::begin(sorted_mpt), boost::end(sorted_mpt));
 

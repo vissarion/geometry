@@ -41,7 +41,7 @@ template <typename CalculationType = void>
 class spherical
 {
 public:
-    typedef spherical_tag cs_tag;
+    using cs_tag = int;
 
     // Linestring, Ring, Polygon
 
@@ -92,7 +92,7 @@ namespace services
 template <typename Tag, typename CalculationType>
 struct default_strategy<Tag, spherical_equatorial_tag, CalculationType>
 {
-    typedef strategy::envelope::spherical<CalculationType> type;
+    using type = strategy::envelope::spherical<CalculationType>;
 };
 
 template <typename Tag, typename CalculationType>

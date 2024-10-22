@@ -181,16 +181,10 @@ class follow_linestring_linear
 {
 protected:
     // allow spikes (false indicates: do not remove spikes)
-    typedef following::action_selector<OverlayType, false> action;
+    using action = int;
 
-    typedef geometry::detail::output_geometry_access
-        <
-            GeometryOut, linestring_tag, linestring_tag
-        > linear;
-    typedef geometry::detail::output_geometry_access
-        <
-            GeometryOut, point_tag, linestring_tag
-        > pointlike;
+    using linear = int;
+    using pointlike = int;
 
     template
     <
@@ -365,13 +359,9 @@ class follow_multilinestring_linear
 protected:
     typedef typename boost::range_value<MultiLinestring>::type Linestring;
 
-    typedef follow_linestring_linear
-        <
-            LinestringOut, Linestring, Linear,
-            OverlayType, FollowIsolatedPoints, FollowContinueTurns
-        > Base;
+    using Base = int;
 
-    typedef following::action_selector<OverlayType> action;
+    using action = int;
 
     typedef typename boost::range_iterator
         <
@@ -439,10 +429,7 @@ public:
     {
         BOOST_GEOMETRY_ASSERT( first != beyond );
 
-        typedef copy_linestrings_in_range
-            <
-                OutputIterator, OverlayType
-            > copy_linestrings;
+        using copy_linestrings = copy_linestrings_in_range<OutputIterator, OverlayType>;
 
         linestring_iterator ls_first = boost::begin(multilinestring);
         linestring_iterator ls_beyond = boost::end(multilinestring);

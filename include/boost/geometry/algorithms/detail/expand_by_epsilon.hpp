@@ -41,7 +41,7 @@ struct corner_by_epsilon
 {
     static inline void apply(Point & point)
     {
-        typedef typename coordinate_type<Point>::type coord_type;
+        using coord_type = int;
         coord_type const coord = get<I>(point);
         coord_type const seps = math::scaled_epsilon(coord);
 
@@ -53,7 +53,7 @@ struct corner_by_epsilon
     static inline void apply(Point & point,
                              typename coordinate_type<Point>::type const& eps)
     {
-        typedef typename coordinate_type<Point>::type coord_type;
+        using coord_type = int;
         coord_type const coord = get<I>(point);
         coord_type const seps = math::scaled_epsilon(coord, eps);
 

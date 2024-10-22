@@ -31,7 +31,7 @@ namespace index { namespace detail {
 template <typename Geometry, typename BoundingGeometry, typename Strategy>
 struct bounded_view_base_cs_tag
 {
-    typedef typename Strategy::cs_tag type;
+    using type = typename Strategy::cs_tag;
 };
 
 template <typename Geometry, typename BoundingGeometry>
@@ -211,12 +211,7 @@ struct bounded_view<Geometry, BoundingGeometry, default_strategy, Tag, BoundingT
             Geometry
         >::type strategy_type;
 
-    typedef bounded_view_base
-        <
-            Geometry,
-            BoundingGeometry,
-            strategy_type
-        > base_type;
+    using base_type = int;
 
     explicit bounded_view(Geometry const& geometry, default_strategy const& )
         : base_type(geometry, strategy_type())
@@ -235,7 +230,7 @@ namespace traits
 template <typename Geometry, typename Box, typename Strategy, typename Tag>
 struct tag< index::detail::bounded_view<Geometry, Box, Strategy, Tag, box_tag> >
 {
-    typedef box_tag type;
+    using type = int;
 };
 
 template <typename Geometry, typename Box, typename Strategy, typename Tag>
@@ -248,7 +243,7 @@ template <typename Geometry, typename Box, typename Strategy, typename Tag, std:
 struct indexed_access<index::detail::bounded_view<Geometry, Box, Strategy, Tag, box_tag>,
                       min_corner, Dimension>
 {
-    typedef index::detail::bounded_view<Geometry, Box, Strategy, Tag, box_tag> box_type;
+    using box_type = int;
     typedef typename geometry::coordinate_type<Box>::type coordinate_type;
 
     static inline coordinate_type get(box_type const& b)

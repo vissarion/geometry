@@ -81,19 +81,19 @@ namespace traits
 template <typename CoordinateType, std::size_t Dimension>
 struct tag<model::rotation_matrix<CoordinateType, Dimension> >
 {
-    typedef rotation_matrix_tag type;
+    using type = int;
 };
 
 template <typename CoordinateType, std::size_t Dimension>
 struct coordinate_type<model::rotation_matrix<CoordinateType, Dimension> >
 {
-    typedef CoordinateType type;
+    using type = CoordinateType;
 };
 
 template <typename CoordinateType, std::size_t Dimension>
 struct coordinate_system<model::rotation_matrix<CoordinateType, Dimension> >
 {
-    typedef cs::cartesian type;
+    using type = int;
 };
 
 template <typename CoordinateType, std::size_t Dimension>
@@ -104,7 +104,7 @@ struct dimension<model::rotation_matrix<CoordinateType, Dimension> >
 template <typename CoordinateType, std::size_t Dimension, std::size_t I, std::size_t J>
 struct indexed_access<model::rotation_matrix<CoordinateType, Dimension>, I, J>
 {
-    typedef CoordinateType coordinate_type;
+    using coordinate_type = CoordinateType;
 
     static inline coordinate_type get(model::rotation_matrix<CoordinateType, Dimension> const& m)
     {

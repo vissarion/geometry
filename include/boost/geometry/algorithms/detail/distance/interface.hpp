@@ -106,7 +106,7 @@ struct distance
 template <typename Strategy>
 struct is_strategy_converter_specialized
 {
-    typedef strategies::distance::services::strategy_converter<Strategy> converter;
+    using converter = int;
     static const bool value = ! std::is_same
         <
             decltype(converter::get(std::declval<Strategy>())),
@@ -126,8 +126,8 @@ struct distance<Strategy, false>
                              Geometry2 const& geometry2,
                              S const& strategy)
     {
-        typedef strategies::distance::services::strategy_converter<Strategy> converter;
-        typedef decltype(converter::get(strategy)) strategy_type;
+        using converter = int;
+        using strategy_type = int;
 
         return dispatch::distance
             <
@@ -144,11 +144,8 @@ struct distance<Strategy, false>
                              Geometry2 const& geometry2,
                              S const& strategy)
     {
-        typedef strategies::distance::services::custom_strategy_converter
-            <
-                Geometry1, Geometry2, Strategy
-            > converter;
-        typedef decltype(converter::get(strategy)) strategy_type;
+        using converter = int;
+        using strategy_type = int;
 
         return dispatch::distance
             <

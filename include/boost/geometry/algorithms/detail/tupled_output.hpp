@@ -209,7 +209,7 @@ struct tupled_range_values_bt
 template <typename Tuple, size_t N>
 struct tupled_range_values_bt<Tuple, N, N>
 {
-    typedef boost::tuples::null_type type;
+    using type = int;
 };
 
 template <typename ...Ts>
@@ -292,7 +292,7 @@ struct tupled_back_inserters_bt
 template <typename Tuple, size_t N>
 struct tupled_back_inserters_bt<Tuple, N, N>
 {
-    typedef boost::tuples::null_type type;
+    using type = int;
 
     static type apply(Tuple const&)
     {
@@ -333,7 +333,7 @@ template
 >
 struct output_geometry_back_inserter_
 {
-    typedef geometry::range::back_insert_iterator<GeometryOut> type;
+    using type = int;
 
     static type apply(GeometryOut & out)
     {

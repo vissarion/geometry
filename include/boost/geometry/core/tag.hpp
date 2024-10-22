@@ -44,7 +44,7 @@ namespace traits
 template <typename Geometry, typename Enable = void>
 struct tag
 {
-    typedef void type;
+    using type = void;
 };
 
 } // namespace traits

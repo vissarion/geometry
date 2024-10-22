@@ -94,7 +94,7 @@ public:
 class mask
     : public detail::relate::mask<3, 3>
 {
-    typedef detail::relate::mask<3, 3> base_type;
+    using base_type = int;
 
 public:
     /*!
@@ -239,7 +239,7 @@ namespace detail { namespace de9im
 template <typename Geometry1, typename Geometry2>
 struct static_mask_equals_type
 {
-    typedef geometry::de9im::static_mask<'T', '*', 'F', '*', '*', 'F', 'F', 'F', '*'> type; // wikipedia
+    using type = geometry::de9im::static_mask<'T', '*', 'F', '*', '*', 'F', 'F', 'F', '*'>; // wikipedia
     //typedef geometry::de9im::static_mask<'T', 'F', 'F', 'F', 'T', 'F', 'F', 'F', 'T'> type; // OGC
 };
 
@@ -247,7 +247,7 @@ struct static_mask_equals_type
 template <typename Geometry1, typename Geometry2>
 struct static_mask_disjoint_type
 {
-    typedef geometry::de9im::static_mask<'F', 'F', '*', 'F', 'F', '*', '*', '*', '*'> type;
+    using type = geometry::de9im::static_mask<'F', 'F', '*', 'F', 'F', '*', '*', '*', '*'>;
 };
 
 // TOUCHES - NOT P/P
@@ -272,7 +272,7 @@ struct static_mask_touches_impl
 template <typename Geometry1, typename Geometry2>
 struct static_mask_touches_impl<Geometry1, Geometry2, 0, 0>
 {
-    typedef geometry::detail::relate::false_mask type;
+    using type = int;
 };
 
 template <typename Geometry1, typename Geometry2>
@@ -289,20 +289,14 @@ struct static_mask_touches_type
 template <typename Geometry1, typename Geometry2>
 struct static_mask_within_type
 {
-    typedef geometry::de9im::static_mask<'T', '*', 'F', '*', '*', 'F', '*', '*', '*'> type;
+    using type = geometry::de9im::static_mask<'T', '*', 'F', '*', '*', 'F', '*', '*', '*'>;
 };
 
 // COVERED_BY (non OGC)
 template <typename Geometry1, typename Geometry2>
 struct static_mask_covered_by_type
 {
-    typedef util::type_sequence
-        <
-            geometry::de9im::static_mask<'T', '*', 'F', '*', '*', 'F', '*', '*', '*'>,
-            geometry::de9im::static_mask<'*', 'T', 'F', '*', '*', 'F', '*', '*', '*'>,
-            geometry::de9im::static_mask<'*', '*', 'F', 'T', '*', 'F', '*', '*', '*'>,
-            geometry::de9im::static_mask<'*', '*', 'F', '*', 'T', 'F', '*', '*', '*'>
-        > type;
+    using type = int;
 };
 
 // CROSSES
@@ -327,7 +321,7 @@ template
 >
 struct static_mask_crosses_impl<Geometry1, Geometry2, Dim1, Dim2, false>
 {
-    typedef geometry::de9im::static_mask<'T', '*', '*', '*', '*', '*', 'T', '*', '*'> type;
+    using type = geometry::de9im::static_mask<'T', '*', '*', '*', '*', '*', 'T', '*', '*'>;
 };
 // dim(G1) == dim(G2) - P/P A/A
 template
@@ -383,7 +377,7 @@ struct static_mask_overlaps_impl
 template <typename Geometry1, typename Geometry2, std::size_t Dim>
 struct static_mask_overlaps_impl<Geometry1, Geometry2, Dim, Dim>
 {
-    typedef geometry::de9im::static_mask<'T', '*', 'T', '*', '*', '*', 'T', '*', '*'> type;
+    using type = geometry::de9im::static_mask<'T', '*', 'T', '*', '*', '*', 'T', '*', '*'>;
 };
 // dim(G1) == 1 && dim(G2) == 1 - L/L
 template <typename Geometry1, typename Geometry2>

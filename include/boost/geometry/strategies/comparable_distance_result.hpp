@@ -49,7 +49,7 @@ struct comparable_distance_strategy2_type
 template <typename Geometry1, typename Geometry2, typename Strategy>
 struct comparable_distance_strategy2_type<Geometry1, Geometry2, Strategy, false>
 {
-    typedef Strategy type;
+    using type = Strategy;
 };
 
 template

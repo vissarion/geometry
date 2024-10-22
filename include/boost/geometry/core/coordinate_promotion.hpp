@@ -37,10 +37,8 @@ namespace traits
 template <typename T, typename PromoteIntegerTo = double>
 struct promote_floating_point
 {
-    typedef std::conditional_t
-        <
-            std::is_integral<T>::value,
-            PromoteIntegerTo,
+    using value = int;
+using PromoteIntegerTo = int,
             T
         > type;
 };
@@ -49,10 +47,7 @@ struct promote_floating_point
 template <typename Geometry>
 struct fp_coordinate_type
 {
-    typedef typename promote_floating_point
-        <
-            typename coordinate_type<Geometry>::type
-        >::type type;
+    using type = int;
 };
 
 namespace detail

@@ -48,7 +48,7 @@ template
 >
 struct result_type
 {
-    typedef CalculationType type;
+    using type = CalculationType;
 };
 
 template

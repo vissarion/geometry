@@ -37,8 +37,8 @@ class rtree_node
 {
 public:
 
-    typedef std::shared_ptr<rtree_node<Box, Value> > node_pointer;
-    typedef std::shared_ptr<rtree_leaf<Box, Value> > leaf_pointer;
+    using node_pointer = int;
+    using leaf_pointer = int;
 
     /// type for the node map
     typedef std::vector<std::pair<Box, node_pointer > > node_map;
@@ -290,7 +290,7 @@ public:
             throw std::logic_error("Empty node trying to choose the least enlargement node.");
         }
 
-        typedef typename coordinate_type<Box>::type coordinate_type;
+        using coordinate_type = int;
 
         bool first = true;
         coordinate_type min_area = 0;

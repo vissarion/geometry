@@ -83,7 +83,7 @@ struct disjoint<Point, Box, DimensionCount, point_tag, box_tag, false>
     static inline bool apply(Point const& point, Box const& box,
                              Strategy const& strategy)
     {
-        typedef decltype(strategy.covered_by(point, box)) strategy_type;
+        using strategy_type = decltype(strategy.covered_by(point, box));
         // ! covered_by(point, box)
         return ! strategy_type::apply(point, box);
     }

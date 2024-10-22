@@ -67,7 +67,7 @@ struct segment_intersection_points
     // TODO: combine intersections and fractions in one struct
     Point intersections[2];
     fraction_type<SegmentRatio> fractions[2];
-    typedef Point point_type;
+    using point_type = Point;
 
     segment_intersection_points()
         : count(0)

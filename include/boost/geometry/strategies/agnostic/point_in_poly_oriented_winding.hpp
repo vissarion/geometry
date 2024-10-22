@@ -57,12 +57,7 @@ template
 >
 class oriented_winding
 {
-    typedef typename select_calculation_type
-        <
-            Point,
-            PointOfSegment,
-            CalculationType
-        >::type calculation_type;
+    using calculation_type = int;
 
 
     using strategy_side_type = typename strategy::side::services::default_strategy
@@ -161,9 +156,9 @@ class oriented_winding
 public :
 
     // Typedefs and static methods to fulfill the concept
-    typedef Point point_type;
-    typedef PointOfSegment segment_point_type;
-    typedef counter state_type;
+    using point_type = Point;
+    using segment_point_type = PointOfSegment;
+    using state_type = counter;
 
     static inline bool apply(Point const& point,
                 PointOfSegment const& s1, PointOfSegment const& s2,

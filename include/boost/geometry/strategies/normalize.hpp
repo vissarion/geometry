@@ -128,7 +128,7 @@ struct normalize_point
 {
     static inline void apply(PointIn const& point_in, PointOut& point_out)
     {
-        typedef typename coordinate_type<PointIn>::type in_coordinate_type;
+        using in_coordinate_type = int;
 
         in_coordinate_type longitude = geometry::get<0>(point_in);
         in_coordinate_type latitude = geometry::get<1>(point_in);
@@ -187,7 +187,7 @@ class normalize_box
 public:
     static inline void apply(BoxIn const& box_in, BoxOut& box_out)
     {
-        typedef typename coordinate_type<BoxIn>::type in_coordinate_type;
+        using in_coordinate_type = int;
 
         in_coordinate_type lon_min = geometry::get<min_corner, 0>(box_in);
         in_coordinate_type lat_min = geometry::get<min_corner, 1>(box_in);

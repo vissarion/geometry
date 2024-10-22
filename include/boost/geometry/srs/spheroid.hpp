@@ -121,19 +121,19 @@ namespace traits
 template <typename RadiusType>
 struct tag< srs::spheroid<RadiusType> >
 {
-    typedef srs_spheroid_tag type;
+    using type = int;
 };
 
 template <typename RadiusType>
 struct radius_type< srs::spheroid<RadiusType> >
 {
-    typedef RadiusType type;
+    using type = RadiusType;
 };
 
 template <typename RadiusType, std::size_t Dimension>
 struct radius_access<srs::spheroid<RadiusType>, Dimension>
 {
-    typedef srs::spheroid<RadiusType> spheroid_type;
+    using spheroid_type = srs::spheroid<RadiusType>;
 
     static inline RadiusType get(spheroid_type const& s)
     {

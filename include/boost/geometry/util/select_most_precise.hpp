@@ -92,13 +92,13 @@ struct type_size<void>
 template <typename ...Types>
 struct select_most_precise
 {
-    typedef void type;
+    using type = void;
 };
 
 template <typename T>
 struct select_most_precise<T>
 {
-    typedef T type;
+    using type = T;
 };
 
 template <typename T1, typename T2>
@@ -135,11 +135,7 @@ struct select_most_precise<T1, T2>
 template <typename T1, typename T2, typename ...Types>
 struct select_most_precise<T1, T2, Types...>
 {
-    typedef typename select_most_precise
-        <
-            typename select_most_precise<T1, T2>::type,
-            typename select_most_precise<Types...>::type
-        >::type type;
+    using type = typename select_most_precise<typename select_most_precise<T1, T2>::type, typename select_most_precise<Types...>::type>::type;
 };
 
 

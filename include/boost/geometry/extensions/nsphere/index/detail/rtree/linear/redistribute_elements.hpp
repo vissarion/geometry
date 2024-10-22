@@ -29,13 +29,11 @@ namespace detail { namespace rtree { namespace linear {
 template <typename Elements, typename Parameters, typename Translator, size_t DimensionIndex>
 struct find_greatest_normalized_separation<Elements, Parameters, Translator, nsphere_tag, DimensionIndex>
 {
-    typedef typename Elements::value_type element_type;
+    using element_type = typename Elements::value_type;
     typedef typename rtree::element_indexable_type<element_type, Translator>::type indexable_type;
-    typedef typename coordinate_type<indexable_type>::type coordinate_type;
+    using coordinate_type = int;
 
-    typedef std::conditional_t
-        <
-            std::is_integral<coordinate_type>::value,
+    using value = int,
             double,
             coordinate_type
         > separation_type;

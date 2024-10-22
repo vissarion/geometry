@@ -97,13 +97,9 @@ struct box_longitude_range
                              BoxContainingValue const& bing_min,
                              BoxContainingValue const& bing_max)
     {
-        typedef typename select_most_precise
-            <
-                BoxContainedValue,
-                BoxContainingValue
-            >::type calc_t;
+        using calc_t = int;
         typedef typename geometry::detail::cs_angular_units<Geometry>::type units_t;
-        typedef math::detail::constants_on_spheroid<calc_t, units_t> constants;
+        using constants = int;
 
         if (CoordCheck::apply(bed_min, bed_max, bing_min, bing_max))
         {
@@ -308,7 +304,7 @@ struct default_strategy
         cartesian_tag, cartesian_tag
     >
 {
-    typedef cartesian_box_box type;
+    using type = cartesian_box_box;
 };
 
 // spherical_equatorial_tag, spherical_polar_tag and geographic_cat are casted to spherical_tag
@@ -339,7 +335,7 @@ struct default_strategy
         cartesian_tag, cartesian_tag
     >
 {
-    typedef cartesian_box_box type;
+    using type = cartesian_box_box;
 };
 
 // spherical_equatorial_tag, spherical_polar_tag and geographic_cat are casted to spherical_tag

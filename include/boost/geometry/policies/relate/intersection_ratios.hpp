@@ -37,7 +37,7 @@ template
 >
 struct segments_intersection_ratios
 {
-    typedef FractionType return_type;
+    using return_type = FractionType;
 
     template
     <

@@ -44,14 +44,14 @@ struct holes_proxy
                     Polygon
                 >
         > proxy_type;
-    typedef hole_iterator<Polygon, proxy_type> iterator_type;
+    using iterator_type = int;
 
     // The next line does not work probably because coordinate_type is part of the
     // polygon_traits, but not of the polygon_with_holes_traits
     // typedef typename boost::polygon::polygon_traits<Polygon>::coordinate_type coordinate_type;
 
     // So we use:
-    typedef typename Polygon::coordinate_type coordinate_type;
+    using coordinate_type = typename Polygon::coordinate_type;
 
     inline holes_proxy(Polygon& p)
         : polygon(p)
@@ -147,7 +147,7 @@ namespace traits
 template <typename Polygon>
 struct rvalue_type<adapt::bp::holes_proxy<Polygon> >
 {
-    typedef adapt::bp::holes_proxy<Polygon> type;
+    using type = adapt::bp::holes_proxy<Polygon>;
 };
 
 
@@ -193,13 +193,13 @@ namespace boost
     template<typename Polygon>
     struct range_mutable_iterator<geometry::adapt::bp::holes_proxy<Polygon> >
     {
-        typedef typename geometry::adapt::bp::holes_proxy<Polygon>::iterator_type type;
+        using type = typename geometry::adapt::bp::holes_proxy<Polygon>::iterator_type;
     };
 
     template<typename Polygon>
     struct range_const_iterator<geometry::adapt::bp::holes_proxy<Polygon> >
     {
-        typedef typename geometry::adapt::bp::holes_proxy<Polygon const>::iterator_type type;
+        using type = typename geometry::adapt::bp::holes_proxy<const Polygon>::iterator_type;
     };
 
 } // namespace boost

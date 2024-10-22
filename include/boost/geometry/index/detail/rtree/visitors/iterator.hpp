@@ -33,9 +33,9 @@ public:
     typedef typename rtree::internal_node<Value, typename Options::parameters_type, Box, Allocators, typename Options::node_tag>::type internal_node;
     typedef typename rtree::leaf<Value, typename Options::parameters_type, Box, Allocators, typename Options::node_tag>::type leaf;
 
-    typedef typename Allocators::size_type size_type;
-    typedef typename Allocators::const_reference const_reference;
-    typedef typename Allocators::node_pointer node_pointer;
+    using size_type = typename Allocators::size_type;
+    using const_reference = typename Allocators::const_reference;
+    using node_pointer = typename Allocators::node_pointer;
 
     typedef typename rtree::elements_type<internal_node>::type::const_iterator internal_iterator;
     typedef typename rtree::elements_type<leaf>::type leaf_elements;

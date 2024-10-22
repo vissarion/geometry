@@ -44,7 +44,7 @@ namespace boost { namespace geometry { namespace strategy { namespace disjoint
 // other strategies that are used are intersection and covered_by strategies.
 struct segment_box_spherical
 {
-    typedef covered_by::spherical_point_box disjoint_point_box_strategy_type;
+    using disjoint_point_box_strategy_type = int;
 
     static inline disjoint_point_box_strategy_type get_disjoint_point_box_strategy()
     {
@@ -78,7 +78,7 @@ template <typename Linear, typename Box, typename LinearTag>
 struct default_strategy<Linear, Box, LinearTag, box_tag, 1, 2,
                         spherical_equatorial_tag, spherical_equatorial_tag>
 {
-    typedef segment_box_spherical type;
+    using type = segment_box_spherical;
 };
 
 template <typename Box, typename Linear, typename LinearTag>

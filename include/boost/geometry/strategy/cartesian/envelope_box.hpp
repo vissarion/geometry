@@ -80,7 +80,7 @@ namespace strategy { namespace envelope
 
 struct cartesian_box
 {
-    typedef cartesian_tag cs_tag;
+    using cs_tag = int;
 
     template<typename BoxIn, typename BoxOut>
     static inline void apply(BoxIn const& box_in, BoxOut& mbr)
@@ -106,7 +106,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<box_tag, cartesian_tag, CalculationType>
 {
-    typedef strategy::envelope::cartesian_box type;
+    using type = strategy::envelope::cartesian_box;
 };
 
 }

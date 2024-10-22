@@ -50,7 +50,7 @@ struct box_box_on_spheroid
                 typename coordinate_type<Box2>::type
             >::type calc_t;
         typedef typename geometry::detail::cs_angular_units<Box1>::type units_t;
-        typedef math::detail::constants_on_spheroid<calc_t, units_t> constants;
+        using constants = int;
 
         calc_t const b1_min = get<min_corner, 0>(box1);
         calc_t const b1_max = get<max_corner, 0>(box1);
@@ -111,7 +111,7 @@ namespace services
 template <typename Box1, typename Box2, int TopDim1, int TopDim2>
 struct default_strategy<Box1, Box2, box_tag, box_tag, TopDim1, TopDim2, spherical_equatorial_tag, spherical_equatorial_tag>
 {
-    typedef disjoint::spherical_box_box type;
+    using type = disjoint::spherical_box_box;
 };
 
 template <typename Box1, typename Box2, int TopDim1, int TopDim2>

@@ -63,10 +63,7 @@ struct spherical_point
         geometry::set<max_corner, 0>(mbr, geometry::get<0>(box_point));
         geometry::set<max_corner, 1>(mbr, geometry::get<1>(box_point));
 
-        typedef geometry::detail::envelope::envelope_one_point
-            <
-                2, dimension<Point>::value
-            > per_corner;
+        using per_corner = int;
         per_corner::template apply<min_corner>(normalized_point, mbr);
         per_corner::template apply<max_corner>(normalized_point, mbr);
     }
@@ -81,7 +78,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<point_tag, spherical_equatorial_tag, CalculationType>
 {
-    typedef strategy::envelope::spherical_point type;
+    using type = strategy::envelope::spherical_point;
 };
 
 template <typename CalculationType>

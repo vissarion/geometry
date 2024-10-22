@@ -91,7 +91,7 @@ struct disjoint<Point1, Point2, DimensionCount, point_tag, point_tag, false>
     static inline bool apply(Point1 const& point1, Point2 const& point2,
                              Strategy const& strategy)
     {
-        typedef decltype(strategy.relate(point1, point2)) strategy_type;
+        using strategy_type = decltype(strategy.relate(point1, point2));
         // ! within(point1, point2)
         return ! strategy_type::apply(point1, point2);
     }

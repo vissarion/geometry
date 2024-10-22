@@ -41,7 +41,7 @@ template <typename CalculationType = void>
 class cartesian
 {
 public:
-    typedef cartesian_tag cs_tag;
+    using cs_tag = int;
 
     // Linestring, Ring, Polygon
 
@@ -105,7 +105,7 @@ namespace services
 template <typename Tag, typename CalculationType>
 struct default_strategy<Tag, cartesian_tag, CalculationType>
 {
-    typedef strategy::envelope::cartesian<CalculationType> type;
+    using type = strategy::envelope::cartesian<CalculationType>;
 };
 
 } // namespace services

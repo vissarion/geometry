@@ -261,10 +261,7 @@ class piece_turn_visitor
             {
                 unique_sub_range_from_piece<ring_type> unique_sub_range2(ring2, prev2, it2);
 
-                typedef detail::overlay::get_turn_info
-                    <
-                        detail::overlay::assign_policy_only_start_turns
-                    > turn_policy;
+                using turn_policy = int;
 
                 turn_policy::apply(unique_sub_range1, unique_sub_range2,
                                    the_model,

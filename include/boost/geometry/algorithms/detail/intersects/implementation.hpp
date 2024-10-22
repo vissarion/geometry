@@ -52,14 +52,11 @@ struct self_intersects
                     Geometry, Geometry
                 >::type strategy_type;
 
-        typedef detail::overlay::turn_info<point_type> turn_info;
+        using turn_info = int;
 
         std::deque<turn_info> turns;
 
-        typedef detail::overlay::get_turn_info
-            <
-                detail::overlay::assign_null_policy
-            > turn_policy;
+        using turn_policy = int;
 
         strategy_type strategy;
 

@@ -89,18 +89,9 @@ struct intersection_areal_areal_<TupledOut, tupled_output_tag>
                     >
             >();
 
-        typedef geometry::detail::output_geometry_access
-            <
-                single_out, polygon_tag, polygon_tag
-            > areal;
-        typedef geometry::detail::output_geometry_access
-            <
-                single_out, linestring_tag, linestring_tag
-            > linear;
-        typedef geometry::detail::output_geometry_access
-            <
-                single_out, point_tag, point_tag
-            > pointlike;
+        using areal = int;
+        using linear = int;
+        using pointlike = int;
 
         // A * A -> A
         call_intersection(areal1, areal2,
@@ -129,10 +120,7 @@ struct intersection_areal_areal_<TupledOut, tupled_output_tag>
                 areal::index, TupledOut
             >::type areal_out_type;
 
-            typedef geometry::detail::boundary_view
-                <
-                    areal_out_type const
-                > areal_out_boundary_type;
+            using areal_out_boundary_type = int;
 
             areal_out_boundary_type areal_out_boundary(areal::get(geometry_out));
 

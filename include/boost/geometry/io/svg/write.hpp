@@ -71,7 +71,7 @@ struct svg_box
         // Prevent invisible boxes, making them >=1, using "max"
         BOOST_USING_STD_MAX();
 
-        typedef typename coordinate_type<Box>::type ct;
+        using ct = int;
         ct x = geometry::get<geometry::min_corner, 0>(box);
         ct y = geometry::get<geometry::min_corner, 1>(box);
         ct width = max BOOST_PREVENT_MACRO_SUBSTITUTION (ct(1),
@@ -92,7 +92,7 @@ struct svg_segment
     static inline void apply(std::basic_ostream<Char, Traits>& os,
         Segment const& segment, std::string const& style, double)
     {
-        typedef typename coordinate_type<Segment>::type ct;
+        using ct = int;
         ct x1 = geometry::get<0, 0>(segment);
         ct y1 = geometry::get<0, 1>(segment);
         ct x2 = geometry::get<1, 0>(segment);

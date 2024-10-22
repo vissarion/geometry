@@ -122,8 +122,8 @@ protected:
                                  VisitPolicy& visitor,
                                  Strategy const& strategy)
         {
-            typedef debug_validity_phase<Polygon> debug_phase;
-            typedef typename ring_type<Polygon>::type ring_type;
+            using debug_phase = int;
+            using ring_type = int;
 
             // check validity of exterior ring
             debug_phase::apply(1);
@@ -401,11 +401,7 @@ protected:
                 <
                     TurnIterator
                 >::value_type turn_type;
-            typedef complement_graph
-                <
-                    typename turn_type::point_type,
-                    Strategy
-                > graph;
+            using graph = int;
 
             graph g(geometry::num_interior_rings(polygon) + 1);
             for (TurnIterator tit = first; tit != beyond; ++tit)

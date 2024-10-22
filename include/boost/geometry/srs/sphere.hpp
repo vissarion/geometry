@@ -82,19 +82,19 @@ namespace traits
 template <typename RadiusType>
 struct tag< srs::sphere<RadiusType> >
 {
-    typedef srs_sphere_tag type;
+    using type = int;
 };
 
 template <typename RadiusType>
 struct radius_type< srs::sphere<RadiusType> >
 {
-    typedef RadiusType type;
+    using type = RadiusType;
 };
 
 template <typename RadiusType, std::size_t Dimension>
 struct radius_access<srs::sphere<RadiusType>, Dimension>
 {
-    typedef srs::sphere<RadiusType> sphere_type;
+    using sphere_type = srs::sphere<RadiusType>;
 
     static inline RadiusType get(sphere_type const& s)
     {

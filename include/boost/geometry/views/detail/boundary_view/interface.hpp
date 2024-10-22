@@ -55,10 +55,7 @@ namespace traits
 template <typename Geometry>
 struct tag< geometry::detail::boundary_view<Geometry> >
 {
-    typedef typename detail_dispatch::boundary_view
-        <
-            Geometry
-        >::tag_type type;
+    using type = int;
 };
 
 } // namespace traits

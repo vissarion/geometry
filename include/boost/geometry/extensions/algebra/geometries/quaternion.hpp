@@ -90,13 +90,13 @@ namespace traits
 template <typename CoordinateType>
 struct tag<model::quaternion<CoordinateType> >
 {
-    typedef quaternion_tag type;
+    using type = int;
 };
 
 template <typename CoordinateType>
 struct coordinate_type<model::quaternion<CoordinateType> >
 {
-    typedef CoordinateType type;
+    using type = CoordinateType;
 };
 
 //template <typename CoordinateType>

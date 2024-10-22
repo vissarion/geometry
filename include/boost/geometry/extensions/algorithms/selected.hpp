@@ -57,7 +57,7 @@ struct differences_loop
 {
     static inline bool apply(P1 const& p1, P2 const& p2, T const& distance, T& sum)
     {
-        typedef typename select_coordinate_type<P1, P2>::type coordinate_type;
+        using coordinate_type = int;
 
         coordinate_type const c1 = boost::numeric_cast<coordinate_type>(get<D>(p1));
         coordinate_type const c2 = boost::numeric_cast<coordinate_type>(get<D>(p2));
@@ -88,7 +88,7 @@ struct outside_loop
 {
     static inline bool apply(PS const& seg1, PS const& seg2, P const& point, T const& distance)
     {
-        typedef typename select_coordinate_type<PS, P>::type coordinate_type;
+        using coordinate_type = int;
 
         coordinate_type const v = boost::numeric_cast<coordinate_type>(get<D>(point));
         coordinate_type const s1 = get<D>(seg1);
@@ -178,7 +178,7 @@ struct close_to_range
             return false;
         }
 
-        typedef typename point_type<R>::type point_type;
+        using point_type = int;
         typedef typename boost::range_iterator<R const>::type iterator_type;
 
         iterator_type it = boost::begin(range);

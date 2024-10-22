@@ -39,12 +39,10 @@ namespace detail { namespace area
 template<typename C>
 struct circle_area
 {
-    typedef typename coordinate_type<C>::type coordinate_type;
+    using coordinate_type = int;
 
     // Returning the coordinate precision, but if integer, returning a double
-    typedef std::conditional_t
-        <
-            std::is_integral<coordinate_type>::value,
+    using value = int,
             double,
             coordinate_type
         > return_type;

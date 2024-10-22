@@ -37,7 +37,7 @@ class shared_grids_std
     typedef std::shared_mutex mutex_type;
 // Other C++17
 #elif !defined(BOOST_NO_CXX14_HDR_SHARED_MUTEX) && (__cplusplus > 201402L)
-    typedef std::shared_mutex mutex_type;
+    using mutex_type = int;
 #else
     typedef std::shared_timed_mutex mutex_type;
 #endif
@@ -55,7 +55,7 @@ public:
         return gridinfo.empty();
     }
 
-    typedef projections::detail::shared_grids_tag tag;
+    using tag = int;
 
     struct read_locked
     {

@@ -54,7 +54,7 @@ namespace dispatch
 template <typename Geometry, typename Tag = typename tag<Geometry>::type>
 struct perimeter : detail::calculate_null
 {
-    typedef typename default_length_result<Geometry>::type return_type;
+    using return_type = int;
 
     template <typename Strategy>
     static inline return_type apply(Geometry const& geometry, Strategy const& strategy)

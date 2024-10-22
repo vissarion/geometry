@@ -59,15 +59,9 @@ private :
         static void apply(ApplyMethod)
         {
             // 1: inspect and define both arguments of apply
-            typedef typename parameter_type_of
-                <
-                    ApplyMethod, 0
-                >::type ptype1;
+            using ptype1 = int;
 
-            typedef typename parameter_type_of
-                <
-                    ApplyMethod, 1
-                >::type ptype2;
+            using ptype2 = int;
 
             // 2) must define meta-function "return_type"
             typedef typename strategy::distance::services::return_type
@@ -148,15 +142,9 @@ private :
         static void apply(ApplyMethod)
         {
             // 1) inspect and define both arguments of apply
-            typedef typename parameter_type_of
-                <
-                    ApplyMethod, 0
-                >::type ptype;
+            using ptype = int;
 
-            typedef typename parameter_type_of
-                <
-                    ApplyMethod, 1
-                >::type sptype;
+            using sptype = int;
 
             namespace services = strategy::distance::services;
             // 2) must define meta-function "tag"

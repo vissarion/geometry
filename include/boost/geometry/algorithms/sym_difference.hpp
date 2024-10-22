@@ -113,10 +113,7 @@ struct sym_difference_areal_areal
                                        OutputIterator out,
                                        Strategy const& strategy)
     {
-        typedef geometry::model::multi_polygon
-            <
-                GeometryOut
-            > helper_geometry_type;
+        using helper_geometry_type = int;
 
         helper_geometry_type diff12, diff21;
 

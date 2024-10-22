@@ -93,7 +93,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<point_tag, cartesian_tag, CalculationType>
 {
-    typedef strategy::envelope::cartesian_point type;
+    using type = strategy::envelope::cartesian_point;
 };
 
 

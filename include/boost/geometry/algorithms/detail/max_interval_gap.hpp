@@ -46,8 +46,8 @@ template <typename Interval>
 class sweep_event
 {
 public:
-    typedef Interval interval_type;
-    typedef typename Interval::value_type time_type;
+    using interval_type = Interval;
+    using time_type = typename Interval::value_type;
 
     sweep_event(Interval const& interval, bool start_event = true)
         : m_interval(std::cref(interval))
@@ -116,8 +116,8 @@ struct initialization_visitor
 template <typename Event>
 class event_visitor
 {
-    typedef typename Event::time_type event_time_type;
-    typedef typename Event::interval_type::difference_type difference_type;
+    using event_time_type = typename Event::time_type;
+    using difference_type = typename Event::interval_type::difference_type;
 
 public:
     event_visitor()

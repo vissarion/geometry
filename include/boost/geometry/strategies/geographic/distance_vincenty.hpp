@@ -50,10 +50,7 @@ class vincenty
             strategy::vincenty, Spheroid, CalculationType
         >
 {
-    typedef strategy::distance::geographic
-        <
-            strategy::vincenty, Spheroid, CalculationType
-        > base_type;
+    using base_type = int;
 
 public:
     inline vincenty()
@@ -72,7 +69,7 @@ namespace services
 template <typename Spheroid, typename CalculationType>
 struct tag<vincenty<Spheroid, CalculationType> >
 {
-    typedef strategy_tag_distance_point_point type;
+    using type = int;
 };
 
 
@@ -85,7 +82,7 @@ struct return_type<vincenty<Spheroid, CalculationType>, P1, P2>
 template <typename Spheroid, typename CalculationType>
 struct comparable_type<vincenty<Spheroid, CalculationType> >
 {
-    typedef vincenty<Spheroid, CalculationType> type;
+    using type = vincenty<Spheroid, CalculationType>;
 };
 
 

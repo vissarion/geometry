@@ -79,7 +79,7 @@ struct box_segment_intersection
 {
     BOOST_STATIC_ASSERT(0 < CurrentDimension);
 
-    typedef box_segment_intersection_dim<Box, Point, CurrentDimension - 1> for_dim;
+    using for_dim = box_segment_intersection_dim<Box, Point, CurrentDimension - 1>;
 
     template <typename RelativeDistance>
     static inline bool apply(Box const& b, Point const& p0, Point const& p1,
@@ -93,7 +93,7 @@ struct box_segment_intersection
 template <typename Box, typename Point>
 struct box_segment_intersection<Box, Point, 1>
 {
-    typedef box_segment_intersection_dim<Box, Point, 0> for_dim;
+    using for_dim = box_segment_intersection_dim<Box, Point, 0>;
 
     template <typename RelativeDistance>
     static inline bool apply(Box const& b, Point const& p0, Point const& p1,

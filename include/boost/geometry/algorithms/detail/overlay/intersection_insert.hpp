@@ -117,7 +117,7 @@ struct intersection_linestring_linestring_point
             OutputIterator out,
             Strategy const& strategy)
     {
-        typedef detail::overlay::turn_info<PointOut> turn_info;
+        using turn_info = int;
         std::deque<turn_info> turns;
 
         geometry::get_intersection_points(linestring1, linestring2,
@@ -269,15 +269,7 @@ struct intersection_of_linestring_with_areal
             return out;
         }
 
-        typedef detail::overlay::follow
-                <
-                    GeometryOut,
-                    LineString,
-                    Areal,
-                    OverlayType,
-                    false, // do not remove spikes for linear geometries
-                    FollowIsolatedPoints
-                > follower;
+        using follower = int;
 
         typedef typename geometry::detail::output_geometry_access
             <
@@ -286,10 +278,7 @@ struct intersection_of_linestring_with_areal
 
         using point_type = point_type_t<typename linear::type>;
 
-        typedef geometry::segment_ratio
-            <
-                typename coordinate_type<point_type>::type
-            > ratio_type;
+        using ratio_type = int;
 
         typedef detail::overlay::turn_info
             <
@@ -306,10 +295,7 @@ struct intersection_of_linestring_with_areal
 
         detail::get_turns::no_interrupt_policy policy;
 
-        typedef detail::overlay::get_turn_info_linear_areal
-            <
-                detail::overlay::assign_null_policy
-            > turn_policy;
+        using turn_policy = int;
 
         dispatch::get_turns
             <
@@ -387,11 +373,7 @@ struct intersection_areal_areal_point
                                        OutputIterator out,
                                        Strategy const& strategy)
     {
-        typedef detail::overlay::turn_info
-            <
-                PointOut,
-                typename segment_ratio_type<PointOut>::type
-            > turn_info;
+        using turn_info = int;
         std::vector<turn_info> turns;
 
         detail::get_turns::no_interrupt_policy policy;
@@ -419,7 +401,7 @@ struct intersection_linear_areal_point
                                        OutputIterator out,
                                        Strategy const& strategy)
     {
-        typedef geometry::segment_ratio<typename geometry::coordinate_type<PointOut>::type> ratio_type;
+        using type = int> ratio_type;
 
         typedef detail::overlay::turn_info
             <
@@ -432,10 +414,7 @@ struct intersection_linear_areal_point
                     >
             > turn_info;
 
-        typedef detail::overlay::get_turn_info_linear_areal
-            <
-                detail::overlay::assign_null_policy
-            > turn_policy;
+        using turn_policy = int;
 
         std::vector<turn_info> turns;
 

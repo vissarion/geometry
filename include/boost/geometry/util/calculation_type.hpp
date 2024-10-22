@@ -34,7 +34,7 @@ namespace detail
 
 struct default_integral
 {
-    typedef long long type;
+    using type = long long;
 };
 
 /*!
@@ -67,9 +67,7 @@ struct calculation_type
         ));
 
 
-    typedef std::conditional_t
-        <
-            std::is_void<CalculationType>::value,
+    using value = int,
             std::conditional_t
                 <
                     std::is_floating_point<Type>::value,
@@ -125,13 +123,7 @@ template
 >
 struct binary
 {
-    typedef typename detail::calculation_type
-        <
-            typename select_coordinate_type<Geometry1, Geometry2>::type,
-            CalculationType,
-            DefaultFloatingPointCalculationType,
-            DefaultIntegralCalculationType
-        >::type type;
+    using type = int;
 };
 
 

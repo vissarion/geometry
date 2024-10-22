@@ -85,7 +85,7 @@ public :
                 DistanceType const& buffer_distance,
                 RangeOut& range_out) const
     {
-        typedef typename coordinate_type<Point>::type coordinate_type;
+        using coordinate_type = int;
 
         typedef typename geometry::select_most_precise
             <

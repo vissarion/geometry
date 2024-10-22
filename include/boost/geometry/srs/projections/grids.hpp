@@ -47,14 +47,14 @@ public:
         return gridinfo.empty();
     }
 
-    typedef projections::detail::grids_tag tag;
+    using tag = projections::detail::grids_tag;
 
     projections::detail::pj_gridinfo gridinfo;
 };
 
 struct ifstream_policy
 {
-    typedef std::ifstream stream_type;
+    using stream_type = int;
 
     static inline void open(stream_type & is, std::string const& gridname)
     {
@@ -69,8 +69,8 @@ template
 >
 struct grids_storage
 {
-    typedef StreamPolicy stream_policy_type;
-    typedef Grids grids_type;
+    using stream_policy_type = StreamPolicy;
+    using grids_type = Grids;
 
     grids_storage()
     {}
@@ -92,7 +92,7 @@ public:
         : m_storage_ptr(boost::addressof(storage))
     {}
 
-    typedef GridsStorage grids_storage_type;
+    using grids_storage_type = GridsStorage;
 
     GridsStorage & grids_storage() const
     {

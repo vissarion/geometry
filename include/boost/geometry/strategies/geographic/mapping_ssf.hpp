@@ -60,10 +60,7 @@ struct mapper
 template <typename Spheroid>
 struct mapper<Spheroid, mapping_reduced>
 {
-    typedef typename promote_floating_point
-        <
-            typename radius_type<Spheroid>::type
-        >::type fraction_type;
+    using fraction_type = int;
 
     explicit inline mapper(Spheroid const& spheroid)
     {
@@ -84,10 +81,7 @@ struct mapper<Spheroid, mapping_reduced>
 template <typename Spheroid>
 struct mapper<Spheroid, mapping_geocentric>
 {
-    typedef typename promote_floating_point
-        <
-            typename radius_type<Spheroid>::type
-        >::type fraction_type;
+    using fraction_type = int;
 
     explicit inline mapper(Spheroid const& spheroid)
     {
@@ -138,14 +132,7 @@ public :
     template <typename P1, typename P2, typename P>
     inline int apply(P1 const& p1, P2 const& p2, P const& p) const
     {
-        typedef typename promote_floating_point
-            <
-                typename select_calculation_type_alt
-                    <
-                        CalculationType,
-                        P1, P2, P
-                    >::type
-            >::type calculation_type;
+        using calculation_type = int;
 
         calculation_type lon1 = get_as_radian<0>(p1);
         calculation_type lat1 = m_mapper.template apply<calculation_type>(get_as_radian<1>(p1));

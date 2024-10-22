@@ -44,7 +44,7 @@ template
 >
 struct strategy_convex_hull
 {
-    typedef strategy::not_implemented type;
+    using type = int;
 };
 
 

@@ -60,13 +60,13 @@ struct parameters_base
 template <std::size_t I, typename P, typename ...Ps>
 struct parameters_base<I, P, Ps...>
 {
-    typedef typename parameters_base<I - 1, Ps...>::type type;
+    using type = typename parameters_base<I - 1, Ps...>::type;
 };
 
 template <typename P, typename ...Ps>
 struct parameters_base<0, P, Ps...>
 {
-    typedef parameters<P, Ps...> type;
+    using type = parameters<P, Ps...>;
 };
 
 } // namespace detail
@@ -448,7 +448,7 @@ template
 >
 struct ellps
 {
-    typedef SpheroidOrSphere model_type;
+    using model_type = SpheroidOrSphere;
 
     ellps() : model() {}
     explicit ellps(SpheroidOrSphere const& sph) : model(sph) {}
@@ -459,7 +459,7 @@ struct ellps
 struct nadgrids
     : srs::detail::nadgrids
 {
-    typedef srs::detail::nadgrids base_t;
+    using base_t = int;
     nadgrids(std::string const& g0) : base_t(g0) {}
     nadgrids(std::string const& g0, std::string const& g1) : base_t(g0, g1) {}
     nadgrids(std::string const& g0, std::string const& g1, std::string const& g2) : base_t(g0, g1, g2) {}
@@ -471,14 +471,14 @@ struct nadgrids
 template <typename Proj>
 struct o_proj
 {
-    typedef Proj type;
+    using type = Proj;
 };
 
 template <typename T = double>
 struct towgs84
     : srs::detail::towgs84<T>
 {
-    typedef srs::detail::towgs84<T> base_t;
+    using base_t = int;
 
     towgs84(T const& v0, T const& v1, T const& v2)
         : base_t(v0, v1, v2)
@@ -492,7 +492,7 @@ struct towgs84
 struct axis
     : srs::detail::axis
 {
-    typedef srs::detail::axis base_t;
+    using base_t = int;
 
     axis(int const& v0, int const& v1, int const& v2)
         : base_t(v0, v1, v2)
@@ -503,7 +503,7 @@ struct axis
 template <typename Units>
 struct vunits
 {
-    typedef Units type;
+    using type = Units;
 };
 
 // Static parameters traits
@@ -516,8 +516,8 @@ template <typename D>
 struct datum_traits
 {
     static const bool is_specialized = false;
-    typedef void ellps_type;
-    typedef void def_type;
+    using ellps_type = void;
+    using def_type = void;
 };
 
 #define BOOST_GEOMETRY_PROJECTIONS_DETAIL_REGISTER_DATUM(NAME, ELLPS, DEF_T, DEF_V) \
@@ -549,7 +549,7 @@ struct ellps_traits
     static const bool is_specialized = false;
     template <typename T> struct model_type
     {
-        typedef void type;
+        using type = void;
     };
 };
 
@@ -560,7 +560,7 @@ struct ellps_traits<spar::ellps<E> >
     template <typename T> struct model_type
     {
         // TODO: transform to spheroid<T> or sphere<T>
-        typedef typename spar::ellps<E>::model_type type;
+        using type = typename spar::ellps<E>::model_type;
     };
 
     template <typename T>
@@ -651,7 +651,7 @@ template <typename M>
 struct mode_traits
 {
     static const bool is_specialized = false;
-    typedef void type;
+    using type = void;
 };
 
 #define BOOST_GEOMETRY_PROJECTIONS_DETAIL_REGISTER_MODE(NAME) \
@@ -671,7 +671,7 @@ template <typename O>
 struct orient_traits
 {
     static const bool is_specialized = false;
-    typedef void type;
+    using type = void;
 };
 
 #define BOOST_GEOMETRY_PROJECTIONS_DETAIL_REGISTER_ORIENT(NAME) \
@@ -689,14 +689,14 @@ template <typename M>
 struct pm_traits
 {
     static const bool is_specialized = false;
-    typedef void type;
+    using type = void;
 };
 
 template <typename T>
 struct pm_traits<spar::pm<T> >
 {
     static const bool is_specialized = true;
-    typedef T type;
+    using type = T;
     static T const& value(spar::pm<T> const& p) { return p.value; }
 };
 
@@ -727,7 +727,7 @@ template <typename P>
 struct proj_traits
 {
     static const bool is_specialized = false;
-    typedef void type;
+    using type = void;
 };
 
 #define BOOST_GEOMETRY_PROJECTIONS_DETAIL_REGISTER_PROJ(NAME) \
@@ -882,7 +882,7 @@ template <typename S>
 struct sweep_traits
 {
     static const bool is_specialized = false;
-    typedef void type;
+    using type = void;
 };
 
 #define BOOST_GEOMETRY_PROJECTIONS_DETAIL_REGISTER_SWEEP(NAME) \
@@ -900,7 +900,7 @@ template <typename S>
 struct units_traits
 {
     static const bool is_specialized = false;
-    typedef void type;
+    using type = void;
 };
 
 #define BOOST_GEOMETRY_PROJECTIONS_DETAIL_REGISTER_UNITS(NAME) \
@@ -997,8 +997,8 @@ struct pick_proj_tag
 
     BOOST_GEOMETRY_STATIC_ASSERT((is_found), "Projection not named.", Tuple);
 
-    typedef proj_traits<proj_type> traits_type;
-    typedef typename traits_type::type type;
+    using traits_type = int;
+    using type = int;
 };
 
 template <typename Tuple>
@@ -1014,8 +1014,8 @@ struct pick_o_proj_tag
 
     BOOST_GEOMETRY_STATIC_ASSERT((is_found), "Expected o_proj parameter.", Tuple);
 
-    typedef proj_traits<typename o_proj_type::type> traits_type;
-    typedef typename traits_type::type type;
+    using traits_type = int;
+    using type = int;
 };
 
 

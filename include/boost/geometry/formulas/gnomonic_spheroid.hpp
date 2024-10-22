@@ -40,12 +40,12 @@ template <
 >
 class gnomonic_spheroid
 {
-    typedef Inverse<CT, false, true, true, true, true> inverse_type;
-    typedef typename inverse_type::result_type inverse_result;
+    using inverse_type = Inverse<CT, false, true, true, true, true>;
+    using inverse_result = typename inverse_type::result_type;
 
-    typedef Direct<CT, false, false, true, true> direct_quantities_type;
-    typedef Direct<CT, true, false, false, false> direct_coordinates_type;
-    typedef typename direct_coordinates_type::result_type direct_result;
+    using direct_quantities_type = Direct<CT, false, false, true, true>;
+    using direct_coordinates_type = Direct<CT, true, false, false, false>;
+    using direct_result = typename direct_coordinates_type::result_type;
 
 public:
     template <typename Spheroid>

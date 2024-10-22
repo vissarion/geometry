@@ -61,7 +61,7 @@ class linestring : public Container<Point, Allocator<Point> >
 {
     BOOST_CONCEPT_ASSERT( (concepts::Point<Point>) );
 
-    typedef Container<Point, Allocator<Point> > base_type;
+    using base_type = Container<Point, Allocator<Point>>;
 
 public :
     /// \constructor_default{linestring}
@@ -108,7 +108,7 @@ template
 >
 struct tag<model::linestring<Point, Container, Allocator> >
 {
-    typedef linestring_tag type;
+    using type = int;
 };
 } // namespace traits
 

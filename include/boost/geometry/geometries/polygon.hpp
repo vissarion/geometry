@@ -80,9 +80,9 @@ class polygon
 public:
 
     // Member types
-    typedef Point point_type;
-    typedef ring<Point, ClockWise, Closed, PointList, PointAlloc> ring_type;
-    typedef RingList<ring_type , RingAlloc<ring_type > > inner_container_type;
+    using point_type = Point;
+    using ring_type = int;
+    using inner_container_type = RingList<ring_type, RingAlloc<ring_type>>;
 
     inline ring_type const& outer() const { return m_outer; }
     inline inner_container_type const& inners() const { return m_inners; }
@@ -166,7 +166,7 @@ struct tag
         >
 >
 {
-    typedef polygon_tag type;
+    using type = int;
 };
 
 template
@@ -187,12 +187,7 @@ struct ring_const_type
         >
 >
 {
-    typedef typename model::polygon
-        <
-            Point, ClockWise, Closed,
-            PointList, RingList,
-            PointAlloc, RingAlloc
-        >::ring_type const& type;
+    using type = const int &;
 };
 
 
@@ -214,12 +209,7 @@ struct ring_mutable_type
         >
 >
 {
-    typedef typename model::polygon
-        <
-            Point, ClockWise, Closed,
-            PointList, RingList,
-            PointAlloc, RingAlloc
-        >::ring_type& type;
+    using type = int &;
 };
 
 template
@@ -241,12 +231,7 @@ struct interior_const_type
         >
 >
 {
-    typedef typename model::polygon
-        <
-            Point, ClockWise, Closed,
-            PointList, RingList,
-            PointAlloc, RingAlloc
-        >::inner_container_type const& type;
+    using type = const int &;
 };
 
 
@@ -269,12 +254,7 @@ struct interior_mutable_type
         >
 >
 {
-    typedef typename model::polygon
-        <
-            Point, ClockWise, Closed,
-            PointList, RingList,
-            PointAlloc, RingAlloc
-        >::inner_container_type& type;
+    using type = int &;
 };
 
 
@@ -296,12 +276,7 @@ struct exterior_ring
         >
 >
 {
-    typedef model::polygon
-        <
-            Point, ClockWise, Closed,
-            PointList, RingList,
-            PointAlloc, RingAlloc
-        > polygon_type;
+    using polygon_type = int;
 
     static inline typename polygon_type::ring_type& get(polygon_type& p)
     {
@@ -334,11 +309,7 @@ struct interior_rings
         >
 >
 {
-    typedef model::polygon
-        <
-            Point, ClockWise, Closed, PointList, RingList,
-            PointAlloc, RingAlloc
-        > polygon_type;
+    using polygon_type = int;
 
     static inline typename polygon_type::inner_container_type& get(
                     polygon_type& p)

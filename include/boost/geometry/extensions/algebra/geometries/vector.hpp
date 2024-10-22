@@ -88,19 +88,19 @@ namespace traits
 template <typename CoordinateType, std::size_t DimensionCount>
 struct tag<model::vector<CoordinateType, DimensionCount> >
 {
-    typedef vector_tag type;
+    using type = int;
 };
 
 template <typename CoordinateType, std::size_t DimensionCount>
 struct coordinate_type<model::vector<CoordinateType, DimensionCount> >
 {
-    typedef CoordinateType type;
+    using type = CoordinateType;
 };
 
 template <typename CoordinateType, std::size_t DimensionCount>
 struct coordinate_system<model::vector<CoordinateType, DimensionCount> >
 {
-    typedef cs::cartesian type;
+    using type = int;
 };
 
 template <typename CoordinateType, std::size_t DimensionCount>

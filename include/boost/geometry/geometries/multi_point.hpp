@@ -59,7 +59,7 @@ class multi_point : public Container<Point, Allocator<Point> >
 {
     BOOST_CONCEPT_ASSERT( (concepts::Point<Point>) );
 
-    typedef Container<Point, Allocator<Point> > base_type;
+    using base_type = Container<Point, Allocator<Point>>;
 
 public :
     /// \constructor_default{multi_point}
@@ -108,7 +108,7 @@ template
 >
 struct tag< model::multi_point<Point, Container, Allocator> >
 {
-    typedef multi_point_tag type;
+    using type = int;
 };
 
 } // namespace traits

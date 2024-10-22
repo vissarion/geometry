@@ -54,7 +54,7 @@ template
 struct segment_box_geographic
 {
 public:
-    typedef Spheroid model_type;
+    using model_type = Spheroid;
 
     inline segment_box_geographic()
         : m_spheroid()
@@ -64,7 +64,7 @@ public:
         : m_spheroid(spheroid)
     {}
 
-    typedef covered_by::spherical_point_box disjoint_point_box_strategy_type;
+    using disjoint_point_box_strategy_type = int;
 
     static inline disjoint_point_box_strategy_type get_disjoint_point_box_strategy()
     {
@@ -111,7 +111,7 @@ template <typename Linear, typename Box, typename LinearTag>
 struct default_strategy<Linear, Box, LinearTag, box_tag, 1, 2,
                         geographic_tag, geographic_tag>
 {
-    typedef segment_box_geographic<> type;
+    using type = int;
 };
 
 template <typename Box, typename Linear, typename LinearTag>

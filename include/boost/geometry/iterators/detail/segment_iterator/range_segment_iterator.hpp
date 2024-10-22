@@ -109,7 +109,7 @@ class range_segment_iterator
     }
 
 public:
-    typedef typename range_iterator_type<Range>::type iterator_type;
+    using iterator_type = int;
 
     // default constructor
     range_segment_iterator()
@@ -148,10 +148,7 @@ public:
                            > const& other)
         : m_it(other.m_it)
     {
-        typedef typename range_segment_iterator
-            <
-                OtherRange, OtherValue, OtherReference
-            >::iterator_type other_iterator_type;
+        using other_iterator_type = typename range_segment_iterator<OtherRange, OtherValue, OtherReference>::iterator_type;
 
         static const bool are_conv
             = std::is_convertible<other_iterator_type, iterator_type>::value;

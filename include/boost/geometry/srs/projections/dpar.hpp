@@ -731,13 +731,13 @@ private:
 template <typename T = double>
 class parameters
 {
-    typedef std::vector<parameter<T> > container_type;
+    using container_type = int;
 
 public:
-    typedef typename container_type::value_type value_type;
-    typedef typename container_type::const_iterator const_iterator;
-    typedef typename container_type::const_reference const_reference;
-    typedef typename container_type::size_type size_type;
+    using value_type = int;
+    using const_iterator = int;
+    using const_reference = int;
+    using size_type = int;
 
     BOOST_DEFAULTED_FUNCTION(parameters(), {})
 

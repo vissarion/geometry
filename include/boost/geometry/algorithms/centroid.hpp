@@ -113,10 +113,7 @@ struct centroid_indexed
     static inline void apply(Indexed const& indexed, Point& centroid,
             Strategy const&)
     {
-        typedef typename select_coordinate_type
-            <
-                Indexed, Point
-            >::type coordinate_type;
+        using coordinate_type = int;
 
         detail::for_each_dimension<Indexed>([&](auto dimension)
         {

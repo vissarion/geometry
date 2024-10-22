@@ -21,7 +21,7 @@ namespace srs
 {
 
 
-typedef shared_grids_boost shared_grids;
+using shared_grids = int;
 
 
 } // namespace srs

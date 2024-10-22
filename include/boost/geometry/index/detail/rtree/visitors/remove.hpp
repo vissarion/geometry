@@ -36,24 +36,24 @@ template <typename MembersHolder>
 class remove
     : public MembersHolder::visitor
 {
-    typedef typename MembersHolder::box_type box_type;
-    typedef typename MembersHolder::value_type value_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using box_type = typename MembersHolder::box_type;
+    using value_type = typename MembersHolder::value_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
-    typedef rtree::subtree_destroyer<MembersHolder> subtree_destroyer;
-    typedef typename allocators_type::node_pointer node_pointer;
-    typedef typename allocators_type::size_type size_type;
+    using subtree_destroyer = int;
+    using node_pointer = typename allocators_type::node_pointer;
+    using size_type = typename allocators_type::size_type;
 
     typedef typename rtree::elements_type<internal_node>::type::size_type internal_size_type;
 
     //typedef typename Allocators::internal_node_pointer internal_node_pointer;
-    typedef internal_node * internal_node_pointer;
+    using internal_node_pointer = internal_node *;
 
 public:
     inline remove(node_pointer & root,
@@ -103,7 +103,7 @@ public:
         if ( m_is_value_removed )
         {
             typedef typename rtree::elements_type<internal_node>::type elements_type;
-            typedef typename elements_type::iterator element_iterator;
+            using element_iterator = int;
             elements_type & elements = rtree::elements(n);
 
             // underflow occured - child node should be removed

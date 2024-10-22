@@ -25,14 +25,14 @@ template <typename MembersHolder>
 class copy
     : public MembersHolder::visitor
 {
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
-    typedef rtree::subtree_destroyer<MembersHolder> subtree_destroyer;
-    typedef typename allocators_type::node_pointer node_pointer;
+    using subtree_destroyer = int;
+    using node_pointer = typename allocators_type::node_pointer;
 
 public:
     explicit inline copy(allocators_type & allocators)

@@ -37,7 +37,7 @@ template
     >
 struct geographic
 {
-    typedef azimuth_tag version_tag;
+    using version_tag = int;
 
     template <typename Geometry>
     struct result_type
@@ -60,7 +60,7 @@ struct geographic
                       typename result_type<Point>::type & azi,
                       typename result_type<Point>::type & razi) const
     {
-        typedef typename result_type<Point>::type calc_t;
+        using calc_t = typename result_type<Point>::type;
 
         if (equals_point_point(p1, p2))
         {
@@ -108,7 +108,7 @@ namespace services
 template <>
 struct default_strategy<geographic_tag>
 {
-    typedef geographic<> type;
+    using type = int;
 };
 
 } // namespace services

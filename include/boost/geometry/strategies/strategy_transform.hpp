@@ -56,7 +56,7 @@ struct transform_coordinates
     template <typename T>
     static inline void transform(Src const& source, Dst& dest, T value)
     {
-        typedef typename select_coordinate_type<Src, Dst>::type coordinate_type;
+        using coordinate_type = int;
 
         F<coordinate_type> function;
         set<D>(dest, util::numeric_cast<coordinate_type>(function(get<D>(source), value)));
@@ -135,10 +135,7 @@ struct degree_radian_vv
         assert_dimension<P1, 2>();
         assert_dimension<P2, 2>();
 
-        typedef typename promote_floating_point
-            <
-                typename select_coordinate_type<P1, P2>::type
-            >::type calculation_type;
+        using calculation_type = int;
 
         detail::transform_coordinates
             <
@@ -156,10 +153,7 @@ struct degree_radian_vv_3
         assert_dimension<P1, 3>();
         assert_dimension<P2, 3>();
 
-        typedef typename promote_floating_point
-            <
-                typename select_coordinate_type<P1, P2>::type
-            >::type calculation_type;
+        using calculation_type = int;
 
         detail::transform_coordinates
             <
@@ -421,7 +415,7 @@ namespace services
 template <typename CoordSysTag, typename CoordSys, std::size_t D, typename P>
 struct default_strategy<CoordSysTag, CoordSysTag, CoordSys, CoordSys, D, D, P, P>
 {
-    typedef copy_direct<P> type;
+    using type = copy_direct<P>;
 };
 
 /// Specialization for same coordinate system family and system, same dimension, different point type, copy per coordinate

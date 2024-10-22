@@ -127,7 +127,7 @@ struct pj_ctable
 struct pj_gi_load
 {
     enum format_t { missing = 0, ntv1, ntv2, gtx, ctable, ctable2 };
-    typedef boost::long_long_type offset_t;
+    using offset_t = int;
 
     explicit pj_gi_load(std::string const& gname = "",
                         format_t f = missing,
@@ -178,7 +178,7 @@ struct pj_gi
     }
 };
 
-typedef std::vector<pj_gi> pj_gridinfo;
+using pj_gridinfo = int;
 
 
 /************************************************************************/

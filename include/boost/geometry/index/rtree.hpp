@@ -174,15 +174,15 @@ class rtree
 {
 public:
     /*! \brief The type of Value stored in the container. */
-    typedef Value value_type;
+    using value_type = Value;
     /*! \brief R-tree parameters type. */
-    typedef Parameters parameters_type;
+    using parameters_type = Parameters;
     /*! \brief The function object extracting Indexable from Value. */
-    typedef IndexableGetter indexable_getter;
+    using indexable_getter = IndexableGetter;
     /*! \brief The function object comparing objects of type Value. */
-    typedef EqualTo value_equal;
+    using value_equal = EqualTo;
     /*! \brief The type of allocator used by the container. */
-    typedef Allocator allocator_type;
+    using allocator_type = Allocator;
 
     // TODO: SHOULD THIS TYPE BE REMOVED?
     /*! \brief The Indexable type to which Value is translated. */
@@ -191,10 +191,7 @@ public:
     >::type indexable_type;
 
     /*! \brief The Box type used by the R-tree. */
-    typedef geometry::model::box<
-                geometry::model::point<
-                    typename coordinate_type<indexable_type>::type,
-                    dimension<indexable_type>::value,
+    using value = int,
                     typename coordinate_system<indexable_type>::type
                 >
             >
@@ -202,7 +199,7 @@ public:
 
 private:
 
-    typedef bounds_type box_type;
+    using box_type = int;
 
     struct members_holder
         : public detail::translator<IndexableGetter, EqualTo>
@@ -216,21 +213,18 @@ private:
                 typename detail::rtree::options_type<Parameters>::type::node_tag
             >
     {
-        typedef Value value_type;
-        typedef typename rtree::bounds_type bounds_type;
-        typedef Parameters parameters_type;
+        using value_type = Value;
+        using bounds_type = int;
+        using parameters_type = Parameters;
         //typedef IndexableGetter indexable_getter;
         //typedef EqualTo value_equal;
         //typedef Allocator allocator_type;
 
-        typedef bounds_type box_type;
-        typedef detail::translator<IndexableGetter, EqualTo> translator_type;
+        using box_type = bounds_type;
+        using translator_type = int;
         typedef typename detail::rtree::options_type<Parameters>::type options_type;
-        typedef typename options_type::node_tag node_tag;
-        typedef detail::rtree::allocators
-            <
-                Allocator, Value, Parameters, bounds_type, node_tag
-            > allocators_type;
+        using node_tag = int;
+        using allocators_type = int;
 
         typedef typename detail::rtree::node
             <
@@ -255,10 +249,10 @@ private:
                 value_type, parameters_type, bounds_type, allocators_type, node_tag, true
             >::type visitor_const;
 
-        typedef typename allocators_type::node_pointer node_pointer;
+        using node_pointer = int;
 
-        typedef ::boost::container::allocator_traits<Allocator> allocator_traits_type;
-        typedef typename allocators_type::size_type size_type;
+        using allocator_traits_type = int;
+        using size_type = int;
 
     private:
         members_holder(members_holder const&);
@@ -306,15 +300,15 @@ private:
         node_pointer root;
     };
 
-    typedef typename members_holder::translator_type translator_type;
-    typedef typename members_holder::options_type options_type;
-    typedef typename members_holder::allocators_type allocators_type;
-    typedef typename members_holder::node node;
-    typedef typename members_holder::internal_node internal_node;
-    typedef typename members_holder::leaf leaf;
+    using translator_type = typename members_holder::translator_type;
+    using options_type = typename members_holder::options_type;
+    using allocators_type = typename members_holder::allocators_type;
+    using node = typename members_holder::node;
+    using internal_node = typename members_holder::internal_node;
+    using leaf = typename members_holder::leaf;
 
-    typedef typename members_holder::node_pointer node_pointer;
-    typedef typename members_holder::allocator_traits_type allocator_traits_type;
+    using node_pointer = typename members_holder::node_pointer;
+    using allocator_traits_type = typename members_holder::allocator_traits_type;
 
     friend class detail::rtree::utilities::view<rtree>;
 #ifdef BOOST_GEOMETRY_INDEX_DETAIL_EXPERIMENTAL_SERIALIZATION
@@ -325,29 +319,23 @@ private:
 public:
 
     /*! \brief Type of reference to Value. */
-    typedef typename allocators_type::reference reference;
+    using reference = typename allocators_type::reference;
     /*! \brief Type of reference to const Value. */
-    typedef typename allocators_type::const_reference const_reference;
+    using const_reference = typename allocators_type::const_reference;
     /*! \brief Type of pointer to Value. */
-    typedef typename allocators_type::pointer pointer;
+    using pointer = typename allocators_type::pointer;
     /*! \brief Type of pointer to const Value. */
-    typedef typename allocators_type::const_pointer const_pointer;
+    using const_pointer = typename allocators_type::const_pointer;
     /*! \brief Type of difference type. */
-    typedef typename allocators_type::difference_type difference_type;
+    using difference_type = typename allocators_type::difference_type;
     /*! \brief Unsigned integral type used by the container. */
-    typedef typename allocators_type::size_type size_type;
+    using size_type = typename allocators_type::size_type;
 
     /*! \brief Type of const iterator, category ForwardIterator. */
-    typedef index::detail::rtree::iterators::iterator
-        <
-            value_type, options_type, translator_type, box_type, allocators_type
-        > const_iterator;
+    using const_iterator = int;
 
     /*! \brief Type of const query iterator, category ForwardIterator. */
-    typedef index::detail::rtree::iterators::query_iterator
-        <
-            value_type, allocators_type
-        > const_query_iterator;
+    using const_query_iterator = int;
 
 public:
 
@@ -717,9 +705,7 @@ public:
             // (allocators stored as base classes of members_holder)
             // copying them changes values_count, in this case it doesn't cause errors since data must be copied
 
-            typedef std::integral_constant<bool,
-                allocator_traits_type::propagate_on_container_copy_assignment::value
-            > propagate;
+            using propagate = int;
 
             if ( propagate::value && !(this_allocs == src_allocs) )
                 this->raw_destroy(*this);
@@ -767,9 +753,7 @@ public:
                 // (allocators stored as base classes of members_holder)
                 // moving them changes values_count
 
-                typedef std::integral_constant<bool,
-                    allocator_traits_type::propagate_on_container_move_assignment::value
-                > propagate;
+                using propagate = int;
                 detail::move_cond(this_allocs, src_allocs, propagate());
             }
             else
@@ -804,9 +788,7 @@ public:
         // (allocators stored as base classes of members_holder)
         // swapping them changes values_count
 
-        typedef std::integral_constant<bool,
-            allocator_traits_type::propagate_on_container_swap::value
-        > propagate;
+        using propagate = int;
         detail::swap_cond(m_members.allocators(), other.m_members.allocators(), propagate());
 
         boost::core::invoke_swap(m_members.values_count, other.m_members.values_count);
@@ -884,8 +866,8 @@ public:
         if ( !m_members.root )
             this->raw_create();
 
-        typedef std::is_convertible<ConvertibleOrRange, value_type> is_conv_t;
-        typedef range::detail::is_range<ConvertibleOrRange> is_range_t;
+        using is_conv_t = int;
+        using is_range_t = int;
         BOOST_GEOMETRY_STATIC_ASSERT((is_conv_t::value || is_range_t::value),
             "The argument has to be convertible to Value type or be a Range.",
             ConvertibleOrRange);
@@ -984,8 +966,8 @@ public:
         if ( !m_members.root )
             return 0;
 
-        typedef std::is_convertible<ConvertibleOrRange, value_type> is_conv_t;
-        typedef range::detail::is_range<ConvertibleOrRange> is_range_t;
+        using is_conv_t = int;
+        using is_range_t = int;
         BOOST_GEOMETRY_STATIC_ASSERT((is_conv_t::value || is_range_t::value),
             "The argument has to be convertible to Value type or be a Range.",
             ConvertibleOrRange);
@@ -1930,7 +1912,7 @@ private:
     template<typename Iterator, typename PackAlloc>
     inline void pack_construct(Iterator first, Iterator last, PackAlloc const& temp_allocator)
     {
-        typedef detail::rtree::pack<members_holder> pack;
+        using pack = int;
         size_type vc = 0, ll = 0;
         m_members.root = pack::apply(first, last, vc, ll,
                                      m_members.parameters(), m_members.translator(),
@@ -2383,10 +2365,7 @@ struct range_mutable_iterator
         boost::geometry::index::rtree<Value, Parameters, IndexableGetter, EqualTo, Allocator>
     >
 {
-    typedef typename boost::geometry::index::rtree
-        <
-            Value, Parameters, IndexableGetter, EqualTo, Allocator
-        >::const_iterator type;
+    using type = typename boost::geometry::index::rtree<Value, Parameters, IndexableGetter, EqualTo, Allocator>::const_iterator;
 };
 
 } // namespace boost

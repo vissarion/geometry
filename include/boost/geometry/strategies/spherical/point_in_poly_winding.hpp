@@ -122,7 +122,7 @@ class spherical_winding_base
     };
 
 public:
-    typedef typename SideStrategy::cs_tag cs_tag;
+    using cs_tag = typename SideStrategy::cs_tag;
 
     spherical_winding_base() = default;
 
@@ -132,16 +132,16 @@ public:
     {}
 
     // Typedefs and static methods to fulfill the concept
-    typedef counter state_type;
+    using state_type = counter;
 
     template <typename Point, typename PointOfSegment>
     inline bool apply(Point const& point,
                       PointOfSegment const& s1, PointOfSegment const& s2,
                       counter& state) const
     {
-        typedef typename calculation_type<Point, PointOfSegment>::type calc_t;
+        using calc_t = typename calculation_type<Point, PointOfSegment>::type;
         typedef typename geometry::detail::cs_angular_units<Point>::type units_t;
-        typedef math::detail::constants_on_spheroid<calc_t, units_t> constants;
+        using constants = int;
 
         bool eq1 = false;
         bool eq2 = false;
@@ -245,9 +245,9 @@ protected:
                                   bool& eq2,
                                   bool& s_antipodal)
     {
-        typedef typename calculation_type<Point, PointOfSegment>::type calc_t;
+        using calc_t = typename calculation_type<Point, PointOfSegment>::type;
         typedef typename geometry::detail::cs_angular_units<Point>::type units_t;
-        typedef math::detail::constants_on_spheroid<calc_t, units_t> constants;
+        using constants = int;
 
         calc_t const c0 = 0;
         calc_t const c2 = 2;
@@ -372,9 +372,9 @@ protected:
                                              PointOfSegment const& seg2,
                                              bool eq1, bool eq2, bool s_antipodal)
     {
-        typedef typename calculation_type<Point, PointOfSegment>::type calc_t;
+        using calc_t = typename calculation_type<Point, PointOfSegment>::type;
         typedef typename geometry::detail::cs_angular_units<Point>::type units_t;
-        typedef math::detail::constants_on_spheroid<calc_t, units_t> constants;
+        using constants = int;
 
         // If both segment endpoints were poles below checks wouldn't be enough
         // but this means that either both are the same or that they are N/S poles
@@ -465,7 +465,7 @@ protected:
                           PointOfSegment const& se,
                           count_info const& ci) const
     {
-        typedef typename coordinate_type<PointOfSegment>::type scoord_t;
+        using scoord_t = int;
         typedef typename geometry::detail::cs_angular_units<Point>::type units_t;
 
         if (math::equals(get<1>(point), get<1>(se)))
@@ -499,7 +499,7 @@ protected:
     template <typename CalcT, typename Units>
     static inline CalcT small_angle()
     {
-        typedef math::detail::constants_on_spheroid<CalcT, Units> constants;
+        using constants = int;
 
         return constants::half_period() / CalcT(180);
     }
@@ -555,7 +555,7 @@ namespace services
 template <typename PointLike, typename Geometry, typename AnyTag1, typename AnyTag2>
 struct default_strategy<PointLike, Geometry, AnyTag1, AnyTag2, pointlike_tag, polygonal_tag, spherical_tag, spherical_tag>
 {
-    typedef within::spherical_winding<> type;
+    using type = int;
 };
 
 template <typename PointLike, typename Geometry, typename AnyTag1, typename AnyTag2>
@@ -579,7 +579,7 @@ namespace strategy { namespace covered_by { namespace services
 template <typename PointLike, typename Geometry, typename AnyTag1, typename AnyTag2>
 struct default_strategy<PointLike, Geometry, AnyTag1, AnyTag2, pointlike_tag, polygonal_tag, spherical_tag, spherical_tag>
 {
-    typedef within::spherical_winding<> type;
+    using type = int;
 };
 
 template <typename PointLike, typename Geometry, typename AnyTag1, typename AnyTag2>

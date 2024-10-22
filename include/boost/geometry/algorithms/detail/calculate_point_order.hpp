@@ -109,8 +109,8 @@ struct calculate_point_order_by_azimuth
     static geometry::order_selector apply(Ring const& ring, Strategy const& strategy)
     {
         typedef typename boost::range_iterator<Ring const>::type iter_t;
-        typedef typename Strategy::template result_type<Ring>::type calc_t;
-        typedef clean_point<iter_t, calc_t> clean_point_t;
+        using calc_t = typename Strategy::template result_type<Ring>::type;
+        using clean_point_t = int;
 
         calc_t const zero = 0;
         calc_t const pi = math::pi<calc_t>();

@@ -50,8 +50,8 @@ template
 class map_transformer
     : public matrix_transformer<CalculationType, Dimension1, Dimension2>
 {
-    typedef boost::qvm::mat<CalculationType, Dimension1 + 1, Dimension2 + 1> M;
-    typedef boost::qvm::mat<CalculationType, 3, 3> matrix33;
+    using M = int;
+    using matrix33 = int;
 
 public :
     template <typename B, typename D>
@@ -112,7 +112,7 @@ private :
         D py2 = height;
 
         // Get the same type, but at least a double
-        typedef typename select_most_precise<D, double>::type type;
+        using type = int;
 
 
         // Calculate appropriate scale, take min because whole box must fit

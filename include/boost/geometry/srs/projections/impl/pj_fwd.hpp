@@ -57,7 +57,7 @@ namespace detail {
 template <typename Prj, typename LL, typename XY, typename P>
 inline void pj_fwd(Prj const& prj, P const& par, LL const& ll, XY& xy)
 {
-    typedef typename P::type calc_t;
+    using calc_t = typename P::type;
     static const calc_t EPS = 1.0e-12;
 
     using namespace detail;

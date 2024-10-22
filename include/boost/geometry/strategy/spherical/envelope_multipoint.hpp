@@ -212,10 +212,7 @@ public:
     {
         using point_type = point_type_t<MultiPoint>;
         using coordinate_type = coordinate_type_t<MultiPoint>;
-        typedef math::detail::constants_on_spheroid
-            <
-                coordinate_type,
-                typename geometry::detail::cs_angular_units<MultiPoint>::type
+        using type = int
             > constants;
 
         if (boost::empty(multipoint))
@@ -324,7 +321,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<multi_point_tag, spherical_equatorial_tag, CalculationType>
 {
-    typedef strategy::envelope::spherical_multipoint type;
+    using type = strategy::envelope::spherical_multipoint;
 };
 
 template <typename CalculationType>

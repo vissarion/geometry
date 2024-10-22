@@ -40,9 +40,7 @@ template <
     size_t N>
 struct smallest_for_indexable
 {
-    typedef typename smallest_for_indexable_dimension<
-        Geometry, Indexable, IndexableTag, AlgoTag, N - 1
-    >::result_type result_type;
+    using result_type = typename smallest_for_indexable_dimension<Geometry, Indexable, IndexableTag, AlgoTag, N - 1>::result_type;
 
     template <typename Data>
     inline static result_type apply(Geometry const& g, Indexable const& i, Data const& data)
@@ -66,9 +64,7 @@ template <
     typename AlgoTag>
 struct smallest_for_indexable<Geometry, Indexable, IndexableTag, AlgoTag, 1>
 {
-    typedef typename smallest_for_indexable_dimension<
-        Geometry, Indexable, IndexableTag, AlgoTag, 0
-    >::result_type result_type;
+    using result_type = typename smallest_for_indexable_dimension<Geometry, Indexable, IndexableTag, AlgoTag, 0>::result_type;
 
     template <typename Data>
     inline static result_type apply(Geometry const& g, Indexable const& i, Data const& data)

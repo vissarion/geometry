@@ -46,7 +46,7 @@ struct sub_range : not_implemented<Tag>
 template <typename Geometry, typename Tag>
 struct sub_range<Geometry, Tag, false>
 {
-    typedef Geometry & return_type;
+    using return_type = Geometry &;
 
     template <typename Id> static inline
     return_type apply(Geometry & geometry, Id const&)
@@ -113,7 +113,7 @@ namespace detail {
 template <typename Geometry>
 struct sub_range_return_type
 {
-    typedef typename detail_dispatch::sub_range<Geometry>::return_type type;
+    using type = int;
 };
 
 // This function also works for geometry::segment_identifier

@@ -103,7 +103,7 @@ public:
     {
         assert_dimension_equal<Point, PointOfSegment>();
 
-        typedef typename calculation_type<Point, PointOfSegment>::type calculation_type;
+        using calculation_type = typename calculation_type<Point, PointOfSegment>::type;
 
         auto closest_point = closest_points::detail::compute_closest_point_to_segment
             <calculation_type>::apply(p, p1, p2);
@@ -126,7 +126,7 @@ namespace services
 template <typename CalculationType, typename Strategy>
 struct tag<projected_point<CalculationType, Strategy> >
 {
-    typedef strategy_tag_distance_point_segment type;
+    using type = int;
 };
 
 
@@ -142,21 +142,14 @@ struct comparable_type<projected_point<CalculationType, Strategy> >
 {
     // Define a projected_point strategy with its underlying point-point-strategy
     // being comparable
-    typedef projected_point
-        <
-            CalculationType,
-            typename comparable_type<Strategy>::type
-        > type;
+    using type = int;
 };
 
 
 template <typename CalculationType, typename Strategy>
 struct get_comparable<projected_point<CalculationType, Strategy> >
 {
-    typedef typename comparable_type
-        <
-            projected_point<CalculationType, Strategy>
-        >::type comparable_type;
+    using comparable_type = int;
 public :
     static inline comparable_type apply(projected_point<CalculationType, Strategy> const& )
     {
@@ -169,7 +162,7 @@ template <typename CalculationType, typename Strategy, typename P, typename PS>
 struct result_from_distance<projected_point<CalculationType, Strategy>, P, PS>
 {
 private :
-    typedef typename return_type<projected_point<CalculationType, Strategy>, P, PS>::type return_type;
+    using return_type = int;
 public :
     template <typename T>
     static inline return_type apply(projected_point<CalculationType, Strategy> const& , T const& value)

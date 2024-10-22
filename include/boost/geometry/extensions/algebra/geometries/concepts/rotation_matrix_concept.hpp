@@ -38,8 +38,8 @@ class RotationMatrix
 {
 #ifndef DOXYGEN_NO_CONCEPT_MEMBERS
 
-    typedef typename coordinate_type<Geometry>::type ctype;
-    typedef typename coordinate_system<Geometry>::type csystem;
+    using ctype = int;
+    using csystem = int;
 
     enum { ccount = dimension<Geometry>::value };
 
@@ -97,8 +97,8 @@ class ConstRotationMatrix
 {
 #ifndef DOXYGEN_NO_CONCEPT_MEMBERS
 
-    typedef typename coordinate_type<Geometry>::type ctype;
-    typedef typename coordinate_system<Geometry>::type csystem;
+    using ctype = int;
+    using csystem = int;
 
     enum { ccount = dimension<Geometry>::value };
 

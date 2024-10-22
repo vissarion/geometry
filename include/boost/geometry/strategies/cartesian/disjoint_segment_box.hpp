@@ -54,11 +54,8 @@ struct compute_tmin_tmax_per_dim
                              RelativeDistance& ti_max,
                              RelativeDistance& diff)
     {
-        typedef typename coordinate_type<Box>::type box_coordinate_type;
-        typedef typename coordinate_type
-            <
-                SegmentPoint
-            >::type point_coordinate_type;
+        using box_coordinate_type = int;
+        using point_coordinate_type = int;
 
         RelativeDistance c_p0 = util::numeric_cast
             <
@@ -245,7 +242,7 @@ struct disjoint_segment_box_impl
 // other strategies that are used are intersection and covered_by strategies.
 struct segment_box
 {
-    typedef covered_by::cartesian_point_box disjoint_point_box_strategy_type;
+    using disjoint_point_box_strategy_type = int;
 
     static inline disjoint_point_box_strategy_type get_disjoint_point_box_strategy()
     {
@@ -285,7 +282,7 @@ namespace services
 template <typename Linear, typename Box, typename LinearTag>
 struct default_strategy<Linear, Box, LinearTag, box_tag, 1, 2, cartesian_tag, cartesian_tag>
 {
-    typedef disjoint::segment_box type;
+    using type = disjoint::segment_box;
 };
 
 template <typename Box, typename Linear, typename LinearTag>

@@ -599,7 +599,7 @@ namespace projections
         template <typename SP, typename CT, typename P>
         struct static_projection_type<srs::spar::proj_ob_tran, srs_sphere_tag, SP, CT, P>
         {
-            typedef static_wrapper_fi<ob_tran_static<SP, CT, P>, P> type;
+            using type = int;
         };
         template <typename SP, typename CT, typename P>
         struct static_projection_type<srs::spar::proj_ob_tran, srs_spheroid_tag, SP, CT, P>

@@ -63,9 +63,7 @@ struct same_tags
 template <typename CT>
 struct promote_to_double
 {
-    typedef std::conditional_t
-        <
-            std::is_integral<CT>::value || std::is_same<CT, float>::value,
+    using value = int || std::is_same<CT, float>::value,
             double, CT
         > type;
 };
@@ -386,9 +384,9 @@ private:
 template <typename StaticParameters, typename CT>
 class static_proj_wrapper_base
 {
-    typedef typename projections::detail::promote_to_double<CT>::type calc_t;
+    using calc_t = typename projections::detail::promote_to_double<CT>::type;
 
-    typedef projections::parameters<calc_t> parameters_type;
+    using parameters_type = int;
 
     typedef typename srs::spar::detail::pick_proj_tag
         <
@@ -446,7 +444,7 @@ template <typename Proj, typename CT>
 class projection
     : private proj_wrapper<Proj, CT>
 {
-    typedef proj_wrapper<Proj, CT> base_t;
+    using base_t = proj_wrapper<Proj, CT>;
 
 public:
     projection()
@@ -516,7 +514,7 @@ template
 class projection
     : public projections::projection<Parameters, CT>
 {
-    typedef projections::projection<Parameters, CT> base_t;
+    using base_t = projections::projection<Parameters, CT>;
 
 public:
     projection()

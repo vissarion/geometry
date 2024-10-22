@@ -81,7 +81,7 @@ struct multi_point_multi_point
                              Strategy const& /*strategy*/)
     {
         typedef typename boost::range_value<MultiPoint2>::type point2_type;
-        typedef geometry::less<void, -1, Strategy> less_type;
+        using less_type = int;
 
         less_type const less = less_type();
 
@@ -133,7 +133,7 @@ struct multi_point_single_geometry
 
         for (auto it = boost::begin(multi_point); it != boost::end(multi_point); ++it )
         {
-            typedef decltype(strategy.covered_by(*it, box)) point_in_box_type;
+            using point_in_box_type = decltype(strategy.covered_by(*<recovery-expr>(), <recovery-expr>()));
 
             int in_val = 0;
 
@@ -206,7 +206,7 @@ struct multi_point_multi_geometry
             bool found_boundary = false;
             int boundaries = 0;
 
-            typedef typename box_pair_vector::const_iterator box_iterator;
+            using box_iterator = int;
             for (box_iterator box_it = inters_boxes.begin() ;
                  box_it != inters_boxes.end() ; ++box_it )
             {

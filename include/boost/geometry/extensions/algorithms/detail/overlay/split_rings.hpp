@@ -240,7 +240,7 @@ struct split_turn_operation : public detail::overlay::turn_operation
         , distance(geometry::return_distance_result<distance_type>(0))
     {}
 
-    typedef typename default_distance_result<P, P>::type distance_type;
+    using distance_type = int;
     distance_type distance; // distance-measurement from segment.first to IP
 };
 
@@ -285,13 +285,7 @@ class range_split_rings
     typedef typename geometry::ring_type<Range>::type ring_type;
 
 
-    typedef typename intersection_strategies
-        <
-            typename cs_tag<point_type>::type,
-            point_type,
-            point_type,
-            point_type
-        >::segment_intersection_strategy_type strategy;
+    using strategy = int;
 
 
 
@@ -350,9 +344,9 @@ class range_split_rings
 
     static void call(Range range, RingCollection& ring_collection)
     {
-        typedef split_turn_info<point_type> turn_info;
+        using turn_info = int;
 
-        typedef std::deque<turn_info> turns_type;
+        using turns_type = int;
         turns_type turns;
 
         detail::get_turns::no_interrupt_policy policy;
@@ -483,11 +477,7 @@ public :
 template <typename Polygon, typename RingCollection>
 struct polygon_split_rings
 {
-  typedef range_split_rings
-        <
-            typename ring_type<Polygon>::type,
-            RingCollection
-        > per_ring;
+  using per_ring = int;
 
     static inline void apply(Polygon const& polygon, RingCollection& ring_collection)
     {

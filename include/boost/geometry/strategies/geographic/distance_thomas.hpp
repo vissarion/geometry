@@ -48,10 +48,7 @@ class thomas
             strategy::thomas, Spheroid, CalculationType
         >
 {
-    typedef strategy::distance::geographic
-        <
-            strategy::thomas, Spheroid, CalculationType
-        > base_type;
+    using base_type = int;
 
 public :
     inline thomas()
@@ -70,7 +67,7 @@ namespace services
 template <typename Spheroid, typename CalculationType>
 struct tag<thomas<Spheroid, CalculationType> >
 {
-    typedef strategy_tag_distance_point_point type;
+    using type = int;
 };
 
 
@@ -83,7 +80,7 @@ struct return_type<thomas<Spheroid, CalculationType>, P1, P2>
 template <typename Spheroid, typename CalculationType>
 struct comparable_type<thomas<Spheroid, CalculationType> >
 {
-    typedef thomas<Spheroid, CalculationType> type;
+    using type = thomas<Spheroid, CalculationType>;
 };
 
 

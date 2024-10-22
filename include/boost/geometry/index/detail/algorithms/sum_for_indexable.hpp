@@ -40,9 +40,7 @@ template <
     size_t N>
 struct sum_for_indexable
 {
-    typedef typename sum_for_indexable_dimension<
-        Geometry, Indexable, IndexableTag, AlgoTag, N - 1
-    >::result_type result_type;
+    using result_type = typename sum_for_indexable_dimension<Geometry, Indexable, IndexableTag, AlgoTag, N - 1>::result_type;
 
     inline static result_type apply(Geometry const& g, Indexable const& i)
     {
@@ -63,9 +61,7 @@ template <
     typename AlgoTag>
 struct sum_for_indexable<Geometry, Indexable, IndexableTag, AlgoTag, 1>
 {
-    typedef typename sum_for_indexable_dimension<
-        Geometry, Indexable, IndexableTag, AlgoTag, 0
-    >::result_type result_type;
+    using result_type = typename sum_for_indexable_dimension<Geometry, Indexable, IndexableTag, AlgoTag, 0>::result_type;
 
     inline static result_type apply(Geometry const& g, Indexable const& i)
     {

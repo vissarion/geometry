@@ -180,7 +180,7 @@ namespace services
 template <typename CalculationType>
 struct tag<pythagoras<CalculationType> >
 {
-    typedef strategy_tag_distance_point_point type;
+    using type = int;
 };
 
 
@@ -193,14 +193,14 @@ struct return_type<distance::pythagoras<CalculationType>, P1, P2>
 template <typename CalculationType>
 struct comparable_type<pythagoras<CalculationType> >
 {
-    typedef comparable::pythagoras<CalculationType> type;
+    using type = comparable::pythagoras<CalculationType>;
 };
 
 
 template <typename CalculationType>
 struct get_comparable<pythagoras<CalculationType> >
 {
-    typedef comparable::pythagoras<CalculationType> comparable_type;
+    using comparable_type = comparable::pythagoras<CalculationType>;
 public :
     static inline comparable_type apply(pythagoras<CalculationType> const& )
     {
@@ -213,7 +213,7 @@ template <typename CalculationType, typename Point1, typename Point2>
 struct result_from_distance<pythagoras<CalculationType>, Point1, Point2>
 {
 private :
-    typedef typename return_type<pythagoras<CalculationType>, Point1, Point2>::type return_type;
+    using return_type = typename return_type<pythagoras<CalculationType>, Point1, Point2>::type;
 public :
     template <typename T>
     static inline return_type apply(pythagoras<CalculationType> const& , T const& value)
@@ -227,7 +227,7 @@ public :
 template <typename CalculationType>
 struct tag<comparable::pythagoras<CalculationType> >
 {
-    typedef strategy_tag_distance_point_point type;
+    using type = int;
 };
 
 
@@ -242,14 +242,14 @@ struct return_type<comparable::pythagoras<CalculationType>, P1, P2>
 template <typename CalculationType>
 struct comparable_type<comparable::pythagoras<CalculationType> >
 {
-    typedef comparable::pythagoras<CalculationType> type;
+    using type = comparable::pythagoras<CalculationType>;
 };
 
 
 template <typename CalculationType>
 struct get_comparable<comparable::pythagoras<CalculationType> >
 {
-    typedef comparable::pythagoras<CalculationType> comparable_type;
+    using comparable_type = comparable::pythagoras<CalculationType>;
 public :
     static inline comparable_type apply(comparable::pythagoras<CalculationType> const& )
     {
@@ -262,7 +262,7 @@ template <typename CalculationType, typename Point1, typename Point2>
 struct result_from_distance<comparable::pythagoras<CalculationType>, Point1, Point2>
 {
 private :
-    typedef typename return_type<comparable::pythagoras<CalculationType>, Point1, Point2>::type return_type;
+    using return_type = typename return_type<comparable::pythagoras<CalculationType>, Point1, Point2>::type;
 public :
     template <typename T>
     static inline return_type apply(comparable::pythagoras<CalculationType> const& , T const& value)
@@ -279,7 +279,7 @@ struct default_strategy
         point_tag, point_tag, Point1, Point2, cartesian_tag, cartesian_tag
     >
 {
-    typedef pythagoras<> type;
+    using type = int;
 };
 
 

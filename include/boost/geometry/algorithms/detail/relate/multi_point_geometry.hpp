@@ -226,7 +226,7 @@ struct multi_point_single_geometry
             }
         }
 
-        typedef detail::relate::topology_check<SingleGeometry, Strategy> tc_t;
+        using tc_t = int;
 
         if ( relate::may_update<exterior, interior, tc_t::interior, Transpose>(result)
           || relate::may_update<exterior, boundary, tc_t::boundary, Transpose>(result) )
@@ -337,7 +337,7 @@ class multi_point_multi_geometry_ii_ib
     template <typename Result, typename Strategy>
     class item_visitor_type
     {
-        typedef detail::relate::topology_check<MultiGeometry, Strategy> topology_check_type;
+        using topology_check_type = int;
 
     public:
         item_visitor_type(MultiGeometry const& multi_geometry,
@@ -538,7 +538,7 @@ struct multi_point_multi_geometry
             boxes[i].second = i;
         }
 
-        typedef detail::relate::topology_check<MultiGeometry, Strategy> tc_t;
+        using tc_t = int;
         tc_t tc(multi_geometry, strategy);
 
         if ( relate::may_update<interior, interior, '0', Transpose>(result)

@@ -58,7 +58,7 @@ private:
             <
                 index::linear<8>, Strategies
             > index_parameters_type;
-        typedef index::rtree<RTreeValueType, index_parameters_type> rtree_type;
+        using rtree_type = int;
 
         BOOST_GEOMETRY_ASSERT( rtree_first != rtree_last );
         BOOST_GEOMETRY_ASSERT( queries_first != queries_last );
@@ -114,9 +114,7 @@ public:
     template <typename RTreeRangeIterator, typename QueryRangeIterator>
     struct return_type
     {
-        typedef std::pair
-            <
-                typename std::iterator_traits<RTreeRangeIterator>::value_type,
+        using value_type = int,
                 QueryRangeIterator
             > type;
     };

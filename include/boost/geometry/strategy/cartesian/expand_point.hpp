@@ -51,10 +51,7 @@ struct point_loop
     template <typename Box, typename Point>
     static inline void apply(Box& box, Point const& source)
     {
-        typedef typename select_coordinate_type
-            <
-                Point, Box
-            >::type coordinate_type;
+        using coordinate_type = int;
 
         std::less<coordinate_type> less;
         std::greater<coordinate_type> greater;
@@ -109,7 +106,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<point_tag, cartesian_tag, CalculationType>
 {
-    typedef cartesian_point type;
+    using type = cartesian_point;
 };
 
 

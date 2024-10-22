@@ -31,9 +31,9 @@ template <typename Value, typename Options, typename IndexableGetter, typename E
 class query_range< index::rtree<Value, Options, IndexableGetter, EqualTo, Allocator> >
 {
 public:
-    typedef std::vector<Value> result_type;
-    typedef typename result_type::iterator iterator;
-    typedef typename result_type::const_iterator const_iterator;
+    using result_type = int;
+    using iterator = int;
+    using const_iterator = int;
 
     template <typename Predicates> inline
     query_range(index::rtree<Value, Options, IndexableGetter, EqualTo, Allocator> const& rtree,

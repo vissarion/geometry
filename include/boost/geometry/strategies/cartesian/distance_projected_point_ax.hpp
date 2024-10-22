@@ -62,7 +62,7 @@ namespace detail
 template <typename T>
 struct projected_point_ax_result
 {
-    typedef T value_type;
+    using value_type = T;
 
     projected_point_ax_result(T const& c = T(0))
         : atd(c), xtd(c)
@@ -97,7 +97,7 @@ public:
     {
         //return left.xtd < right.xtd && right.atd < m_max_distance.atd;
 
-        typedef typename Distance::value_type value_type;
+        using value_type = typename Distance::value_type;
 
         value_type const lx = left.xtd > m_max_distance.xtd ? left.xtd - m_max_distance.xtd : 0;
         value_type const rx = right.xtd > m_max_distance.xtd ? right.xtd - m_max_distance.xtd : 0;
@@ -148,10 +148,7 @@ public :
     template <typename Point, typename PointOfSegment>
     struct result_type
     {
-        typedef projected_point_ax_result
-                    <
-                        typename calculation_type<Point, PointOfSegment>::type
-                    > type;
+        using type = projected_point_ax_result<typename calculation_type<Point, PointOfSegment>::type>;
     };
 
 public :
@@ -162,19 +159,15 @@ public :
     {
         assert_dimension_equal<Point, PointOfSegment>();
 
-        typedef typename calculation_type<Point, PointOfSegment>::type calculation_type;
+        using calculation_type = typename calculation_type<Point, PointOfSegment>::type;
 
         // A projected point of points in Integer coordinates must be able to be
         // represented in FP.
-        typedef model::point
-            <
-                calculation_type,
-                dimension<PointOfSegment>::value,
-                typename coordinate_system<PointOfSegment>::type
+        using type = int
             > fp_point_type;
 
         // For convenience
-        typedef fp_point_type fp_vector_type;
+        using fp_vector_type = int;
 
         /*
             Algorithm [p: (px,py), p1: (x1,y1), p2: (x2,y2)]
@@ -246,15 +239,14 @@ namespace services
 template <typename CalculationType, typename Strategy>
 struct tag<detail::projected_point_ax<CalculationType, Strategy> >
 {
-    typedef strategy_tag_distance_point_segment type;
+    using type = int;
 };
 
 
 template <typename CalculationType, typename Strategy, typename P, typename PS>
 struct return_type<detail::projected_point_ax<CalculationType, Strategy>, P, PS>
 {
-    typedef typename detail::projected_point_ax<CalculationType, Strategy>
-                        ::template result_type<P, PS>::type type;
+    using type = typename detail::projected_point_ax<CalculationType, Strategy>::template result_type<P, PS>::type;
 };
 
 
@@ -263,21 +255,14 @@ struct comparable_type<detail::projected_point_ax<CalculationType, Strategy> >
 {
     // Define a projected_point strategy with its underlying point-point-strategy
     // being comparable
-    typedef detail::projected_point_ax
-        <
-            CalculationType,
-            typename comparable_type<Strategy>::type
-        > type;
+    using type = int;
 };
 
 
 template <typename CalculationType, typename Strategy>
 struct get_comparable<detail::projected_point_ax<CalculationType, Strategy> >
 {
-    typedef typename comparable_type
-        <
-            detail::projected_point_ax<CalculationType, Strategy>
-        >::type comparable_type;
+    using comparable_type = int;
 public :
     static inline comparable_type apply(detail::projected_point_ax<CalculationType, Strategy> const& )
     {
@@ -290,7 +275,7 @@ template <typename CalculationType, typename Strategy, typename P, typename PS>
 struct result_from_distance<detail::projected_point_ax<CalculationType, Strategy>, P, PS>
 {
 private :
-    typedef typename return_type<detail::projected_point_ax<CalculationType, Strategy>, P, PS>::type return_type;
+    using return_type = int;
 public :
     template <typename T>
     static inline return_type apply(detail::projected_point_ax<CalculationType, Strategy> const& , T const& value)

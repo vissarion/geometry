@@ -167,9 +167,7 @@ inline void unique(Geometry& geometry)
     concepts::check<Geometry>();
 
     // Default strategy is the default point-comparison policy
-    typedef geometry::equal_to
-        <
-            typename geometry::point_type<Geometry>::type
+    using type = int
         > policy;
 
 

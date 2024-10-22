@@ -111,8 +111,7 @@ struct interpolate_range
         auto const pp_strategy = strategies.distance(dummy_point(), dummy_point());
         auto const strategy = strategies.line_interpolate(range);
 
-        typedef decltype(pp_strategy.apply(
-                    std::declval<point_t>(), std::declval<point_t>())) distance_type;
+        using distance_type = int;
 
         auto prev = it++;
         distance_type repeated_distance = max_distance;

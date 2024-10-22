@@ -51,7 +51,7 @@ inline void sweep(Range const& range, PriorityQueue& queue,
                   EventVisitor& event_visitor,
                   InterruptPolicy const& interrupt_policy)
 {
-    typedef typename PriorityQueue::value_type event_type;
+    using event_type = typename PriorityQueue::value_type;
 
     initialization_visitor.apply(range, queue, event_visitor);
     while (! queue.empty())

@@ -54,7 +54,7 @@ template
 struct translating_transformer
 {
     typedef typename geometry::point_type<Geometry>::type point_type;
-    typedef boost::reference_wrapper<point_type const> result_type;
+    using result_type = int;
 
     explicit translating_transformer(Geometry const&) {}
     explicit translating_transformer(point_type const&) {}

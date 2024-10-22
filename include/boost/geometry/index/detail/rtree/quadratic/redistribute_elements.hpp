@@ -41,15 +41,12 @@ inline void pick_seeds(Elements const& elements,
                        size_t & seed1,
                        size_t & seed2)
 {
-    typedef typename Elements::value_type element_type;
+    using element_type = typename Elements::value_type;
     typedef typename rtree::element_indexable_type<element_type, Translator>::type indexable_type;
-    typedef Box box_type;
+    using box_type = Box;
     typedef typename index::detail::default_content_result<box_type>::type content_type;
     typedef typename index::detail::strategy_type<Parameters>::type strategy_type;
-    typedef index::detail::bounded_view
-        <
-            indexable_type, box_type, strategy_type
-        > bounded_indexable_view;
+    using bounded_indexable_view = int;
 
     const size_t elements_count = parameters.get_max_elements() + 1;
     BOOST_GEOMETRY_INDEX_ASSERT(elements.size() == elements_count, "wrong number of elements");
@@ -95,14 +92,14 @@ inline void pick_seeds(Elements const& elements,
 template <typename MembersHolder>
 struct redistribute_elements<MembersHolder, quadratic_tag>
 {
-    typedef typename MembersHolder::box_type box_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using box_type = typename MembersHolder::box_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
     typedef typename index::detail::default_content_result<box_type>::type content_type;
 
@@ -116,7 +113,7 @@ struct redistribute_elements<MembersHolder, quadratic_tag>
                              allocators_type & allocators)
     {
         typedef typename rtree::elements_type<Node>::type elements_type;
-        typedef typename elements_type::value_type element_type;
+        using element_type = int;
         typedef typename rtree::element_indexable_type<element_type, translator_type>::type indexable_type;
 
         elements_type & elements1 = rtree::elements(n);

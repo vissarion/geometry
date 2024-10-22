@@ -37,8 +37,8 @@ namespace boost { namespace geometry { namespace concepts {
 template <typename Geometry>
 class ConstNsphere
 {
-    typedef typename point_type<Geometry>::type point_type;
-    typedef typename radius_type<Geometry>::type radius_type;
+    using point_type = int;
+    using radius_type = int;
 
 
     template <size_t Dimension, size_t DimensionCount>
@@ -46,7 +46,7 @@ class ConstNsphere
     {
         static void apply()
         {
-            typedef typename coordinate_type<Geometry>::type coordinate_type;
+            using coordinate_type = int;
             const Geometry* s = 0;
             coordinate_type coord(geometry::get<Dimension>(*s));
             boost::ignore_unused(coord);
@@ -85,8 +85,8 @@ class Nsphere
 {
     BOOST_CONCEPT_ASSERT( (concepts::ConstNsphere<Geometry>) );
 
-    typedef typename point_type<Geometry>::type point_type;
-    typedef typename radius_type<Geometry>::type radius_type;
+    using point_type = int;
+    using radius_type = int;
 
 
     template <size_t Dimension, size_t DimensionCount>

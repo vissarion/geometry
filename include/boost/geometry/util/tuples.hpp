@@ -296,11 +296,7 @@ template <typename Tuple,
           std::size_t N = size<Tuple>::value>
 struct push_back_bt
 {
-    typedef
-    boost::tuples::cons<
-        typename element<I, Tuple>::type,
-        typename push_back_bt<Tuple, T, I+1, N>::type
-    > type;
+    using type = int;
 
     static type apply(Tuple const& tup, T const& t)
     {
@@ -315,7 +311,7 @@ struct push_back_bt
 template <typename Tuple, typename T, std::size_t N>
 struct push_back_bt<Tuple, T, N, N>
 {
-    typedef boost::tuples::cons<T, boost::tuples::null_type> type;
+    using type = int;
 
     static type apply(Tuple const&, T const& t)
     {

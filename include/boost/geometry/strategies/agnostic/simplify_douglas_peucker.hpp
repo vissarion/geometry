@@ -59,7 +59,7 @@ class douglas_peucker
 {
 public :
 
-    typedef PointDistanceStrategy distance_strategy_type;
+    using distance_strategy_type = PointDistanceStrategy;
 
     typedef typename strategy::distance::services::return_type
                      <

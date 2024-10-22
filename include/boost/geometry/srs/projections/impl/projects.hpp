@@ -164,7 +164,7 @@ struct pj_complex { T r, i; };
 template <typename T>
 struct parameters : public detail::pj_consts<T>
 {
-    typedef T type;
+    using type = T;
 
     struct proj_id
     {

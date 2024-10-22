@@ -46,7 +46,7 @@ namespace services
 template <typename Point>
 struct default_strategy<geographic_tag, Point>
 {
-    typedef huiller_earth<Point> type;
+    using type = int;
 };
 
 } // namespace services

@@ -41,12 +41,9 @@ class element_axis_corner_less
 {
     typedef typename rtree::element_indexable_type<Element, Translator>::type indexable_type;
     typedef typename geometry::point_type<indexable_type>::type point_type;
-    typedef geometry::model::box<point_type> bounds_type;
+    using bounds_type = int;
     typedef typename index::detail::strategy_type<Parameters>::type strategy_type;
-    typedef index::detail::bounded_view
-        <
-            indexable_type, bounds_type, strategy_type
-        > bounded_view_type;
+    using bounded_view_type = int;
 
 public:
     element_axis_corner_less(Translator const& tr, strategy_type const& strategy)
@@ -121,9 +118,9 @@ struct choose_split_axis_and_index_for_corner
                              Parameters const& parameters,
                              Translator const& translator)
     {
-        typedef typename Elements::value_type element_type;
+        using element_type = typename Elements::value_type;
         typedef typename rtree::element_indexable_type<element_type, Translator>::type indexable_type;
-        typedef typename tag<indexable_type>::type indexable_tag;
+        using indexable_tag = int;
 
         BOOST_GEOMETRY_INDEX_ASSERT(elements.size() == parameters.get_max_elements() + 1, "wrong number of elements");
 
@@ -371,9 +368,9 @@ struct nth_element
         }
         else
         {
-            typedef typename Elements::value_type element_type;
+            using element_type = typename Elements::value_type;
             typedef typename rtree::element_indexable_type<element_type, Translator>::type indexable_type;
-            typedef typename tag<indexable_type>::type indexable_tag;
+            using indexable_tag = int;
 
             typename index::detail::strategy_type<Parameters>::type
                 strategy = index::detail::get_strategy(parameters);
@@ -401,14 +398,14 @@ struct nth_element<Corner, Dimension, Dimension>
 template <typename MembersHolder>
 struct redistribute_elements<MembersHolder, rstar_tag>
 {
-    typedef typename MembersHolder::box_type box_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using box_type = typename MembersHolder::box_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
     static const size_t dimension = geometry::dimension<box_type>::value;
 
@@ -426,7 +423,7 @@ struct redistribute_elements<MembersHolder, rstar_tag>
         allocators_type & allocators)
     {
         typedef typename rtree::elements_type<Node>::type elements_type;
-        typedef typename elements_type::value_type element_type;
+        using element_type = int;
 
         elements_type & elements1 = rtree::elements(n);
         elements_type & elements2 = rtree::elements(second_node);

@@ -38,9 +38,7 @@ namespace boost { namespace geometry
 template <typename Geometry1, typename Geometry2, typename CalculationType>
 struct select_calculation_type
 {
-    typedef std::conditional_t
-        <
-            std::is_void<CalculationType>::value,
+    using value = int,
             typename select_coordinate_type
                 <
                     Geometry1,
@@ -58,9 +56,7 @@ template
 >
 struct select_calculation_type_alt
 {
-    typedef std::conditional_t
-        <
-            std::is_void<CalculationType>::value,
+    using value = int,
             typename select_coordinate_type
                 <
                     Geometries...

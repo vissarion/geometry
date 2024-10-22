@@ -65,8 +65,8 @@ struct box_box_loop
     template <typename Box1, typename Box2>
     static inline bool apply(Box1 const& b1, Box2 const& b2, bool & touch)
     {
-        typedef typename coordinate_type<Box1>::type coordinate_type1;
-        typedef typename coordinate_type<Box2>::type coordinate_type2;
+        using coordinate_type1 = int;
+        using coordinate_type2 = int;
 
         coordinate_type1 const& min1 = get<min_corner, Dimension>(b1);
         coordinate_type1 const& max1 = get<max_corner, Dimension>(b1);
@@ -510,12 +510,9 @@ struct self_touches
                 Geometry, Geometry
             >::type strategy_type;
         typedef typename geometry::point_type<Geometry>::type point_type;
-        typedef detail::overlay::turn_info<point_type> turn_info;
+        using turn_info = int;
 
-        typedef detail::overlay::get_turn_info
-            <
-                detail::overlay::assign_null_policy
-            > policy_type;
+        using policy_type = int;
 
         std::deque<turn_info> turns;
         detail::touches::areal_interrupt_policy policy;

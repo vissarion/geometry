@@ -34,8 +34,8 @@ class query_range
         "Not implemented for this Index type.",
         Index);
 
-    typedef int* iterator;
-    typedef const int* const_iterator;
+    using iterator = int *;
+    using const_iterator = const int *;
 
     template <typename Predicates>
     inline query_range(

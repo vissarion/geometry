@@ -153,19 +153,16 @@ private:
     };
 
 public:
-    typedef distance::return_t<Geometry, SegmentOrBox, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(Geometry const& geometry,
                                     SegmentOrBox const& segment_or_box,
                                     Strategies const& strategies,
                                     bool check_intersection = true)
     {
-        typedef geometry::segment_iterator
-            <
-                Geometry const
-            > segment_iterator_type;
+        using segment_iterator_type = int;
 
-        typedef assign_new_min_iterator<SegmentOrBox> assign_new_value;
+        using assign_new_value = int;
 
 
         if (check_intersection

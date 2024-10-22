@@ -49,12 +49,7 @@ struct get_turn_info_linear_linear
                 UmbrellaStrategy const& umbrella_strategy,
                 OutputIterator out)
     {
-        typedef intersection_info
-            <
-                UniqueSubRange1, UniqueSubRange2,
-                typename TurnInfo::point_type,
-                UmbrellaStrategy
-            > inters_info;
+        using inters_info = int;
 
         inters_info inters(range_p, range_q, umbrella_strategy);
 

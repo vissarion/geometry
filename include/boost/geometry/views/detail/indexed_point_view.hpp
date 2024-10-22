@@ -69,7 +69,7 @@ namespace traits
 template <typename Geometry, std::size_t Index>
 struct tag< geometry::detail::indexed_point_view<Geometry, Index> >
 {
-    typedef point_tag type;
+    using type = int;
 };
 
 template <typename Geometry, std::size_t Index>

@@ -26,11 +26,11 @@ namespace boost { namespace geometry { namespace index { namespace detail { name
 template <typename Value, typename Allocators>
 struct end_query_iterator
 {
-    typedef std::forward_iterator_tag iterator_category;
-    typedef Value value_type;
-    typedef typename Allocators::const_reference reference;
-    typedef typename Allocators::difference_type difference_type;
-    typedef typename Allocators::const_pointer pointer;
+    using iterator_category = int;
+    using value_type = Value;
+    using reference = typename Allocators::const_reference;
+    using difference_type = typename Allocators::difference_type;
+    using pointer = typename Allocators::const_pointer;
 
     reference operator*() const
     {
@@ -67,14 +67,14 @@ struct end_query_iterator
 template <typename MembersHolder, typename Predicates>
 class spatial_query_iterator
 {
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
 public:
-    typedef std::forward_iterator_tag iterator_category;
-    typedef typename MembersHolder::value_type value_type;
-    typedef typename allocators_type::const_reference reference;
-    typedef typename allocators_type::difference_type difference_type;
-    typedef typename allocators_type::const_pointer pointer;
+    using iterator_category = int;
+    using value_type = typename MembersHolder::value_type;
+    using reference = typename allocators_type::const_reference;
+    using difference_type = typename allocators_type::difference_type;
+    using pointer = typename allocators_type::const_pointer;
 
     spatial_query_iterator() = default;
 
@@ -133,14 +133,14 @@ private:
 template <typename MembersHolder, typename Predicates>
 class distance_query_iterator
 {
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
 public:
-    typedef std::forward_iterator_tag iterator_category;
-    typedef typename MembersHolder::value_type value_type;
-    typedef typename allocators_type::const_reference reference;
-    typedef typename allocators_type::difference_type difference_type;
-    typedef typename allocators_type::const_pointer pointer;
+    using iterator_category = int;
+    using value_type = typename MembersHolder::value_type;
+    using reference = typename allocators_type::const_reference;
+    using difference_type = typename allocators_type::difference_type;
+    using pointer = typename allocators_type::const_pointer;
 
     distance_query_iterator() = default;
 
@@ -208,11 +208,11 @@ template <typename Value, typename Allocators>
 class query_iterator_base
 {
 public:
-    typedef std::forward_iterator_tag iterator_category;
-    typedef Value value_type;
-    typedef typename Allocators::const_reference reference;
-    typedef typename Allocators::difference_type difference_type;
-    typedef typename Allocators::const_pointer pointer;
+    using iterator_category = int;
+    using value_type = Value;
+    using reference = typename Allocators::const_reference;
+    using difference_type = typename Allocators::difference_type;
+    using pointer = typename Allocators::const_pointer;
 
     virtual ~query_iterator_base() {}
 
@@ -228,14 +228,14 @@ template <typename Value, typename Allocators, typename Iterator>
 class query_iterator_wrapper
     : public query_iterator_base<Value, Allocators>
 {
-    typedef query_iterator_base<Value, Allocators> base_t;
+    using base_t = query_iterator_base<Value, Allocators>;
 
 public:
-    typedef std::forward_iterator_tag iterator_category;
-    typedef Value value_type;
-    typedef typename Allocators::const_reference reference;
-    typedef typename Allocators::difference_type difference_type;
-    typedef typename Allocators::const_pointer pointer;
+    using iterator_category = int;
+    using value_type = Value;
+    using reference = typename Allocators::const_reference;
+    using difference_type = typename Allocators::difference_type;
+    using pointer = typename Allocators::const_pointer;
 
     query_iterator_wrapper() : m_iterator() {}
     explicit query_iterator_wrapper(Iterator const& it) : m_iterator(it) {}
@@ -260,15 +260,15 @@ private:
 template <typename Value, typename Allocators>
 class query_iterator
 {
-    typedef query_iterator_base<Value, Allocators> iterator_base;
-    typedef std::unique_ptr<iterator_base> iterator_ptr;
+    using iterator_base = query_iterator_base<Value, Allocators>;
+    using iterator_ptr = int;
 
 public:
-    typedef std::forward_iterator_tag iterator_category;
-    typedef Value value_type;
-    typedef typename Allocators::const_reference reference;
-    typedef typename Allocators::difference_type difference_type;
-    typedef typename Allocators::const_pointer pointer;
+    using iterator_category = int;
+    using value_type = Value;
+    using reference = typename Allocators::const_reference;
+    using difference_type = typename Allocators::difference_type;
+    using pointer = typename Allocators::const_pointer;
 
     query_iterator() = default;
 

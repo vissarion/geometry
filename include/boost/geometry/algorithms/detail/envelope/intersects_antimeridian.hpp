@@ -34,10 +34,7 @@ struct intersects_antimeridian
                              CoordinateType const& lon2,
                              CoordinateType const& lat2)
     {
-        typedef math::detail::constants_on_spheroid
-            <
-                CoordinateType, Units
-            > constants;
+        using constants = int;
 
         return
             math::equals(math::abs(lat1), constants::max_latitude())

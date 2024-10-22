@@ -78,13 +78,7 @@ class point : public model::point
                     CoordinateSystem<Units>
                 >
 {
-    typedef model::point
-        <
-            CoordinateType,
-            Dimensions,
-            CoordinateSystem<Units>
-        >
-        base_type;
+    using base_type = int;
 public:
 
     /// Default constructor, does not initialize anything
@@ -162,7 +156,7 @@ struct tag
             >
         >
 {
-    typedef point_tag type;
+    using type = int;
 };
 
 template
@@ -183,7 +177,7 @@ struct coordinate_type
             >
         >
 {
-    typedef CoordinateType type;
+    using type = CoordinateType;
 };
 
 template
@@ -204,7 +198,7 @@ struct coordinate_system
             >
         >
 {
-    typedef CoordinateSystem<Units> type;
+    using type = CoordinateSystem<Units>;
 };
 
 template
@@ -247,13 +241,7 @@ struct access
             Dimension
         >
 {
-    typedef model::ll::point
-            <
-                Units,
-                CoordinateType,
-                CoordinateSystem,
-                DimensionCount
-            > type;
+    using type = int;
 
     static inline CoordinateType get(type const& p)
     {

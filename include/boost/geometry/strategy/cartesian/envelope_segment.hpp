@@ -78,7 +78,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<segment_tag, cartesian_tag, CalculationType>
 {
-    typedef strategy::envelope::cartesian_segment<CalculationType> type;
+    using type = strategy::envelope::cartesian_segment<CalculationType>;
 };
 
 }

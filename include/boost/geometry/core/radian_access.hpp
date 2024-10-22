@@ -43,7 +43,7 @@ namespace detail
 template<std::size_t Dimension, typename Geometry>
 struct degree_radian_converter
 {
-    typedef typename fp_coordinate_type<Geometry>::type coordinate_type;
+    using coordinate_type = int;
 
     static inline coordinate_type get(Geometry const& geometry)
     {
@@ -69,7 +69,7 @@ struct degree_radian_converter
 template <std::size_t Dimension, typename Geometry, typename DegreeOrRadian>
 struct radian_access
 {
-    typedef typename fp_coordinate_type<Geometry>::type coordinate_type;
+    using coordinate_type = int;
 
     static inline coordinate_type get(Geometry const& geometry)
     {
@@ -108,7 +108,7 @@ struct radian_access<1, Geometry, CoordinateSystem<degree> >
 template<std::size_t Index, std::size_t Dimension, typename Geometry>
 struct degree_radian_converter_box_segment
 {
-    typedef typename fp_coordinate_type<Geometry>::type coordinate_type;
+    using coordinate_type = int;
 
     static inline coordinate_type get(Geometry const& geometry)
     {
@@ -134,7 +134,7 @@ struct degree_radian_converter_box_segment
 template <std::size_t Index, std::size_t Dimension, typename Geometry, typename DegreeOrRadian>
 struct radian_access_box_segment
 {
-    typedef typename fp_coordinate_type<Geometry>::type coordinate_type;
+    using coordinate_type = int;
 
     static inline coordinate_type get(Geometry const& geometry)
     {

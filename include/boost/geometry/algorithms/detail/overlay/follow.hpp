@@ -382,14 +382,8 @@ template
 >
 class follow
 {
-    typedef geometry::detail::output_geometry_access
-        <
-            GeometryOut, linestring_tag, linestring_tag
-        > linear;
-    typedef geometry::detail::output_geometry_access
-        <
-            GeometryOut, point_tag, linestring_tag
-        > pointlike;
+    using linear = int;
+    using pointlike = int;
 
 public :
 
@@ -413,7 +407,7 @@ public :
                 OutputIterator out,
                 Strategy const& strategy)
     {
-        typedef following::action_selector<OverlayType, RemoveSpikes> action;
+        using action = following::action_selector<OverlayType, RemoveSpikes>;
 
         // Sort intersection points on segments-along-linestring, and distance
         // (like in enrich is done for poly/poly)

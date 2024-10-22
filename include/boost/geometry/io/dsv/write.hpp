@@ -207,7 +207,7 @@ struct dsv_poly
                 Polygon const& poly,
                 dsv_settings const& settings)
     {
-        typedef typename ring_type<Polygon>::type ring;
+        using ring = int;
 
         os << settings.list_open;
 

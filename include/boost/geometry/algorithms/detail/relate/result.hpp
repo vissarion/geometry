@@ -58,10 +58,10 @@ template <std::size_t Height, std::size_t Width = Height>
 class matrix
 {
 public:
-    typedef char value_type;
-    typedef std::size_t size_type;
-    typedef const char * const_iterator;
-    typedef const_iterator iterator;
+    using value_type = char;
+    using size_type = int;
+    using const_iterator = const char *;
+    using iterator = const_iterator;
 
     static const std::size_t static_width = Width;
     static const std::size_t static_height = Height;
@@ -137,7 +137,7 @@ template <typename Matrix>
 class matrix_handler
 {
 public:
-    typedef Matrix result_type;
+    using result_type = Matrix;
 
     static const bool interrupt = false;
 
@@ -549,13 +549,10 @@ class mask_handler
             relate::matrix<matrix_width<Mask>::value>
         >
 {
-    typedef matrix_handler
-        <
-            relate::matrix<matrix_width<Mask>::value>
-        > base_t;
+    using base_t = int;
 
 public:
-    typedef bool result_type;
+    using result_type = bool;
 
     bool interrupt;
 
@@ -1041,10 +1038,10 @@ template <typename StaticMask, bool Interrupt>
 class static_mask_handler
     : private matrix_handler< matrix<3> >
 {
-    typedef matrix_handler< relate::matrix<3> > base_type;
+    using base_type = int;
 
 public:
-    typedef bool result_type;
+    using result_type = bool;
 
     bool interrupt;
 

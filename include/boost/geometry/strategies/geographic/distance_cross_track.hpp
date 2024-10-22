@@ -791,7 +791,7 @@ namespace services
 template <typename FormulaPolicy>
 struct tag<geographic_cross_track<FormulaPolicy> >
 {
-    typedef strategy_tag_distance_point_segment type;
+    using type = int;
 };
 
 template
@@ -812,7 +812,7 @@ template
 >
 struct tag<geographic_cross_track<FormulaPolicy, Spheroid, CalculationType> >
 {
-    typedef strategy_tag_distance_point_segment type;
+    using type = int;
 };
 
 template
@@ -825,7 +825,7 @@ template
 >
 struct tag<detail::geographic_cross_track<FormulaPolicy, Spheroid, CalculationType, Bisection, EnableClosestPoint> >
 {
-    typedef strategy_tag_distance_point_segment type;
+    using type = int;
 };
 
 //return types
@@ -880,10 +880,7 @@ template
 >
 struct comparable_type<geographic_cross_track<FormulaPolicy, Spheroid, CalculationType> >
 {
-    typedef geographic_cross_track
-        <
-            FormulaPolicy, Spheroid, CalculationType
-        >  type;
+    using type = geographic_cross_track<FormulaPolicy, Spheroid, CalculationType>;
 };
 
 
@@ -949,10 +946,7 @@ template
 struct result_from_distance<geographic_cross_track<FormulaPolicy, Spheroid, CalculationType>, P, PS>
 {
 private :
-    typedef typename geographic_cross_track
-        <
-            FormulaPolicy, Spheroid, CalculationType
-        >::template return_type<P, PS>::type return_type;
+    using return_type = typename geographic_cross_track<FormulaPolicy, Spheroid, CalculationType>::template return_type<P, PS>::type;
 public :
     template <typename T>
     static inline return_type
@@ -996,7 +990,7 @@ struct default_strategy
         geographic_tag, geographic_tag
     >
 {
-    typedef geographic_cross_track<> type;
+    using type = int;
 };
 
 

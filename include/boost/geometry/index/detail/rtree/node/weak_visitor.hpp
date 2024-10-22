@@ -56,12 +56,12 @@ inline void apply_visitor(Visitor & v,
     BOOST_GEOMETRY_INDEX_ASSERT(&n, "null ptr");
     if ( is_internal_node )
     {
-        typedef weak_internal_node<Value, Parameters, Box, Allocators, Tag> internal_node;
+        using internal_node = weak_internal_node<Value, Parameters, Box, Allocators, Tag>;
         v(get<internal_node>(n));
     }
     else
     {
-        typedef weak_leaf<Value, Parameters, Box, Allocators, Tag> leaf;
+        using leaf = weak_leaf<Value, Parameters, Box, Allocators, Tag>;
         v(get<leaf>(n));
     }
 }

@@ -26,7 +26,7 @@ namespace detail
 struct nadgrids
     : std::vector<std::string>
 {
-    typedef std::vector<std::string> base_t;
+    using base_t = int;
 
     nadgrids()
     {}
@@ -77,12 +77,12 @@ struct towgs84
 {
     static const std::size_t static_capacity = 7;
 
-    typedef std::size_t size_type;
-    typedef T value_type;
-    typedef T* iterator;
-    typedef const T* const_iterator;
-    typedef T& reference;
-    typedef const T& const_reference;
+    using size_type = int;
+    using value_type = T;
+    using iterator = T *;
+    using const_iterator = const T *;
+    using reference = T &;
+    using const_reference = const T &;
 
     towgs84()
         : m_size(0)
@@ -181,12 +181,12 @@ struct axis
 {
     static const std::size_t static_capacity = 3;
 
-    typedef std::size_t size_type;
-    typedef int value_type;
-    typedef int* iterator;
-    typedef const int* const_iterator;
-    typedef int& reference;
-    typedef const int& const_reference;
+    using size_type = int;
+    using value_type = int;
+    using iterator = int *;
+    using const_iterator = const int *;
+    using reference = int &;
+    using const_reference = const int &;
 
     axis()
         : m_size(3)
