@@ -95,7 +95,7 @@ private:
 
 public:
     // TODO: Or should the return type be defined by sb_strategy_type?
-    typedef distance::return_t<box_point, Segment, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(Segment const& segment,
                                     Box const& box,
@@ -296,7 +296,7 @@ private:
     template <typename T, bool IsLess /* true */>
     struct compare_less_equal
     {
-        typedef compare_less_equal<T, !IsLess> other;
+        using other = compare_less_equal<T, !IsLess>;
 
         template <typename T1, typename T2>
         inline bool operator()(T1 const& t1, T2 const& t2) const
@@ -309,7 +309,7 @@ private:
     template <typename T>
     struct compare_less_equal<T, false>
     {
-        typedef compare_less_equal<T, true> other;
+        using other = compare_less_equal<T, true>;
 
         template <typename T1, typename T2>
         inline bool operator()(T1 const& t1, T2 const& t2) const
@@ -323,7 +323,7 @@ private:
     template <typename LessEqual>
     struct other_compare
     {
-        typedef typename LessEqual::other type;
+        using type = typename LessEqual::other;
     };
 
 
@@ -344,7 +344,7 @@ private:
             // for negative slope segments swap the roles of bottom_right
             // and top_right and use greater_equal instead of less_equal.
 
-            typedef cast_to_result<ReturnType> cast;
+            using cast = cast_to_result<ReturnType>;
 
             LessEqual less_equal;
 
@@ -403,7 +403,7 @@ private:
         {
             auto const ps_strategy = strategies.distance(dummy_point(), dummy_segment());
 
-            typedef cast_to_result<ReturnType> cast;
+            using cast = cast_to_result<ReturnType>;
             LessEqual less_equal;
 
             // p0 is above the upper segment of the box (and inside its band)
@@ -478,7 +478,7 @@ private:
                                  Strategies const& strategies,
                                  ReturnType& result)
         {
-            typedef compare_less_equal<ReturnType, false> GreaterEqual;
+            using GreaterEqual = compare_less_equal<ReturnType, false>;
 
             // the segment lies below the box
             if (geometry::get<1>(p1) < geometry::get<1>(bottom_left))
@@ -529,7 +529,7 @@ private:
             auto const side_strategy = strategies.side();
             auto const ps_strategy = strategies.distance(dummy_point(), dummy_segment());
 
-            typedef cast_to_result<ReturnType> cast;
+            using cast = cast_to_result<ReturnType>;
             ReturnType diff1 = cast::apply(geometry::get<1>(p1))
                                - cast::apply(geometry::get<1>(p0));
 
@@ -557,7 +557,7 @@ private:
                                BoxPoint const& bottom_right,
                                Strategies const& strategies)
     {
-        typedef compare_less_equal<ReturnType, true> less_equal;
+        using less_equal = compare_less_equal<ReturnType, true>;
 
         // assert that the segment has non-negative slope
         BOOST_GEOMETRY_ASSERT( ( math::equals(geometry::get<0>(p0), geometry::get<0>(p1))
@@ -611,7 +611,7 @@ private:
                            BoxPoint const& bottom_right,
                            Strategies const& strategies)
     {
-        typedef compare_less_equal<ReturnType, false> greater_equal;
+        using greater_equal = compare_less_equal<ReturnType, false>;
 
         // assert that the segment has negative slope
         BOOST_GEOMETRY_ASSERT( ( geometry::get<0>(p0) < geometry::get<0>(p1)
@@ -722,10 +722,10 @@ template
 >
 class segment_to_box<Segment, Box, 2, Strategies>
 {
-    typedef distance::strategy_t<Segment, Box, Strategies> strategy_type;
+    using strategy_type = int;
 
 public:
-    typedef distance::return_t<Segment, Box, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(Segment const& segment,
                                     Box const& box,
@@ -756,7 +756,7 @@ public:
                               bottom_left, bottom_right,
                               top_left, top_right);
 
-        typedef geometry::less<segment_point, -1, Strategies> less_type;
+        using less_type = int;
         if (less_type()(p[0], p[1]))
         {
             return segment_to_box_2D

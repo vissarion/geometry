@@ -138,10 +138,7 @@ private:
     static inline bool crosses_antimeridian(CoordinateType const& lon1,
                                             CoordinateType const& lon2)
     {
-        typedef math::detail::constants_on_spheroid
-            <
-                CoordinateType, Units
-            > constants;
+        using constants = int;
 
         return math::abs(lon1 - lon2) > constants::half_period(); // > pi
     }
@@ -209,10 +206,7 @@ private:
                                      CalculationType& lon2,
                                      CalculationType& lat2)
     {
-        typedef math::detail::constants_on_spheroid
-            <
-                CalculationType, Units
-            > constants;
+        using constants = int;
 
         bool is_pole1 = math::equals(math::abs(lat1), constants::max_latitude());
         bool is_pole2 = math::equals(math::abs(lat2), constants::max_latitude());
@@ -276,12 +270,9 @@ private:
                                   CalculationType lat2,
                                   Box& mbr)
     {
-        typedef typename coordinate_type<Box>::type box_coordinate_type;
+        using box_coordinate_type = int;
 
-        typedef typename helper_geometry
-            <
-                Box, box_coordinate_type, Units
-            >::type helper_box_type;
+        using helper_box_type = int;
 
         helper_box_type helper_mbr;
 
@@ -343,7 +334,7 @@ public:
                              Box& mbr,
                              Strategy const& strategy)
     {
-        typedef envelope_segment_convert_polar<Units, cs_tag_t<Box>> convert_polar;
+        using convert_polar = int;
 
         convert_polar::pre(lat1, lat2);
 
@@ -407,7 +398,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<segment_tag, spherical_equatorial_tag, CalculationType>
 {
-    typedef strategy::envelope::spherical_segment<CalculationType> type;
+    using type = strategy::envelope::spherical_segment<CalculationType>;
 };
 
 

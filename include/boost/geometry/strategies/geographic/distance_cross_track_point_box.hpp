@@ -63,7 +63,7 @@ public:
     // point-point strategy getters
     struct distance_ps_strategy
     {
-        typedef geographic_cross_track<FormulaPolicy, Spheroid, CalculationType> type;
+        using type = int;
     };
 
     template <typename Point, typename Box>
@@ -94,7 +94,7 @@ public:
 #endif
 */
 
-        typedef typename return_type<Point, Box>::type return_type;
+        using return_type = typename return_type<Point, Box>::type;
 
         return details::cross_track_point_box_generic
                         <return_type>::apply(point, box,
@@ -119,7 +119,7 @@ namespace services
 template <typename Strategy, typename Spheroid, typename CalculationType>
 struct tag<geographic_cross_track_point_box<Strategy, Spheroid, CalculationType> >
 {
-    typedef strategy_tag_distance_point_box type;
+    using type = int;
 };
 
 
@@ -150,10 +150,7 @@ struct return_type<geographic_cross_track_point_box<Strategy>, P, Box>
 template <typename Strategy, typename Spheroid, typename CalculationType>
 struct comparable_type<geographic_cross_track_point_box<Strategy, Spheroid, CalculationType> >
 {
-    typedef geographic_cross_track_point_box
-        <
-            Strategy, Spheroid, CalculationType
-        > type;
+    using type = geographic_cross_track_point_box<Strategy, Spheroid, CalculationType>;
 };
 
 
@@ -176,12 +173,9 @@ struct result_from_distance
     >
 {
 private:
-    typedef geographic_cross_track_point_box<Strategy, Spheroid, CalculationType> this_strategy;
+    using this_strategy = geographic_cross_track_point_box<Strategy, Spheroid, CalculationType>;
 
-    typedef typename this_strategy::template return_type
-        <
-            P, Box
-        >::type return_type;
+    using return_type = typename this_strategy::template return_type<P, Box>::type;
 
 public:
     template <typename T>
@@ -202,7 +196,7 @@ struct default_strategy
         geographic_tag, geographic_tag
     >
 {
-    typedef geographic_cross_track_point_box<> type;
+    using type = int;
 };
 
 template <typename Box, typename Point>

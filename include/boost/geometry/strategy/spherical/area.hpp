@@ -69,7 +69,7 @@ public:
     {
         friend class spherical;
 
-        typedef typename result_type<Geometry>::type return_type;
+        using return_type = typename result_type<Geometry>::type;
 
     public:
         inline state()
@@ -137,10 +137,7 @@ public :
     {
         if (! geometry::math::equals(get<0>(p1), get<0>(p2)))
         {
-            typedef geometry::formula::area_formulas
-                <
-                    typename result_type<Geometry>::type
-                > area_formulas;
+            using area_formulas = int;
 
             st.m_sum += area_formulas::template spherical<LongSegment>(p1, p2);
 
@@ -177,7 +174,7 @@ namespace services
 template <>
 struct default_strategy<spherical_equatorial_tag>
 {
-    typedef strategy::area::spherical<> type;
+    using type = int;
 };
 
 // Note: spherical polar coordinate system requires "get_as_radian_equatorial"

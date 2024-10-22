@@ -33,17 +33,14 @@ template <typename IntersectionPointsReturnType>
 struct segments_intersection_policy
 {
 private:
-    typedef policies::relate::segments_intersection_points
-        <
-            IntersectionPointsReturnType
-        > pts_policy;
-    typedef policies::relate::segments_direction dir_policy;
+    using pts_policy = int;
+    using dir_policy = int;
 
 public:
     struct return_type
     {
-        typedef typename pts_policy::return_type intersection_points_type;
-        typedef typename dir_policy::return_type direction_type;
+        using intersection_points_type = int;
+        using direction_type = int;
 
         return_type(intersection_points_type const& pts_result,
                     direction_type const& dir_result)

@@ -53,7 +53,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<box_tag, cartesian_tag, CalculationType>
 {
-    typedef cartesian_box type;
+    using type = cartesian_box;
 };
 
 

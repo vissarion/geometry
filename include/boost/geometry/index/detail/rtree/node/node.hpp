@@ -110,11 +110,11 @@ inline Box values_box(FwdIter first, FwdIter last, Translator const& tr,
 template <typename MembersHolder>
 struct destroy_element
 {
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
     inline static void apply(typename internal_node::elements_type::value_type & element,
                              allocators_type & allocators)
@@ -133,8 +133,8 @@ struct destroy_element
 template <typename MembersHolder>
 struct destroy_elements
 {
-    typedef typename MembersHolder::value_type value_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using value_type = typename MembersHolder::value_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
     template <typename Range>
     inline static void apply(Range & elements, allocators_type & allocators)
@@ -145,9 +145,7 @@ struct destroy_elements
     template <typename It>
     inline static void apply(It first, It last, allocators_type & allocators)
     {
-        typedef std::is_same
-            <
-                value_type, typename std::iterator_traits<It>::value_type
+        using value_type = int
             > is_range_of_values;
 
         apply_dispatch(first, last, allocators, is_range_of_values());

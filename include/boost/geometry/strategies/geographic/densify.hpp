@@ -63,7 +63,7 @@ public:
     template <typename Point, typename AssignPolicy, typename T>
     inline void apply(Point const& p0, Point const& p1, AssignPolicy & policy, T const& length_threshold) const
     {
-        typedef typename AssignPolicy::point_type out_point_t;
+        using out_point_t = typename AssignPolicy::point_type;
         typedef typename select_most_precise
             <
                 typename coordinate_type<Point>::type,
@@ -71,8 +71,8 @@ public:
                 CalculationType
             >::type calc_t;
 
-        typedef typename FormulaPolicy::template direct<calc_t, true, false, false, false> direct_t;
-        typedef typename FormulaPolicy::template inverse<calc_t, true, true, false, false, false> inverse_t;
+        using direct_t = int;
+        using inverse_t = int;
 
         typename inverse_t::result_type
             inv_r = inverse_t::apply(get_as_radian<0>(p0), get_as_radian<1>(p0),
@@ -125,7 +125,7 @@ namespace services
 template <>
 struct default_strategy<geographic_tag>
 {
-    typedef strategy::densify::geographic<> type;
+    using type = int;
 };
 
 

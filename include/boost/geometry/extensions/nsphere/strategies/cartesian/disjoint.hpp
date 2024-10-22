@@ -32,7 +32,7 @@ namespace services
 template <typename Point, typename NSphere>
 struct default_strategy<Point, NSphere, point_tag, nsphere_tag, 0, 2>
 {
-    typedef int type;
+    using type = int;
 };
 
 template <typename NSphere1, typename NSphere2>

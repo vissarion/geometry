@@ -39,7 +39,7 @@ public:
         return gridinfo.empty();
     }
 
-    typedef projections::detail::shared_grids_tag tag;
+    using tag = int;
 
     struct read_locked
     {

@@ -33,13 +33,13 @@ class CentroidStrategy
 #ifndef DOXYGEN_NO_CONCEPT_MEMBERS
 
     // 1) must define state_type,
-    typedef typename Strategy::state_type state_type;
+    using state_type = typename Strategy::state_type;
 
     // 2) must define point_type,
-    typedef typename Strategy::point_type point_type;
+    using point_type = typename Strategy::point_type;
 
     // 3) must define point_type, of polygon (segments)
-    typedef typename Strategy::segment_point_type spoint_type;
+    using spoint_type = typename Strategy::segment_point_type;
 
     struct check_methods
     {

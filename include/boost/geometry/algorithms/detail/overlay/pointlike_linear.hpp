@@ -217,8 +217,8 @@ private:
     class segment_range
     {
     public:
-        typedef geometry::segment_iterator<Linear const> const_iterator;
-        typedef const_iterator iterator;
+        using const_iterator = int;
+        using iterator = const_iterator;
 
         explicit segment_range(Linear const& linear)
             : m_linear(linear)
@@ -273,9 +273,7 @@ public:
                                        OutputIterator oit,
                                        Strategy const& strategy)
     {
-        typedef std::vector
-            <
-                typename boost::range_value<MultiPoint>::type
+        using type = int
             > point_vector_type;
 
         point_vector_type common_points;

@@ -55,7 +55,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<segment_tag, cartesian_tag, CalculationType>
 {
-    typedef cartesian_segment type;
+    using type = cartesian_segment;
 };
 
 

@@ -33,7 +33,7 @@ class rtree_leaf : public rtree_node<Box, Value>
 public:
 
     /// container type for the leaves
-    typedef std::shared_ptr<rtree_node<Box, Value> > node_pointer;
+    using node_pointer = int;
     typedef std::vector<std::pair<Box, Value> > leaf_map;
 
     /**

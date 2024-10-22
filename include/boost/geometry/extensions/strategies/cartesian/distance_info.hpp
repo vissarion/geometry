@@ -43,8 +43,8 @@ namespace boost { namespace geometry
 template <typename Point>
 struct distance_info_result
 {
-    typedef Point point_type;
-    typedef typename default_distance_result<Point>::type distance_type;
+    using point_type = Point;
+    using distance_type = int;
 
     bool on_segment;
     bool within_geometry;
@@ -120,19 +120,15 @@ public :
     {
         assert_dimension_equal<Point, PointOfSegment>();
 
-        typedef typename calculation_type<Point, PointOfSegment>::type calculation_type;
+        using calculation_type = typename calculation_type<Point, PointOfSegment>::type;
 
         //// A projected point of points in Integer coordinates must be able to be
         //// represented in FP.
-        typedef model::point
-            <
-                calculation_type,
-                dimension<PointOfSegment>::value,
-                typename coordinate_system<PointOfSegment>::type
+        using type = int
             > fp_point_type;
 
         // For convenience
-        typedef fp_point_type fp_vector_type;
+        using fp_vector_type = int;
 
 
 

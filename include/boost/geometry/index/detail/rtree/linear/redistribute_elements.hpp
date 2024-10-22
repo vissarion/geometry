@@ -84,23 +84,18 @@ inline R difference(T const& from, T const& to)
 template <typename Elements, typename Parameters, typename Translator, typename Tag, size_t DimensionIndex>
 struct find_greatest_normalized_separation
 {
-    typedef typename Elements::value_type element_type;
+    using element_type = typename Elements::value_type;
     typedef typename rtree::element_indexable_type<element_type, Translator>::type indexable_type;
-    typedef typename coordinate_type<indexable_type>::type coordinate_type;
+    using coordinate_type = int;
 
-    typedef std::conditional_t
-        <
-            std::is_integral<coordinate_type>::value,
+    using value = int,
             double,
             coordinate_type
         > separation_type;
 
     typedef typename geometry::point_type<indexable_type>::type point_type;
-    typedef geometry::model::box<point_type> bounds_type;
-    typedef index::detail::bounded_view
-        <
-            indexable_type, bounds_type,
-            typename index::detail::strategy_type<Parameters>::type
+    using bounds_type = int;
+    using type = int
         > bounded_view_type;
 
     static inline void apply(Elements const& elements,
@@ -243,15 +238,12 @@ struct pick_seeds_impl
 {
     BOOST_STATIC_ASSERT(0 < Dimension);
 
-    typedef typename Elements::value_type element_type;
+    using element_type = typename Elements::value_type;
     typedef typename rtree::element_indexable_type<element_type, Translator>::type indexable_type;
 
-    typedef find_greatest_normalized_separation<
-        Elements, Parameters, Translator,
-        typename tag<indexable_type>::type, Dimension - 1
-    > find_norm_sep;
+    using find_norm_sep = int;
 
-    typedef typename find_norm_sep::separation_type separation_type;
+    using separation_type = int;
 
     static inline void apply(Elements const& elements,
                              Parameters const& parameters,
@@ -279,16 +271,13 @@ struct pick_seeds_impl
 template <typename Elements, typename Parameters, typename Translator>
 struct pick_seeds_impl<Elements, Parameters, Translator, 1>
 {
-    typedef typename Elements::value_type element_type;
+    using element_type = typename Elements::value_type;
     typedef typename rtree::element_indexable_type<element_type, Translator>::type indexable_type;
-    typedef typename coordinate_type<indexable_type>::type coordinate_type;
+    using coordinate_type = int;
 
-    typedef find_greatest_normalized_separation<
-        Elements, Parameters, Translator,
-        typename tag<indexable_type>::type, 0
-    > find_norm_sep;
+    using find_norm_sep = int;
 
-    typedef typename find_norm_sep::separation_type separation_type;
+    using separation_type = int;
 
     static inline void apply(Elements const& elements,
                              Parameters const& parameters,
@@ -310,7 +299,7 @@ inline void pick_seeds(Elements const& elements,
                        size_t & seed1,
                        size_t & seed2)
 {
-    typedef typename Elements::value_type element_type;
+    using element_type = typename Elements::value_type;
     typedef typename rtree::element_indexable_type<element_type, Translator>::type indexable_type;
 
     typedef pick_seeds_impl
@@ -318,7 +307,7 @@ inline void pick_seeds(Elements const& elements,
             Elements, Parameters, Translator,
             geometry::dimension<indexable_type>::value
         > impl;
-    typedef typename impl::separation_type separation_type;
+    using separation_type = int;
 
     separation_type separation = 0;
     impl::apply(elements, parameters, tr, separation, seed1, seed2);
@@ -331,14 +320,14 @@ inline void pick_seeds(Elements const& elements,
 template <typename MembersHolder>
 struct redistribute_elements<MembersHolder, linear_tag>
 {
-    typedef typename MembersHolder::box_type box_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using box_type = typename MembersHolder::box_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
     template <typename Node>
     static inline void apply(Node & n,
@@ -350,7 +339,7 @@ struct redistribute_elements<MembersHolder, linear_tag>
                              allocators_type & allocators)
     {
         typedef typename rtree::elements_type<Node>::type elements_type;
-        typedef typename elements_type::value_type element_type;
+        using element_type = int;
         typedef typename rtree::element_indexable_type<element_type, translator_type>::type indexable_type;
         typedef typename index::detail::default_content_result<box_type>::type content_type;
 

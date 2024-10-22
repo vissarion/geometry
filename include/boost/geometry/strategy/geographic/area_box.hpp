@@ -81,7 +81,7 @@ public:
     template <typename Box>
     inline auto apply(Box const& box) const
     {
-        typedef typename result_type<Box>::type return_type;
+        using return_type = typename result_type<Box>::type;
 
         return_type const c0 = 0;
 

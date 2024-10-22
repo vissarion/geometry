@@ -45,18 +45,8 @@ public:
     >
     static inline int apply(P1 const& p1, P2 const& p2, P const& p)
     {
-        typedef typename select_calculation_type_alt
-            <
-                CalculationType,
-                P1,
-                P2,
-                P
-            >::type CoordinateType;
-        typedef typename select_most_precise
-            <
-                CoordinateType,
-                double
-            >::type PromotedType;
+        using CoordinateType = int;
+        using PromotedType = int;
 
         CoordinateType const x = get<0>(p);
         CoordinateType const y = get<1>(p);

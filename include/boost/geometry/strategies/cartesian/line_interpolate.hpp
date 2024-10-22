@@ -55,11 +55,8 @@ public:
                       Point & p,
                       Distance const&) const
     {
-        typedef typename select_calculation_type_alt
-            <
-                CalculationType, Point
-            >::type calc_t;
-        typedef typename coordinate_type<Point>::type coord_t;
+        using calc_t = int;
+        using coord_t = int;
 
         //segment convex combination: p0*fraction + p1*(1-fraction)
         Fraction const one_minus_fraction = 1-fraction;
@@ -84,7 +81,7 @@ namespace services
 template <>
 struct default_strategy<cartesian_tag>
 {
-    typedef strategy::line_interpolate::cartesian<> type;
+    using type = int;
 };
 
 

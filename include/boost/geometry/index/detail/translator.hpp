@@ -50,7 +50,7 @@ struct translator
     : public IndexableGetter
     , public EqualTo
 {
-    typedef typename IndexableGetter::result_type result_type;
+    using result_type = typename IndexableGetter::result_type;
 
     translator(IndexableGetter const& i, EqualTo const& e)
         : IndexableGetter(i), EqualTo(e)
@@ -75,7 +75,7 @@ struct translator
 template <typename IndexableGetter>
 struct result_type
 {
-    typedef typename IndexableGetter::result_type type;
+    using type = typename IndexableGetter::result_type;
 };
 
 template <typename IndexableGetter>

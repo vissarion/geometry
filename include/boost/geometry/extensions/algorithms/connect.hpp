@@ -83,11 +83,11 @@ struct map_policy
             geometry::less<Point>
         > map_type;
 
-    typedef typename map_type::const_iterator map_iterator_type;
+    using map_iterator_type = int;
     typedef typename std::vector<node<Point> >::const_iterator vector_iterator_type;
 
-    typedef Point point_type;
-    typedef typename default_distance_result<Point>::type distance_result_type;
+    using point_type = Point;
+    using distance_result_type = int;
 
 
     map_type map;
@@ -208,11 +208,11 @@ struct fuzzy_policy
                 >
         > map_type;
 
-    typedef typename map_type::const_iterator map_iterator_type;
+    using map_iterator_type = int;
     typedef typename std::vector<node<Point> >::const_iterator vector_iterator_type;
 
-    typedef Point point_type;
-    typedef typename default_distance_result<Point>::type distance_result_type;
+    using point_type = Point;
+    using distance_result_type = int;
 
 
     map_type map;
@@ -400,7 +400,7 @@ inline void debug(Policy const& policy)
 template <typename Multi, typename GeometryOut, typename Policy>
 struct connect_multi_linestring
 {
-    typedef typename point_type<Multi>::type point_type;
+    using point_type = int;
     typedef typename boost::range_iterator<Multi const>::type iterator_type;
     typedef typename boost::range_value<Multi>::type linestring_type;
 
@@ -544,10 +544,7 @@ inline void connect(Geometry const& geometry, Collection& output_collection)
     concepts::check<Geometry const>();
     concepts::check<geometry_out>();
 
-    typedef detail::connect::map_policy
-        <
-            typename point_type<Geometry>::type
-        > policy_type;
+    using policy_type = int;
 
     policy_type policy;
 
@@ -576,10 +573,7 @@ inline void connect(Geometry const& geometry, Collection& output_collection,
     concepts::check<Geometry const>();
     concepts::check<geometry_out>();
 
-    typedef detail::connect::fuzzy_policy
-        <
-            typename point_type<Geometry>::type
-        > policy_type;
+    using policy_type = int;
 
     policy_type policy(limit);
 

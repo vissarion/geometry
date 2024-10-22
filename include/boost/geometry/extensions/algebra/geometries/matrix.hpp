@@ -80,13 +80,13 @@ namespace traits
 template <typename CoordinateType, std::size_t Rows, std::size_t Cols>
 struct tag<model::matrix<CoordinateType, Rows, Cols> >
 {
-    typedef matrix_tag type;
+    using type = int;
 };
 
 template <typename CoordinateType, std::size_t Rows, std::size_t Cols>
 struct coordinate_type<model::matrix<CoordinateType, Rows, Cols> >
 {
-    typedef CoordinateType type;
+    using type = CoordinateType;
 };
 
 //template <typename CoordinateType, std::size_t Rows, std::size_t Cols>
@@ -108,7 +108,7 @@ struct indexed_dimension<model::matrix<CoordinateType, Rows, Cols>, 1>
 template <typename CoordinateType, std::size_t Rows, std::size_t Cols, std::size_t I, std::size_t J>
 struct indexed_access<model::matrix<CoordinateType, Rows, Cols>, I, J>
 {
-    typedef CoordinateType coordinate_type;
+    using coordinate_type = CoordinateType;
 
     static inline coordinate_type get(model::matrix<CoordinateType, Rows, Cols> const& m)
     {

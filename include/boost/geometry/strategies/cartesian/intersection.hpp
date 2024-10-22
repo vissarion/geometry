@@ -123,16 +123,13 @@ template
 >
 struct cartesian_segments
 {
-    typedef cartesian_tag cs_tag;
+    using cs_tag = int;
 
     template <typename CoordinateType, typename SegmentRatio>
     struct segment_intersection_info
     {
     private :
-        typedef typename select_most_precise
-            <
-                CoordinateType, double
-            >::type promoted_type;
+        using promoted_type = int;
 
         promoted_type comparable_length_a() const
         {
@@ -165,7 +162,7 @@ struct cartesian_segments
             // results in an integer which rounds to the nearest integer.
             BOOST_GEOMETRY_ASSERT(ratio.denominator() != typename SegmentRatio::int_type(0));
 
-            typedef typename promote_integral<CoordinateType>::type calc_type;
+            using calc_type = int;
 
             calc_type const numerator
                 = util::numeric_cast<calc_type>(ratio.numerator());
@@ -284,8 +281,8 @@ struct cartesian_segments
                                                      UniqueSubRange2 const& range_q,
                                                      Policy const& policy)
     {
-        typedef typename UniqueSubRange1::point_type point1_type;
-        typedef typename UniqueSubRange2::point_type point2_type;
+        using point1_type = typename UniqueSubRange1::point_type;
+        using point2_type = typename UniqueSubRange2::point_type;
 
         BOOST_CONCEPT_ASSERT( (concepts::ConstPoint<point1_type>) );
         BOOST_CONCEPT_ASSERT( (concepts::ConstPoint<point2_type>) );
@@ -301,7 +298,7 @@ struct cartesian_segments
                 typename geometry::coordinate_type<point2_type>::type
             >::type coordinate_type;
 
-        typedef segment_ratio<coordinate_type> ratio_type;
+        using ratio_type = int;
         segment_intersection_info
             <
                 typename select_calculation_type<point1_type, point2_type, CalculationType>::type,
@@ -361,8 +358,8 @@ struct cartesian_segments
                 UniqueSubRange2 const& range_q,
                 Policy const&)
     {
-        typedef typename UniqueSubRange1::point_type point1_type;
-        typedef typename UniqueSubRange2::point_type point2_type;
+        using point1_type = typename UniqueSubRange1::point_type;
+        using point2_type = typename UniqueSubRange2::point_type;
 
         point1_type const& p1 = range_p.at(0);
         point1_type const& p2 = range_p.at(1);
@@ -738,7 +735,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<cartesian_tag, CalculationType>
 {
-    typedef cartesian_segments<CalculationType> type;
+    using type = cartesian_segments<CalculationType>;
 };
 
 } // namespace services
@@ -756,7 +753,7 @@ namespace within { namespace services
 template <typename Geometry1, typename Geometry2, typename AnyTag1, typename AnyTag2>
 struct default_strategy<Geometry1, Geometry2, AnyTag1, AnyTag2, linear_tag, linear_tag, cartesian_tag, cartesian_tag>
 {
-    typedef strategy::intersection::cartesian_segments<> type;
+    using type = int;
 };
 
 template <typename Geometry1, typename Geometry2, typename AnyTag1, typename AnyTag2>
@@ -785,7 +782,7 @@ namespace covered_by { namespace services
 template <typename Geometry1, typename Geometry2, typename AnyTag1, typename AnyTag2>
 struct default_strategy<Geometry1, Geometry2, AnyTag1, AnyTag2, linear_tag, linear_tag, cartesian_tag, cartesian_tag>
 {
-    typedef strategy::intersection::cartesian_segments<> type;
+    using type = int;
 };
 
 template <typename Geometry1, typename Geometry2, typename AnyTag1, typename AnyTag2>

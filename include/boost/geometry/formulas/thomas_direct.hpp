@@ -56,7 +56,7 @@ class thomas_direct
     static const bool CalcRevAzimuth = EnableReverseAzimuth || CalcCoordinates || CalcQuantities;
 
 public:
-    typedef result_direct<CT> result_type;
+    using result_type = int;
 
     template <typename T, typename Dist, typename Azi, typename Spheroid>
     static inline result_type apply(T const& lo1,

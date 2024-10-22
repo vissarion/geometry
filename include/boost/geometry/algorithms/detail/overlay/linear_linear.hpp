@@ -239,7 +239,7 @@ public:
                     >
             >::template turn_info_type<Strategy>::type turn_info;
 
-        typedef std::vector<turn_info> turns_container;
+        using turns_container = int;
 
         turns_container turns;
         compute_turns(turns, linear1, linear2, strategy);

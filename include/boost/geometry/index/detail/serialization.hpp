@@ -367,18 +367,18 @@ namespace boost { namespace geometry { namespace index { namespace detail { name
 template <typename MembersHolder>
 class load
 {
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
-    typedef typename allocators_type::node_pointer node_pointer;
-    typedef typename allocators_type::size_type size_type;
+    using node_pointer = typename allocators_type::node_pointer;
+    using size_type = typename allocators_type::size_type;
 
-    typedef rtree::subtree_destroyer<MembersHolder> subtree_destroyer;
+    using subtree_destroyer = int;
 
 public:
     template <typename Archive> inline static
@@ -404,7 +404,7 @@ private:
         //BOOST_GEOMETRY_INDEX_ASSERT(current_level <= leafs_level, "invalid parameter");
 
         typedef typename rtree::elements_type<internal_node>::type elements_type;
-        typedef typename elements_type::value_type element_type;
+        using element_type = int;
         //typedef typename elements_type::size_type elements_size;
 
         // CONSIDER: change to elements_type::size_type or size_type
@@ -431,7 +431,7 @@ private:
 
             for ( size_t i = 0 ; i < elements_count ; ++i )
             {
-                typedef typename elements_type::value_type::first_type box_type;
+                using box_type = int;
                 box_type b = serialization_load<box_type>("b", ar);
                 node_pointer n = raw_apply(ar, version, leafs_level, values_count, parameters, translator, allocators, current_level+1); // recursive call
                 elements.push_back(element_type(b, n));
@@ -449,7 +449,7 @@ private:
             leaf & l = rtree::get<leaf>(*n);
 
             typedef typename rtree::elements_type<leaf>::type elements_type;
-            typedef typename elements_type::value_type element_type;
+            using element_type = int;
             elements_type & elements = rtree::elements(l);
 
             values_count += elements_count;
@@ -477,17 +477,17 @@ template <typename Rtree>
 class const_private_view
 {
 public:
-    typedef typename Rtree::size_type size_type;
+    using size_type = typename Rtree::size_type;
 
-    typedef typename Rtree::translator_type translator_type;
-    typedef typename Rtree::value_type value_type;
-    typedef typename Rtree::options_type options_type;
-    typedef typename Rtree::box_type box_type;
-    typedef typename Rtree::allocators_type allocators_type;
+    using translator_type = typename Rtree::translator_type;
+    using value_type = typename Rtree::value_type;
+    using options_type = typename Rtree::options_type;
+    using box_type = typename Rtree::box_type;
+    using allocators_type = typename Rtree::allocators_type;
 
     const_private_view(Rtree const& rt) : m_rtree(rt) {}
 
-    typedef typename Rtree::members_holder members_holder;
+    using members_holder = typename Rtree::members_holder;
 
     members_holder const& members() const { return m_rtree.m_members; }
 
@@ -502,17 +502,17 @@ template <typename Rtree>
 class private_view
 {
 public:
-    typedef typename Rtree::size_type size_type;
+    using size_type = typename Rtree::size_type;
 
-    typedef typename Rtree::translator_type translator_type;
-    typedef typename Rtree::value_type value_type;
-    typedef typename Rtree::options_type options_type;
-    typedef typename Rtree::box_type box_type;
-    typedef typename Rtree::allocators_type allocators_type;
+    using translator_type = typename Rtree::translator_type;
+    using value_type = typename Rtree::value_type;
+    using options_type = typename Rtree::options_type;
+    using box_type = typename Rtree::box_type;
+    using allocators_type = typename Rtree::allocators_type;
 
     private_view(Rtree & rt) : m_rtree(rt) {}
 
-    typedef typename Rtree::members_holder members_holder;
+    using members_holder = typename Rtree::members_holder;
 
     members_holder & members() { return m_rtree.m_members; }
     members_holder const& members() const { return m_rtree.m_members; }
@@ -534,13 +534,13 @@ void save(Archive & ar, boost::geometry::index::rtree<V, P, I, E, A> const& rt, 
 {
     namespace detail = boost::geometry::index::detail;
 
-    typedef boost::geometry::index::rtree<V, P, I, E, A> rtree;
-    typedef detail::rtree::const_private_view<rtree> view;
-    typedef typename view::translator_type translator_type;
-    typedef typename view::value_type value_type;
-    typedef typename view::options_type options_type;
-    typedef typename view::box_type box_type;
-    typedef typename view::allocators_type allocators_type;
+    using rtree = boost::geometry::index::rtree<V, P, I, E, A>;
+    using view = detail::rtree::const_private_view<rtree>;
+    using translator_type = typename view::translator_type;
+    using value_type = typename view::value_type;
+    using options_type = typename view::options_type;
+    using box_type = typename view::box_type;
+    using allocators_type = typename view::allocators_type;
 
     view tree(rt);
 
@@ -563,19 +563,19 @@ void load(Archive & ar, boost::geometry::index::rtree<V, P, I, E, A> & rt, unsig
 {
     namespace detail = boost::geometry::index::detail;
 
-    typedef boost::geometry::index::rtree<V, P, I, E, A> rtree;
-    typedef detail::rtree::private_view<rtree> view;
-    typedef typename view::size_type size_type;
-    typedef typename view::translator_type translator_type;
-    typedef typename view::value_type value_type;
-    typedef typename view::options_type options_type;
-    typedef typename view::box_type box_type;
-    typedef typename view::allocators_type allocators_type;
-    typedef typename view::members_holder members_holder;
+    using rtree = boost::geometry::index::rtree<V, P, I, E, A>;
+    using view = detail::rtree::private_view<rtree>;
+    using size_type = typename view::size_type;
+    using translator_type = typename view::translator_type;
+    using value_type = typename view::value_type;
+    using options_type = typename view::options_type;
+    using box_type = typename view::box_type;
+    using allocators_type = typename view::allocators_type;
+    using members_holder = typename view::members_holder;
 
-    typedef typename options_type::parameters_type parameters_type;
-    typedef typename allocators_type::node_pointer node_pointer;
-    typedef detail::rtree::subtree_destroyer<members_holder> subtree_destroyer;
+    using parameters_type = typename options_type::parameters_type;
+    using node_pointer = typename allocators_type::node_pointer;
+    using subtree_destroyer = int;
 
     view tree(rt);
 

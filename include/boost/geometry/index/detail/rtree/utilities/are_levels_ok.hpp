@@ -27,8 +27,8 @@ template <typename MembersHolder>
 class are_levels_ok
     : public MembersHolder::visitor_const
 {
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
 public:
     inline are_levels_ok()
@@ -95,7 +95,7 @@ private:
 template <typename Rtree> inline
 bool are_levels_ok(Rtree const& tree)
 {
-    typedef utilities::view<Rtree> RTV;
+    using RTV = utilities::view<Rtree>;
     RTV rtv(tree);
 
     visitors::are_levels_ok<

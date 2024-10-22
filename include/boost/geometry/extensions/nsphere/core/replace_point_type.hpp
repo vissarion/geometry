@@ -33,7 +33,7 @@ template <typename Geometry, typename NewPointType>
 struct replace_point_type<nsphere_tag, Geometry, NewPointType>
 {
     typedef typename geometry::coordinate_type<Geometry>::type coortype;
-    typedef model::nsphere<NewPointType, coortype> type;
+    using type = int;
 };
 
 

@@ -60,15 +60,15 @@ template <typename ValueOrIndexable, typename MembersHolder>
 struct count
     : public MembersHolder::visitor_const
 {
-    typedef typename MembersHolder::value_type value_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
+    using value_type = typename MembersHolder::value_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
-    typedef count_helper<ValueOrIndexable, value_type> count_help;
+    using count_help = count_helper<ValueOrIndexable, value_type>;
 
     inline count(ValueOrIndexable const& vori, parameters_type const& parameters, translator_type const& t)
         : value_or_indexable(vori), m_parameters(parameters), tr(t), found_count(0)

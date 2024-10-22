@@ -28,7 +28,7 @@ namespace detail { namespace relate
 template <typename Geometry1, typename Geometry2>
 struct result_handler_type<Geometry1, Geometry2, geometry::de9im::matrix>
 {
-    typedef matrix_handler<geometry::de9im::matrix> type;
+    using type = int;
 };
 
 

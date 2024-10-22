@@ -84,7 +84,7 @@ namespace detail { namespace simplify
 template <typename Point>
 struct douglas_peucker_point
 {
-    typedef Point point_type;
+    using point_type = Point;
 
     Point const* p;
     bool included;
@@ -120,8 +120,7 @@ class douglas_peucker
                                 PSDistanceStrategy const& ps_distance_strategy)
     {
         typedef typename std::iterator_traits<Iterator>::value_type::point_type point_type;
-        typedef decltype(ps_distance_strategy.apply(std::declval<point_type>(),
-                            std::declval<point_type>(), std::declval<point_type>())) distance_type;
+        using distance_type = int;
 
         std::size_t size = end - begin;
 
@@ -204,7 +203,7 @@ class douglas_peucker
 #endif
 
         typedef typename boost::range_value<Range>::type point_type;
-        typedef douglas_peucker_point<point_type> dp_point_type;
+        using dp_point_type = int;
 
         // Copy coordinates, a vector of references to all points
         std::vector<dp_point_type> ref_candidates(boost::begin(range),
@@ -244,7 +243,7 @@ public:
                                        Strategies const& strategies)
     {
         typedef typename boost::range_value<Range>::type point_type;
-        typedef decltype(strategies.distance(detail::dummy_point(), detail::dummy_segment())) distance_strategy_type;
+        using distance_strategy_type = int;
 
         typedef typename strategy::distance::services::comparable_type
             <

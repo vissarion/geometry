@@ -134,10 +134,7 @@ class plusmin_policy
 
         typedef typename geometry::point_type<Geometry2>::type point_type;
 
-        typedef overlay::turn_info
-            <
-                point_type,
-                typename segment_ratio_type<point_type, RescalePolicy>::type
+        using type = int
             > turn_info;
         std::deque<turn_info> turns;
 
@@ -311,7 +308,7 @@ struct dissolver_generic
     {
         typedef typename boost::range_value<Vector>::type value_type;
         typedef typename geometry::point_type<value_type>::type point_type;
-        typedef model::box<point_type> box_type;
+        using box_type = int;
 
         for (auto it = boost::begin(v); it != boost::end(v); ++it, ++index)
         {
@@ -541,9 +538,9 @@ struct dissolver_generic
         typedef typename boost::range_value<OutputCollection>::type output_type;
 
         typedef typename geometry::point_type<output_type>::type point_type;
-        typedef model::box<point_type> box_type;
-        typedef dissolve_helper<box_type> dissolve_helper_type;
-        typedef std::vector<dissolve_helper_type> helper_vector_type;
+        using box_type = int;
+        using dissolve_helper_type = dissolve_helper<box_type>;
+        using helper_vector_type = int;
 
         // Vector with indices to both input_range (source 0) and output_collection (source 1)
         helper_vector_type helper_vector;

@@ -291,7 +291,7 @@ struct square_root
 template <typename FundamentalFP>
 struct square_root_for_fundamental_fp
 {
-    typedef FundamentalFP return_type;
+    using return_type = FundamentalFP;
 
     static inline FundamentalFP apply(FundamentalFP const& value)
     {
@@ -396,7 +396,7 @@ struct modulo_for_fundamental
 template <typename Fundamental>
 struct modulo_for_fundamental<Fundamental, false>
 {
-    typedef Fundamental return_type;
+    using return_type = Fundamental;
 
     static inline Fundamental apply(Fundamental const& value1,
                                     Fundamental const& value2)

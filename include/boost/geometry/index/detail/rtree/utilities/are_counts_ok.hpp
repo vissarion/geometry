@@ -27,10 +27,10 @@ template <typename MembersHolder>
 class are_counts_ok
     : public MembersHolder::visitor_const
 {
-    typedef typename MembersHolder::parameters_type parameters_type;
+    using parameters_type = typename MembersHolder::parameters_type;
 
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
 public:
     inline are_counts_ok(parameters_type const& parameters, bool check_min = true)
@@ -101,7 +101,7 @@ private:
 template <typename Rtree> inline
 bool are_counts_ok(Rtree const& tree, bool check_min = true)
 {
-    typedef utilities::view<Rtree> RTV;
+    using RTV = utilities::view<Rtree>;
     RTV rtv(tree);
 
     visitors::are_counts_ok<

@@ -220,8 +220,8 @@ private:
     class segment_range
     {
     public:
-        typedef geometry::segment_iterator<Linear const> const_iterator;
-        typedef const_iterator iterator;
+        using const_iterator = int;
+        using iterator = const_iterator;
 
         segment_range(Linear const& linear)
             : m_linear(linear)

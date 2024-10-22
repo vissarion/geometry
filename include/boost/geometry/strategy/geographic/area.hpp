@@ -252,7 +252,7 @@ namespace services
 template <>
 struct default_strategy<geographic_tag>
 {
-    typedef strategy::area::geographic<> type;
+    using type = int;
 };
 
 #endif // DOXYGEN_NO_STRATEGY_SPECIALIZATIONS

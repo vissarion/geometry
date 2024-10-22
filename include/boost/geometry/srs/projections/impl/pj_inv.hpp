@@ -57,7 +57,7 @@ namespace detail
 template <typename PRJ, typename LL, typename XY, typename PAR>
 inline void pj_inv(PRJ const& prj, PAR const& par, XY const& xy, LL& ll)
 {
-    typedef typename PAR::type calc_t;
+    using calc_t = typename PAR::type;
     static const calc_t EPS = 1.0e-12;
 
     /* can't do as much preliminary checking as with forward */

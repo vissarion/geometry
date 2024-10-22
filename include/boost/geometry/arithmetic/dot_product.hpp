@@ -36,7 +36,7 @@ namespace detail
 template <typename P1, typename P2, std::size_t Dimension, std::size_t DimensionCount>
 struct dot_product_maker
 {
-    typedef typename select_coordinate_type<P1, P2>::type coordinate_type;
+    using coordinate_type = int;
 
     static constexpr coordinate_type apply(P1 const& p1, P2 const& p2)
     {
@@ -48,7 +48,7 @@ struct dot_product_maker
 template <typename P1, typename P2, std::size_t DimensionCount>
 struct dot_product_maker<P1, P2, DimensionCount, DimensionCount>
 {
-    typedef typename select_coordinate_type<P1, P2>::type coordinate_type;
+    using coordinate_type = int;
 
     static constexpr coordinate_type apply(P1 const& p1, P2 const& p2)
     {

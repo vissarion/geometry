@@ -148,7 +148,7 @@ inline void assign_ranges(InputProxy const& in_proxy,
 template <typename InputPoint>
 class graham_andrew
 {
-    typedef InputPoint point_type;
+    using point_type = InputPoint;
     typedef typename std::vector<point_type> container_type;
 
     class partitions

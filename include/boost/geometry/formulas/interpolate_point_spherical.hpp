@@ -22,7 +22,7 @@ namespace boost { namespace geometry { namespace formula
 template <typename CalculationType>
 class interpolate_point_spherical
 {
-    typedef model::point<CalculationType, 3, cs::cartesian> point3d_t;
+    using point3d_t = int;
 
 public :
 

@@ -209,7 +209,7 @@ namespace services
 template <typename CalculationType>
 struct tag<pythagoras_box_box<CalculationType> >
 {
-    typedef strategy_tag_distance_box_box type;
+    using type = int;
 };
 
 
@@ -222,14 +222,14 @@ struct return_type<distance::pythagoras_box_box<CalculationType>, Box1, Box2>
 template <typename CalculationType>
 struct comparable_type<pythagoras_box_box<CalculationType> >
 {
-    typedef comparable::pythagoras_box_box<CalculationType> type;
+    using type = comparable::pythagoras_box_box<CalculationType>;
 };
 
 
 template <typename CalculationType>
 struct get_comparable<pythagoras_box_box<CalculationType> >
 {
-    typedef comparable::pythagoras_box_box<CalculationType> comparable_type;
+    using comparable_type = comparable::pythagoras_box_box<CalculationType>;
 public :
     static inline comparable_type
     apply(pythagoras_box_box<CalculationType> const& )
@@ -243,10 +243,7 @@ template <typename CalculationType, typename Box1, typename Box2>
 struct result_from_distance<pythagoras_box_box<CalculationType>, Box1, Box2>
 {
 private:
-    typedef typename return_type
-        <
-            pythagoras_box_box<CalculationType>, Box1, Box2
-        >::type return_type;
+    using return_type = typename return_type<pythagoras_box_box<CalculationType>, Box1, Box2>::type;
 public:
     template <typename T>
     static inline return_type
@@ -261,7 +258,7 @@ public:
 template <typename CalculationType>
 struct tag<comparable::pythagoras_box_box<CalculationType> >
 {
-    typedef strategy_tag_distance_box_box type;
+    using type = int;
 };
 
 
@@ -279,14 +276,14 @@ struct return_type<comparable::pythagoras_box_box<CalculationType>, Box1, Box2>
 template <typename CalculationType>
 struct comparable_type<comparable::pythagoras_box_box<CalculationType> >
 {
-    typedef comparable::pythagoras_box_box<CalculationType> type;
+    using type = comparable::pythagoras_box_box<CalculationType>;
 };
 
 
 template <typename CalculationType>
 struct get_comparable<comparable::pythagoras_box_box<CalculationType> >
 {
-    typedef comparable::pythagoras_box_box<CalculationType> comparable_type;
+    using comparable_type = comparable::pythagoras_box_box<CalculationType>;
 public :
     static inline comparable_type apply(comparable_type const& )
     {
@@ -302,10 +299,7 @@ struct result_from_distance
     >
 {
 private :
-    typedef typename return_type
-        <
-            comparable::pythagoras_box_box<CalculationType>, Box1, Box2
-        >::type return_type;
+    using return_type = typename return_type<comparable::pythagoras_box_box<CalculationType>, Box1, Box2>::type;
 public :
     template <typename T>
     static inline return_type
@@ -324,7 +318,7 @@ struct default_strategy
         box_tag, box_tag, BoxPoint1, BoxPoint2, cartesian_tag, cartesian_tag
     >
 {
-    typedef pythagoras_box_box<> type;
+    using type = int;
 };
 
 

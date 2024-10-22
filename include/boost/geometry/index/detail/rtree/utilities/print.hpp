@@ -150,10 +150,10 @@ template <typename MembersHolder>
 struct print
     : public MembersHolder::visitor_const
 {
-    typedef typename MembersHolder::translator_type translator_type;
+    using translator_type = typename MembersHolder::translator_type;
 
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
     inline print(std::ostream & o, translator_type const& t)
         : os(o), tr(t), level(0)
@@ -219,7 +219,7 @@ struct print
 template <typename Rtree> inline
 void print(std::ostream & os, Rtree const& tree)
 {
-    typedef utilities::view<Rtree> RTV;
+    using RTV = utilities::view<Rtree>;
     RTV rtv(tree);
 
     visitors::print<

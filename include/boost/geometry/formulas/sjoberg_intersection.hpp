@@ -627,9 +627,9 @@ template
 >
 class sjoberg_intersection
 {
-    typedef sjoberg_geodesic<CT, Order> geodesic_type;
-    typedef Inverse<CT, false, true, false, false, false> inverse_type;
-    typedef typename inverse_type::result_type inverse_result;
+    using geodesic_type = sjoberg_geodesic<CT, Order>;
+    using inverse_type = Inverse<CT, false, true, false, false, false>;
+    using inverse_result = typename inverse_type::result_type;
 
     static bool const enable_02 = true;
     static int const max_iterations_02 = 10;

@@ -72,7 +72,7 @@ struct spherical_latitude
     typedef typename geometry::detail::cs_angular_units<Point1>::type units1_type;
     typedef typename geometry::coordinate_type<Point2>::type coordinate2_type;
     typedef typename geometry::detail::cs_angular_units<Point2>::type units2_type;
-    typedef std::is_same<units1_type, units2_type> same_units_type;
+    using same_units_type = int;
 
     template <typename T1, typename T2>
     static inline bool apply(Point1 const& left, Point2 const& right,
@@ -140,8 +140,8 @@ struct spherical_longitude
     typedef typename geometry::detail::cs_angular_units<Point1>::type units1_type;
     typedef typename geometry::coordinate_type<Point2>::type coordinate2_type;
     typedef typename geometry::detail::cs_angular_units<Point2>::type units2_type;
-    typedef std::is_same<units1_type, units2_type> same_units_type;
-    typedef std::conditional_t<same_units_type::value, units1_type, geometry::radian> units_type;
+    using same_units_type = int;
+    using units_type = int;
 
     static const bool is_equatorial = ! std::is_same
                                         <
@@ -292,7 +292,7 @@ struct default_strategy
         spherical_tag, spherical_tag
     >
 {
-    typedef compare::spherical<ComparePolicy, EqualsPolicy, Dimension> type;
+    using type = compare::spherical<ComparePolicy, EqualsPolicy, Dimension>;
 };
 
 template <typename ComparePolicy, typename EqualsPolicy, typename Point1, typename Point2, int Dimension>

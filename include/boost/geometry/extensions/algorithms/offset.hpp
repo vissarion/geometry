@@ -47,10 +47,7 @@ template
 >
 struct offset_range
 {
-    typedef geometry::detail::buffer::buffer_range
-        <
-            Range
-        > per_range;
+    using per_range = int;
 
     template
     <
@@ -70,7 +67,7 @@ struct offset_range
                 bool reverse)
     {
         collection.start_new_ring();
-        typedef typename point_type<RangeOut>::type output_point_type;
+        using output_point_type = int;
         output_point_type first_p1, first_p2, last_p1, last_p2;
 
         if (reverse)

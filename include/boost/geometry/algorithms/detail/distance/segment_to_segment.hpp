@@ -46,10 +46,10 @@ namespace detail { namespace distance
 template<typename Segment1, typename Segment2, typename Strategies>
 class segment_to_segment
 {
-    typedef distance::strategy_t<Segment1, Segment2, Strategies> strategy_type;
+    using strategy_type = int;
 
 public:
-    typedef distance::return_t<Segment1, Segment2, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(Segment1 const& segment1, Segment2 const& segment2,
                                     Strategies const& strategies)

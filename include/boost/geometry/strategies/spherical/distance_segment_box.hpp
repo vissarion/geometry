@@ -56,11 +56,9 @@ struct generic_segment_box
     {
         ReturnType result;
         typename LessEqual::other less_equal;
-        typedef geometry::model::segment<SegmentPoint> segment_type;
+        using segment_type = int;
         // if cs_tag is spherical_tag check segment's cs_tag with spherical_equatorial_tag as default
-        typedef std::conditional_t
-            <
-                std::is_same<typename Strategies::cs_tag, spherical_tag>::value,
+        using value = int,
                 std::conditional_t
                     <
                         std::is_same
@@ -72,10 +70,8 @@ struct generic_segment_box
                     >,
                 typename Strategies::cs_tag
             > cs_tag;
-        typedef geometry::detail::disjoint::
-                disjoint_segment_box_sphere_or_spheroid<cs_tag>
-                disjoint_sb;
-        typedef typename disjoint_sb::disjoint_info disjoint_info_type;
+        using disjoint_sb = int;
+        using disjoint_info_type = int;
 
         segment_type seg(p0, p1);
 
@@ -107,7 +103,7 @@ struct generic_segment_box
         // disjoint but vertex not computed
         if (disjoint_result == disjoint_info_type::disjoint_no_vertex)
         {
-            typedef typename coordinate_type<SegmentPoint>::type CT;
+            using CT = int;
 
             geometry::model::box<SegmentPoint> mbr;
             geometry::envelope(seg, mbr, strategies);
@@ -216,7 +212,7 @@ struct spherical_segment_box
           >
     {};
 
-    typedef spherical_tag cs_tag;
+    using cs_tag = int;
 
     // constructors
 
@@ -285,7 +281,7 @@ namespace services
 template <typename CalculationType, typename Strategy>
 struct tag<spherical_segment_box<CalculationType, Strategy> >
 {
-    typedef strategy_tag_distance_segment_box type;
+    using type = int;
 };
 
 template <typename CalculationType, typename Strategy, typename PS, typename PB>
@@ -298,21 +294,14 @@ struct comparable_type<spherical_segment_box<CalculationType, Strategy> >
 {
     // Define a cartesian_segment_box strategy with its underlying point-segment
     // strategy being comparable
-    typedef spherical_segment_box
-        <
-            CalculationType,
-            typename comparable_type<Strategy>::type
-        > type;
+    using type = int;
 };
 
 
 template <typename CalculationType, typename Strategy>
 struct get_comparable<spherical_segment_box<CalculationType, Strategy> >
 {
-    typedef typename comparable_type
-        <
-            spherical_segment_box<CalculationType, Strategy>
-        >::type comparable_type;
+    using comparable_type = int;
 public :
     static inline comparable_type apply(spherical_segment_box<CalculationType, Strategy> const& )
     {
@@ -324,15 +313,7 @@ template <typename CalculationType, typename Strategy, typename PS, typename PB>
 struct result_from_distance<spherical_segment_box<CalculationType, Strategy>, PS, PB>
 {
 private :
-    typedef typename return_type<
-                                    spherical_segment_box
-                                    <
-                                        CalculationType,
-                                        Strategy
-                                    >,
-                                    PS,
-                                    PB
-                                 >::type return_type;
+    using return_type = int;
 public :
     template <typename T>
     static inline return_type apply(spherical_segment_box<CalculationType,
@@ -351,7 +332,7 @@ struct default_strategy
         spherical_equatorial_tag, spherical_equatorial_tag
     >
 {
-    typedef spherical_segment_box<> type;
+    using type = int;
 };
 
 template <typename Box, typename Segment>

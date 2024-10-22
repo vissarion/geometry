@@ -53,7 +53,7 @@ class andoyer_inverse
     static const bool CalcRevAzimuth = EnableReverseAzimuth || CalcQuantities;
 
 public:
-    typedef result_inverse<CT> result_type;
+    using result_type = int;
 
     template <typename T1, typename T2, typename Spheroid>
     static inline result_type apply(T1 const& lon1,

@@ -55,8 +55,8 @@ private:
     InnerIterator m_inner_it;
 
 public:
-    typedef OuterIterator outer_iterator_type;
-    typedef InnerIterator inner_iterator_type;
+    using outer_iterator_type = OuterIterator;
+    using inner_iterator_type = InnerIterator;
 
     // default constructor
     flatten_iterator() = default;

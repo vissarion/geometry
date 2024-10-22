@@ -31,7 +31,7 @@ namespace detail { namespace distance
 template <typename Linear, typename Areal, typename Strategies>
 struct linear_to_areal
 {
-    typedef distance::return_t<Linear, Areal, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(Linear const& linear,
                                     Areal const& areal,
@@ -60,7 +60,7 @@ struct linear_to_areal
 template <typename Areal1, typename Areal2, typename Strategies>
 struct areal_to_areal
 {
-    typedef distance::return_t<Areal1, Areal2, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(Areal1 const& areal1,
                                     Areal2 const& areal2,

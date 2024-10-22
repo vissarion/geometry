@@ -240,7 +240,7 @@ template
 >
 struct tag<model::point<CoordinateType, DimensionCount, CoordinateSystem> >
 {
-    typedef point_tag type;
+    using type = int;
 };
 
 template
@@ -251,7 +251,7 @@ template
 >
 struct coordinate_type<model::point<CoordinateType, DimensionCount, CoordinateSystem> >
 {
-    typedef CoordinateType type;
+    using type = CoordinateType;
 };
 
 template
@@ -262,7 +262,7 @@ template
 >
 struct coordinate_system<model::point<CoordinateType, DimensionCount, CoordinateSystem> >
 {
-    typedef CoordinateSystem type;
+    using type = CoordinateSystem;
 };
 
 template
@@ -306,7 +306,7 @@ template
 >
 struct make<model::point<CoordinateType, DimensionCount, CoordinateSystem> >
 {
-    typedef model::point<CoordinateType, DimensionCount, CoordinateSystem> point_type;
+    using point_type = model::point<CoordinateType, DimensionCount, CoordinateSystem>;
 
     static const bool is_specialized = true;
 

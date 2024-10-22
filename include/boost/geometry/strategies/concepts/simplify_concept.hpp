@@ -45,7 +45,7 @@ private :
 
     // 1) must define distance_strategy_type,
     //    defining point-segment distance strategy (to be checked)
-    typedef typename Strategy::distance_strategy_type ds_type;
+    using ds_type = typename Strategy::distance_strategy_type;
 
 
     struct checker
@@ -59,9 +59,7 @@ private :
                     ApplyMethod
                 >::type parameter_types;
 
-            typedef std::conditional_t
-                <
-                    ft::is_member_function_pointer<ApplyMethod>::value,
+            using value = int,
                     std::integral_constant<int, 1>,
                     std::integral_constant<int, 0>
                 > base_index;

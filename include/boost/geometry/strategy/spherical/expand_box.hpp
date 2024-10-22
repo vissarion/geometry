@@ -150,7 +150,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<box_tag, spherical_equatorial_tag, CalculationType>
 {
-    typedef spherical_box type;
+    using type = spherical_box;
 };
 
 template <typename CalculationType>

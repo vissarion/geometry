@@ -73,8 +73,8 @@ struct to_furthest_tag {};
 template <typename T>
 struct relation
 {
-    typedef T value_type;
-    typedef to_nearest_tag tag;
+    using value_type = T;
+    using tag = to_nearest_tag;
     static inline T const& value(T const& v) { return v; }
     static inline T & value(T & v) { return v; }
 };
@@ -82,8 +82,8 @@ struct relation
 template <typename T>
 struct relation< to_nearest<T> >
 {
-    typedef T value_type;
-    typedef to_nearest_tag tag;
+    using value_type = T;
+    using tag = to_nearest_tag;
     static inline T const& value(to_nearest<T> const& r) { return r.value; }
     static inline T & value(to_nearest<T> & r) { return r.value; }
 };
@@ -91,8 +91,8 @@ struct relation< to_nearest<T> >
 template <typename T>
 struct relation< to_centroid<T> >
 {
-    typedef T value_type;
-    typedef to_centroid_tag tag;
+    using value_type = T;
+    using tag = to_centroid_tag;
     static inline T const& value(to_centroid<T> const& r) { return r.value; }
     static inline T & value(to_centroid<T> & r) { return r.value; }
 };
@@ -100,8 +100,8 @@ struct relation< to_centroid<T> >
 template <typename T>
 struct relation< to_furthest<T> >
 {
-    typedef T value_type;
-    typedef to_furthest_tag tag;
+    using value_type = T;
+    using tag = to_furthest_tag;
     static inline T const& value(to_furthest<T> const& r) { return r.value; }
     static inline T & value(to_furthest<T> & r) { return r.value; }
 };

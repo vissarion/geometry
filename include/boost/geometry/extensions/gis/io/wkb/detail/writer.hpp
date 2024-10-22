@@ -44,7 +44,7 @@ namespace detail { namespace wkb
     template <typename T>
     struct value_writer
     {
-        typedef T value_type;
+        using value_type = T;
 
         template <typename OutputIterator>
         static bool write(T const& value,

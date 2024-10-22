@@ -37,7 +37,7 @@ template
 class geographic_segment
 {
 public:
-    typedef Spheroid model_type;
+    using model_type = Spheroid;
 
     inline geographic_segment()
         : m_spheroid()

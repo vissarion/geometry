@@ -32,7 +32,7 @@ namespace detail { namespace distance
 template <typename Linear, typename Box, typename Strategies>
 struct linear_to_box
 {
-    typedef distance::return_t<Linear, Box, Strategies> return_type;
+    using return_type = int;
 
     template <typename Iterator>
     static inline return_type apply(Box const& box,

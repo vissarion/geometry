@@ -33,8 +33,8 @@ namespace dispatch
 template <typename S>
 struct assign<nsphere_tag, S, 2>
 {
-    typedef typename coordinate_type<S>::type coordinate_type;
-    typedef typename radius_type<S>::type radius_type;
+    using coordinate_type = int;
+    using radius_type = int;
 
     /// 2-value version for an n-sphere is valid for circle and sets the center
     template <typename T>

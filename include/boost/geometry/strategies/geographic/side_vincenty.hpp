@@ -40,7 +40,7 @@ template
 class vincenty
     : public side::geographic<strategy::vincenty, Spheroid, CalculationType>
 {
-    typedef side::geographic<strategy::vincenty, Spheroid, CalculationType> base_t;
+    using base_t = int;
 
 public:
     vincenty()

@@ -108,7 +108,7 @@ namespace traits
 template <typename Ring>
 struct tag<geometry::detail::buffer::buffered_ring<Ring> >
 {
-    typedef ring_tag type;
+    using type = int;
 };
 
 
@@ -135,7 +135,7 @@ struct point_type<geometry::detail::buffer::buffered_ring_collection<Ring> >
 template <typename Ring>
 struct tag<geometry::detail::buffer::buffered_ring_collection<Ring> >
 {
-    typedef geometry::detail::buffer::buffered_ring_collection_tag type;
+    using type = geometry::detail::buffer::buffered_ring_collection_tag;
 };
 
 
@@ -154,7 +154,7 @@ struct ring_type
     detail::buffer::buffered_ring_collection<Ring>
 >
 {
-    typedef Ring type;
+    using type = Ring;
 };
 
 
@@ -177,7 +177,7 @@ struct point_order<detail::buffer::buffered_ring_collection_tag,
 template <>
 struct single_tag_of<detail::buffer::buffered_ring_collection_tag>
 {
-    typedef ring_tag type;
+    using type = int;
 };
 
 

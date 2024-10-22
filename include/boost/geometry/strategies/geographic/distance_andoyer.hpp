@@ -54,10 +54,7 @@ class andoyer
             strategy::andoyer, Spheroid, CalculationType
         >
 {
-    typedef strategy::distance::geographic
-        <
-            strategy::andoyer, Spheroid, CalculationType
-        > base_type;
+    using base_type = int;
 
 public :
     inline andoyer()
@@ -77,7 +74,7 @@ namespace services
 template <typename Spheroid, typename CalculationType>
 struct tag<andoyer<Spheroid, CalculationType> >
 {
-    typedef strategy_tag_distance_point_point type;
+    using type = int;
 };
 
 
@@ -90,7 +87,7 @@ struct return_type<andoyer<Spheroid, CalculationType>, P1, P2>
 template <typename Spheroid, typename CalculationType>
 struct comparable_type<andoyer<Spheroid, CalculationType> >
 {
-    typedef andoyer<Spheroid, CalculationType> type;
+    using type = andoyer<Spheroid, CalculationType>;
 };
 
 

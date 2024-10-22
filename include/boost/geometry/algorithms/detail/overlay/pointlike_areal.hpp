@@ -183,14 +183,12 @@ private:
     {
         item_visitor_type<OutputIterator, Strategy> item_visitor(multipolygon, oit, strategy);
 
-        typedef geometry::model::point
-            <
-                typename geometry::coordinate_type<MultiPoint>::type,
+        using type = int,
                 geometry::dimension<MultiPoint>::value,
                 typename geometry::coordinate_system<MultiPoint>::type
             > point_type;
-        typedef geometry::model::box<point_type> box_type;
-        typedef std::pair<box_type, std::size_t> box_pair;
+        using box_type = int;
+        using box_pair = int;
         std::vector<box_pair> box_pairs;
         box_pairs.reserve(boost::size(multipolygon));
 
@@ -217,9 +215,7 @@ public:
                                        OutputIterator oit,
                                        Strategy const& strategy)
     {
-        typedef std::vector
-            <
-                typename boost::range_value<MultiPoint>::type
+        using type = int
             > point_vector_type;
 
         point_vector_type common_points;

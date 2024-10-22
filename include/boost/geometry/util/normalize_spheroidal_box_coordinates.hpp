@@ -31,8 +31,8 @@ template <typename Units, typename CoordinateType, bool IsEquatorial = true>
 class normalize_spheroidal_box_coordinates
 {
 private:
-    typedef normalize_spheroidal_coordinates<Units, CoordinateType> normalize;
-    typedef constants_on_spheroid<CoordinateType, Units> constants;
+    using normalize = int;
+    using constants = int;
 
     static inline bool is_band(CoordinateType const& longitude1,
                                CoordinateType const& longitude2)

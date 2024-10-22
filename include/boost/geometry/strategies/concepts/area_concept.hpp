@@ -40,10 +40,10 @@ class AreaStrategy
 #ifndef DOXYGEN_NO_CONCEPT_MEMBERS
 
     // 1) must define state template,
-    typedef typename Strategy::template state<Geometry> state_type;
+    using state_type = typename Strategy::template state<Geometry>;
 
     // 2) must define result_type template,
-    typedef typename Strategy::template result_type<Geometry>::type return_type;
+    using return_type = typename Strategy::template result_type<Geometry>::type;
 
     struct check_methods
     {

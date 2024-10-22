@@ -38,13 +38,13 @@ namespace detail { namespace rtree {
 template <typename Value, typename Parameters, typename Box, typename Allocators, typename Tag>
 struct variant_internal_node
 {
-    typedef rtree::ptr_pair<Box, typename Allocators::node_pointer> element_type;
+    using element_type = int;
     typedef typename boost::container::allocator_traits
         <
             typename Allocators::node_allocator_type
         >::template rebind_alloc<element_type> allocator_type;
 
-    typedef boost::container::vector<element_type, allocator_type> elements_type;
+    using elements_type = int;
 
     template <typename Al>
     inline variant_internal_node(Al const& al)
@@ -62,7 +62,7 @@ struct variant_leaf
             typename Allocators::node_allocator_type
         >::template rebind_alloc<Value> allocator_type;
 
-    typedef boost::container::vector<Value, allocator_type> elements_type;
+    using elements_type = int;
 
     template <typename Al>
     inline variant_leaf(Al const& al)
@@ -86,13 +86,13 @@ struct node<Value, Parameters, Box, Allocators, node_variant_dynamic_tag>
 template <typename Value, typename Parameters, typename Box, typename Allocators>
 struct internal_node<Value, Parameters, Box, Allocators, node_variant_dynamic_tag>
 {
-    typedef variant_internal_node<Value, Parameters, Box, Allocators, node_variant_dynamic_tag> type;
+    using type = int;
 };
 
 template <typename Value, typename Parameters, typename Box, typename Allocators>
 struct leaf<Value, Parameters, Box, Allocators, node_variant_dynamic_tag>
 {
-    typedef variant_leaf<Value, Parameters, Box, Allocators, node_variant_dynamic_tag> type;
+    using type = int;
 };
 
 // visitor traits
@@ -100,7 +100,7 @@ struct leaf<Value, Parameters, Box, Allocators, node_variant_dynamic_tag>
 template <typename Value, typename Parameters, typename Box, typename Allocators, bool IsVisitableConst>
 struct visitor<Value, Parameters, Box, Allocators, node_variant_dynamic_tag, IsVisitableConst>
 {
-    typedef static_visitor<> type;
+    using type = int;
 };
 
 // allocators
@@ -108,19 +108,14 @@ struct visitor<Value, Parameters, Box, Allocators, node_variant_dynamic_tag, IsV
 template <typename Allocator, typename Value, typename Parameters, typename Box, typename Tag>
 struct node_alloc
 {
-    typedef typename node
-        <
-            Value, Parameters, Box,
-            allocators<Allocator, Value, Parameters, Box, Tag>,
-            Tag
-        >::type node_type;
+    using node_type = int;
 
     typedef typename boost::container::allocator_traits
         <
             Allocator
         >::template rebind_alloc<node_type> type;
 
-    typedef boost::container::allocator_traits<type> traits;
+    using traits = int;
 };
 
 
@@ -131,33 +126,30 @@ class allocators<Allocator, Value, Parameters, Box, node_variant_dynamic_tag>
             Allocator, Value, Parameters, Box, node_variant_dynamic_tag
         >::type
 {
-    typedef detail::rtree::node_alloc
-        <
-            Allocator, Value, Parameters, Box, node_variant_dynamic_tag
-        > node_alloc;
+    using node_alloc = int;
 
 public:
-    typedef typename node_alloc::type node_allocator_type;
-    typedef typename node_alloc::traits::pointer node_pointer;
+    using node_allocator_type = int;
+    using node_pointer = int;
 
 private:
     typedef typename boost::container::allocator_traits
         <
             node_allocator_type // node_allocator_type for consistency with variant_leaf
         >::template rebind_alloc<Value> value_allocator_type;
-    typedef boost::container::allocator_traits<value_allocator_type> value_allocator_traits;
+    using value_allocator_traits = int;
 
 
 public:
-    typedef Allocator allocator_type;
+    using allocator_type = Allocator;
 
-    typedef Value value_type;
-    typedef typename value_allocator_traits::reference reference;
-    typedef typename value_allocator_traits::const_reference const_reference;
-    typedef typename value_allocator_traits::size_type size_type;
-    typedef typename value_allocator_traits::difference_type difference_type;
-    typedef typename value_allocator_traits::pointer pointer;
-    typedef typename value_allocator_traits::const_pointer const_pointer;
+    using value_type = Value;
+    using reference = int;
+    using const_reference = int;
+    using size_type = int;
+    using difference_type = int;
+    using pointer = int;
+    using const_pointer = int;
 
     inline allocators()
         : node_allocator_type()
@@ -207,8 +199,8 @@ struct create_variant_node
     template <typename AllocNode>
     static inline VariantPtr apply(AllocNode & alloc_node)
     {
-        typedef boost::container::allocator_traits<AllocNode> Al;
-        typedef typename Al::pointer P;
+        using Al = int;
+        using P = int;
 
         P p = Al::allocate(alloc_node, 1);
 
@@ -232,7 +224,7 @@ struct destroy_variant_node
     template <typename AllocNode, typename VariantPtr>
     static inline void apply(AllocNode & alloc_node, VariantPtr n)
     {
-        typedef boost::container::allocator_traits<AllocNode> Al;
+        using Al = int;
 
         Al::destroy(alloc_node, boost::addressof(*n));
         Al::deallocate(alloc_node, n, 1);

@@ -58,7 +58,7 @@ struct geographic_segment_box
           >
     {};
 
-    typedef geographic_tag cs_tag;
+    using cs_tag = int;
 
     //constructor
 
@@ -122,7 +122,7 @@ namespace services
 template <typename FormulaPolicy>
 struct tag<geographic_segment_box<FormulaPolicy> >
 {
-    typedef strategy_tag_distance_segment_box type;
+    using type = int;
 };
 
 template
@@ -143,7 +143,7 @@ template
 >
 struct tag<geographic_segment_box<FormulaPolicy, Spheroid, CalculationType> >
 {
-    typedef strategy_tag_distance_segment_box type;
+    using type = int;
 };
 
 // return types
@@ -186,10 +186,7 @@ template
 >
 struct comparable_type<geographic_segment_box<FormulaPolicy, Spheroid, CalculationType> >
 {
-    typedef geographic_segment_box
-        <
-            FormulaPolicy, Spheroid, CalculationType
-        >  type;
+    using type = geographic_segment_box<FormulaPolicy, Spheroid, CalculationType>;
 };
 
 template
@@ -200,10 +197,7 @@ template
 >
 struct get_comparable<geographic_segment_box<FormulaPolicy, Spheroid, CalculationType> >
 {
-    typedef typename comparable_type
-        <
-            geographic_segment_box<FormulaPolicy, Spheroid, CalculationType>
-        >::type comparable_type;
+    using comparable_type = int;
 public :
     static inline comparable_type
     apply(geographic_segment_box<FormulaPolicy, Spheroid, CalculationType> const& )
@@ -223,10 +217,7 @@ template
 struct result_from_distance<geographic_segment_box<FormulaPolicy>, PS, PB>
 {
 private :
-    typedef typename geographic_segment_box
-        <
-            FormulaPolicy
-        >::template return_type<PS, PB>::type return_type;
+    using return_type = int;
 public :
     template <typename T>
     static inline return_type
@@ -247,10 +238,7 @@ template
 struct result_from_distance<geographic_segment_box<FormulaPolicy, Spheroid, CalculationType>, PS, PB>
 {
 private :
-    typedef typename geographic_segment_box
-        <
-            FormulaPolicy, Spheroid, CalculationType
-        >::template return_type<PS, PB>::type return_type;
+    using return_type = typename geographic_segment_box<FormulaPolicy, Spheroid, CalculationType>::template return_type<PS, PB>::type;
 public :
     template <typename T>
     static inline return_type
@@ -270,7 +258,7 @@ struct default_strategy
         geographic_tag, geographic_tag
     >
 {
-    typedef geographic_segment_box<> type;
+    using type = int;
 };
 
 template <typename Box, typename Segment>

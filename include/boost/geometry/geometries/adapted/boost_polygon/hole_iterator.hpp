@@ -47,7 +47,7 @@ public :
     {
     }
 
-    typedef std::ptrdiff_t difference_type;
+    using difference_type = int;
 
 private:
     friend class boost::iterator_core_access;

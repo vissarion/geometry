@@ -173,18 +173,13 @@ template <typename Params, typename CT, typename ProjParams>
 class factory
 {
 private:
-    typedef detail::factory_entry
-        <
-            Params,
-            CT,
-            ProjParams
-        > entry_base;
+    using entry_base = int;
 
-    typedef factory_key<Params> key;
-    typedef typename key::type key_type;
-    typedef std::shared_ptr<entry_base> entry_ptr;
+    using key = factory_key<Params>;
+    using key_type = typename key::type;
+    using entry_ptr = int;
 
-    typedef std::map<key_type, entry_ptr> entries_map;
+    using entries_map = int;
 
     entries_map m_entries;
 
@@ -302,7 +297,7 @@ public:
 
     detail::dynamic_wrapper_b<CT, ProjParams>* create_new(Params const& params, ProjParams const& proj_par) const
     {
-        typedef typename entries_map::const_iterator const_iterator;
+        using const_iterator = int;
         const_iterator it = m_entries.find(key::get(proj_par));
         if (it != m_entries.end())
         {

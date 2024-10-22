@@ -50,7 +50,7 @@ class spherical
 {
 public:
 
-    typedef typename DistanceStrategy::radius_type radius_type;
+    using radius_type = typename DistanceStrategy::radius_type;
 
     spherical() = default;
 
@@ -69,11 +69,7 @@ public:
                       Point & p,
                       Distance const&) const
     {
-        typedef typename select_calculation_type_alt
-        <
-            CalculationType,
-            Point
-        >::type calc_t;
+        using calc_t = int;
 
         formula::interpolate_point_spherical<calc_t> formula;
 
@@ -102,7 +98,7 @@ namespace services
 template <>
 struct default_strategy<spherical_equatorial_tag>
 {
-    typedef strategy::line_interpolate::spherical<> type;
+    using type = int;
 };
 
 

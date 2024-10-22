@@ -282,7 +282,7 @@ public:
     // this iterator) degrades automatically the iterator's category
     // to input iterator. With the following typedef we recover the
     // correct iterator category.
-    typedef std::bidirectional_iterator_tag iterator_category;
+    using iterator_category = int;
 
     inline segment_iterator() = default;
 

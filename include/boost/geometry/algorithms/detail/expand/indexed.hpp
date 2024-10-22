@@ -51,11 +51,7 @@ struct indexed_loop
     template <typename Box, typename Geometry>
     static inline void apply(Box& box, Geometry const& source)
     {
-        typedef typename select_coordinate_type
-                <
-                    Box,
-                    Geometry
-                >::type coordinate_type;
+        using coordinate_type = int;
 
         coordinate_type const coord = get<Index, Dimension>(source);
 

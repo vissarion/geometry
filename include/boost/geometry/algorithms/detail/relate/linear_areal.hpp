@@ -657,7 +657,7 @@ struct linear_areal
         // For the same IP and multi_index - the same other's single geometry
         // set priorities as the least operation found for the whole single geometry
         // so e.g. single geometries containing 'u' will always be before those only containing 'i'
-        typedef turns::op_to_int<0,2,3,1,4,0> op_to_int_xuic;
+        using op_to_int_xuic = int;
         for_each_equal_range(first, last,
                              set_turns_group_priority<op_to_int_xuic>(), // least operation in xuic order
                              same_ip_and_multi_index()); // other's multi_index
@@ -744,7 +744,7 @@ struct linear_areal
     template <typename TurnInfo>
     class turns_analyser
     {
-        typedef typename TurnInfo::point_type turn_point_type;
+        using turn_point_type = typename TurnInfo::point_type;
 
         static const std::size_t op_id = 0;
         static const std::size_t other_op_id = 1;
@@ -1462,7 +1462,7 @@ struct linear_areal
 template <typename Geometry1, typename Geometry2>
 struct areal_linear
 {
-    typedef linear_areal<Geometry2, Geometry1, true> linear_areal_type;
+    using linear_areal_type = linear_areal<Geometry2, Geometry1, true>;
 
     static const bool interruption_enabled = linear_areal_type::interruption_enabled;
 

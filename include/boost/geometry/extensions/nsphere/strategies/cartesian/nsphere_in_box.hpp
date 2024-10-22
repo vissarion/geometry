@@ -139,7 +139,7 @@ struct default_strategy
         cartesian_tag, cartesian_tag
     >
 {
-    typedef within::nsphere_in_box<NSphere, Box, within::nsphere_within_range> type;
+    using type = within::nsphere_in_box<NSphere, Box, within::nsphere_within_range>;
 };
 
 
@@ -159,7 +159,7 @@ struct default_strategy
         cartesian_tag, cartesian_tag
     >
 {
-    typedef within::nsphere_in_box<NSphere, Box, within::nsphere_covered_by_range> type;
+    using type = within::nsphere_in_box<NSphere, Box, within::nsphere_covered_by_range>;
 };
 
 

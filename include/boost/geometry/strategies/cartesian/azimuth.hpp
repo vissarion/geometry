@@ -69,7 +69,7 @@ private:
                                T2 const& x2, T2 const& y2,
                                Result& a1, Result& a2)
     {
-        typedef typename result_type<T1, T2>::type calc_t;
+        using calc_t = typename result_type<T1, T2>::type;
 
         // NOTE: azimuth 0 is at Y axis, increasing right
         // as in spherical/geographic where 0 is at North axis
@@ -85,7 +85,7 @@ namespace services
 template <>
 struct default_strategy<cartesian_tag>
 {
-    typedef strategy::azimuth::cartesian<> type;
+    using type = int;
 };
 
 }

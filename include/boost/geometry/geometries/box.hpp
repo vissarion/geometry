@@ -192,13 +192,13 @@ namespace traits
 template <typename Point>
 struct tag<model::box<Point> >
 {
-    typedef box_tag type;
+    using type = int;
 };
 
 template <typename Point>
 struct point_type<model::box<Point> >
 {
-    typedef Point type;
+    using type = Point;
 };
 
 template <typename Point, std::size_t Dimension>
@@ -236,7 +236,7 @@ struct indexed_access<model::box<Point>, max_corner, Dimension>
 template <typename Point>
 struct make<model::box<Point> >
 {
-    typedef model::box<Point> box_type;
+    using box_type = model::box<Point>;
 
     static const bool is_specialized = true;
 

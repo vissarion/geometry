@@ -49,7 +49,7 @@ class pointing_segment
             >
     ) );
 
-    typedef ConstOrNonConstPoint point_type;
+    using point_type = ConstOrNonConstPoint;
 
 public:
     point_type* first;
@@ -78,19 +78,19 @@ namespace traits
 template <typename Point>
 struct tag<model::pointing_segment<Point> >
 {
-    typedef segment_tag type;
+    using type = int;
 };
 
 template <typename Point>
 struct point_type<model::pointing_segment<Point> >
 {
-    typedef Point type;
+    using type = Point;
 };
 
 template <typename Point, std::size_t Dimension>
 struct indexed_access<model::pointing_segment<Point>, 0, Dimension>
 {
-    typedef model::pointing_segment<Point> segment_type;
+    using segment_type = model::pointing_segment<Point>;
     typedef typename geometry::coordinate_type
         <
             segment_type

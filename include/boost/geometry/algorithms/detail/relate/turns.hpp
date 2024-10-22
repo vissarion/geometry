@@ -157,7 +157,7 @@ struct less_op_linear_areal_single
         segment_identifier const& left_other_seg_id = left.operations[other_op_id].seg_id;
         segment_identifier const& right_other_seg_id = right.operations[other_op_id].seg_id;
 
-        typedef typename Turn::turn_operation_type operation_type;
+        using operation_type = typename Turn::turn_operation_type;
         operation_type const& left_operation = left.operations[OpId];
         operation_type const& right_operation = right.operations[OpId];
 
@@ -192,7 +192,7 @@ struct less_op_areal_areal
         segment_identifier const& left_other_seg_id = left.operations[other_op_id].seg_id;
         segment_identifier const& right_other_seg_id = right.operations[other_op_id].seg_id;
 
-        typedef typename Turn::turn_operation_type operation_type;
+        using operation_type = typename Turn::turn_operation_type;
         operation_type const& left_operation = left.operations[OpId];
         operation_type const& right_operation = right.operations[OpId];
 

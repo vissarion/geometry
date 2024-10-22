@@ -40,8 +40,8 @@ class Point
 {
 #ifndef DOXYGEN_NO_CONCEPT_MEMBERS
 
-    typedef typename coordinate_type<Geometry>::type ctype;
-    typedef typename coordinate_system<Geometry>::type csystem;
+    using ctype = int;
+    using csystem = int;
 
     // The following enum is used to fully instantiate the coordinate
     // system class; this is needed in order to check the units passed
@@ -93,8 +93,8 @@ class ConstPoint
 {
 #ifndef DOXYGEN_NO_CONCEPT_MEMBERS
 
-    typedef typename coordinate_type<Geometry>::type ctype;
-    typedef typename coordinate_system<Geometry>::type csystem;
+    using ctype = int;
+    using csystem = int;
 
     // The following enum is used to fully instantiate the coordinate
     // system class; this is needed in order to check the units passed

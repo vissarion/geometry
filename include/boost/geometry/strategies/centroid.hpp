@@ -59,7 +59,7 @@ template
 >
 struct default_strategy
 {
-    typedef not_applicable_strategy type;
+    using type = not_applicable_strategy;
 };
 
 

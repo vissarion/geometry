@@ -107,10 +107,7 @@ class winding
             Point, PointOfSegment, CalculationType
         >::type
 {
-    typedef typename within::detail::winding_base_type
-        <
-            Point, PointOfSegment, CalculationType
-        >::type base_t;
+    using base_t = int;
 
 public:
     winding() {}

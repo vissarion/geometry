@@ -144,17 +144,17 @@ struct nth_element_and_half_boxes<Dimension, Dimension>
 template <typename MembersHolder>
 class pack
 {
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
-    typedef typename MembersHolder::node_pointer node_pointer;
-    typedef typename MembersHolder::size_type size_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using node_pointer = typename MembersHolder::node_pointer;
+    using size_type = typename MembersHolder::size_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
-    typedef typename MembersHolder::box_type box_type;
+    using box_type = typename MembersHolder::box_type;
     typedef typename geometry::point_type<box_type>::type point_type;
     typedef typename geometry::coordinate_type<point_type>::type coordinate_type;
     typedef typename detail::default_content_result<box_type>::type content_type;
@@ -167,9 +167,9 @@ class pack
     >::type values_counts_container;
 
     typedef typename rtree::elements_type<internal_node>::type internal_elements;
-    typedef typename internal_elements::value_type internal_element;
+    using internal_element = int;
 
-    typedef rtree::subtree_destroyer<MembersHolder> subtree_destroyer;
+    using subtree_destroyer = int;
 
 public:
     // Arbitrary iterators
@@ -200,7 +200,7 @@ public:
         if ( diff <= 0 )
             return node_pointer(0);
 
-        typedef std::pair<point_type, InIt> entry_type;
+        using entry_type = int;
         typedef typename boost::container::allocator_traits<TmpAlloc>::
             template rebind_alloc<entry_type> temp_entry_allocator_type;
 

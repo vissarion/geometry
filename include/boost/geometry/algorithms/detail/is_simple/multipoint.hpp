@@ -45,12 +45,7 @@ struct is_simple_multipoint
     template <typename Strategy>
     static inline bool apply(MultiPoint const& multipoint, Strategy const& strategy)
     {
-        typedef geometry::less
-            <
-                point_type_t<MultiPoint>,
-                -1,
-                Strategy
-            > less_type;
+        using less_type = int;
 
         if (boost::empty(multipoint))
         {

@@ -70,7 +70,7 @@ public:
                              CT & lon, CT & lat,
                              Spheroid const& spheroid)
     {
-        typedef gnomonic_spheroid<CT, Inverse, Direct> gnom_t;
+        using gnom_t = int;
 
         lon = (lona1 + lona2 + lonb1 + lonb2) / 4;
         lat = (lata1 + lata2 + latb1 + latb2) / 4;
@@ -114,7 +114,7 @@ private:
                                  CT const& xb1, CT const& yb1, CT const& xb2, CT const& yb2,
                                  CT & x, CT & y)
     {
-        typedef model::point<CT, 3, cs::cartesian> v3d_t;
+        using v3d_t = int;
 
         CT const c0 = 0;
         CT const c1 = 1;

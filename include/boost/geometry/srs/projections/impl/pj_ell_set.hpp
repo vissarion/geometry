@@ -363,11 +363,7 @@ inline void pj_ell_init(Params const& params, T &a, T &es)
 template <typename Params>
 struct static_srs_tag_check_nonexpanded
 {
-    typedef std::conditional_t
-        <
-            geometry::tuples::exists_if
-                <
-                    Params, srs::spar::detail::is_param_t<srs::spar::r>::pred
+    using pred = int
                 >::value
          || geometry::tuples::exists_if
                 <
@@ -482,7 +478,7 @@ template
 struct static_srs_tag
 {
     // User passed one of the non-ellps, non-datum parameters
-    typedef NonExpandedTag type;
+    using type = NonExpandedTag;
 };
 
 template <typename Params, typename EllpsTag, typename DatumTag>
@@ -490,7 +486,7 @@ struct static_srs_tag<Params, void, EllpsTag, DatumTag>
 {
     // User didn't pass neither one of the non-ellps, non-datum parameters
     // but passed ellps
-    typedef EllpsTag type;
+    using type = EllpsTag;
 };
 
 template <typename Params, typename DatumTag>
@@ -498,7 +494,7 @@ struct static_srs_tag<Params, void, void, DatumTag>
 {
     // User didn't pass neither one of the non-ellps, non-datum parameters
     // nor ellps parameter but passed datum parameter
-    typedef DatumTag type;
+    using type = DatumTag;
 };
 
 template <typename Params>
@@ -506,11 +502,7 @@ struct static_srs_tag<Params, void, void, void>
 {
     // User didn't pass any parameter defining model
     // so use default or generate error
-    typedef std::conditional_t
-        <
-            geometry::tuples::exists_if
-                <
-                    Params, srs::spar::detail::is_param<srs::spar::no_defs>::pred
+    using pred = int
                 >::value,
             void,
             srs_spheroid_tag // WGS84

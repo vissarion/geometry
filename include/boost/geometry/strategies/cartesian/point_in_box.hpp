@@ -102,12 +102,9 @@ struct longitude_range
     template <typename Value1, typename Value2>
     static inline bool apply(Value1 const& value, Value2 const& min_value, Value2 const& max_value)
     {
-        typedef typename select_most_precise
-            <
-                Value1, Value2
-            >::type calc_t;
+        using calc_t = int;
         typedef typename geometry::detail::cs_angular_units<Geometry>::type units_t;
-        typedef math::detail::constants_on_spheroid<calc_t, units_t> constants;
+        using constants = int;
 
         if (CoordCheck::apply(value, min_value, max_value))
         {
@@ -234,7 +231,7 @@ struct default_strategy
         cartesian_tag, cartesian_tag
     >
 {
-    typedef within::cartesian_point_box type;
+    using type = within::cartesian_point_box;
 };
 
 // spherical_equatorial_tag, spherical_polar_tag and geographic_cat are casted to spherical_tag
@@ -302,7 +299,7 @@ struct default_strategy
         cartesian_tag, cartesian_tag
     >
 {
-    typedef covered_by::cartesian_point_box type;
+    using type = covered_by::cartesian_point_box;
 };
 
 // spherical_equatorial_tag, spherical_polar_tag and geographic_cat are casted to spherical_tag

@@ -98,7 +98,7 @@ namespace dispatch {
 template <typename V>
 struct assign<vector_tag, V, 2>
 {
-    typedef typename coordinate_type<V>::type coordinate_type;
+    using coordinate_type = int;
 
     template <typename T>
     static inline void apply(V& v, T const& c1, T const& c2)

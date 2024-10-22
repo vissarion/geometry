@@ -79,7 +79,7 @@ public:
     template <typename Point, typename AssignPolicy, typename T>
     inline void apply(Point const& p0, Point const& p1, AssignPolicy & policy, T const& length_threshold) const
     {
-        typedef typename AssignPolicy::point_type out_point_t;
+        using out_point_t = typename AssignPolicy::point_type;
         typedef typename select_most_precise
             <
                 typename coordinate_type<Point>::type,
@@ -135,7 +135,7 @@ namespace services
 template <>
 struct default_strategy<spherical_equatorial_tag>
 {
-    typedef strategy::densify::spherical<> type;
+    using type = int;
 };
 
 

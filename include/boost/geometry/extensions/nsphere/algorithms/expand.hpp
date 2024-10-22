@@ -50,7 +50,7 @@ struct nsphere_loop
     template <typename Box, typename NSphere>
     static inline void apply(Box& box, NSphere const& source)
     {
-        typedef typename select_coordinate_type<NSphere, Box>::type coordinate_type;
+        using coordinate_type = int;
 
         std::less<coordinate_type> const less;
         std::greater<coordinate_type> const greater;

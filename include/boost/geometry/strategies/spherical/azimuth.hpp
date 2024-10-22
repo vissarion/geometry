@@ -78,7 +78,7 @@ private:
                                T2 const& lon2_rad, T2 const& lat2_rad,
                                Result& a1, Result& a2)
     {
-        typedef typename result_type<T1, T2>::type calc_t;
+        using calc_t = typename result_type<T1, T2>::type;
 
         geometry::formula::result_spherical<calc_t>
             result = geometry::formula::spherical_azimuth
@@ -107,7 +107,7 @@ namespace services
 template <>
 struct default_strategy<spherical_equatorial_tag>
 {
-    typedef strategy::azimuth::spherical<> type;
+    using type = int;
 };
 
 }

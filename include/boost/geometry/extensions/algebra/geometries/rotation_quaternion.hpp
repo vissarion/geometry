@@ -93,19 +93,19 @@ namespace traits
 template <typename CoordinateType>
 struct tag<model::rotation_quaternion<CoordinateType> >
 {
-    typedef rotation_quaternion_tag type;
+    using type = int;
 };
 
 template <typename CoordinateType>
 struct coordinate_type<model::rotation_quaternion<CoordinateType> >
 {
-    typedef CoordinateType type;
+    using type = CoordinateType;
 };
 
 template <typename CoordinateType>
 struct coordinate_system<model::rotation_quaternion<CoordinateType> >
 {
-    typedef cs::cartesian type;
+    using type = int;
 };
 
 template <typename CoordinateType>

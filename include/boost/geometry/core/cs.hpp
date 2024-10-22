@@ -66,13 +66,13 @@ struct define_angular_units
 template <>
 struct define_angular_units<geometry::degree>
 {
-    typedef geometry::degree units;
+    using units = geometry::degree;
 };
 
 template <>
 struct define_angular_units<geometry::radian>
 {
-    typedef geometry::radian units;
+    using units = geometry::radian;
 };
 
 } // namespace core_detail
@@ -194,33 +194,33 @@ struct cs_tag
 template<typename DegreeOrRadian>
 struct cs_tag<cs::geographic<DegreeOrRadian> >
 {
-    typedef geographic_tag type;
+    using type = int;
 };
 
 template<typename DegreeOrRadian>
 struct cs_tag<cs::spherical<DegreeOrRadian> >
 {
-    typedef spherical_polar_tag type;
+    using type = int;
 };
 
 template<typename DegreeOrRadian>
 struct cs_tag<cs::spherical_equatorial<DegreeOrRadian> >
 {
-    typedef spherical_equatorial_tag type;
+    using type = int;
 };
 
 
 template<>
 struct cs_tag<cs::cartesian>
 {
-    typedef cartesian_tag type;
+    using type = int;
 };
 
 
 template <>
 struct cs_tag<cs::undefined>
 {
-    typedef cs_undefined_tag type;
+    using type = int;
 };
 
 #endif // DOXYGEN_NO_TRAITS_SPECIALIZATIONS
@@ -255,7 +255,7 @@ namespace traits
 template <typename CoordinateSystem>
 struct cs_angular_units
 {
-    typedef geometry::radian type;
+    using type = geometry::radian;
 };
 
 #ifndef DOXYGEN_NO_TRAITS_SPECIALIZATIONS
@@ -263,19 +263,19 @@ struct cs_angular_units
 template<typename DegreeOrRadian>
 struct cs_angular_units<cs::geographic<DegreeOrRadian> >
 {
-    typedef DegreeOrRadian type;
+    using type = DegreeOrRadian;
 };
 
 template<typename DegreeOrRadian>
 struct cs_angular_units<cs::spherical<DegreeOrRadian> >
 {
-    typedef DegreeOrRadian type;
+    using type = DegreeOrRadian;
 };
 
 template<typename DegreeOrRadian>
 struct cs_angular_units<cs::spherical_equatorial<DegreeOrRadian> >
 {
-    typedef DegreeOrRadian type;
+    using type = DegreeOrRadian;
 };
 
 #endif // DOXYGEN_NO_TRAITS_SPECIALIZATIONS

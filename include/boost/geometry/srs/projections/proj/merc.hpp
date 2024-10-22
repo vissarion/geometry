@@ -134,7 +134,7 @@ namespace projections
             template <typename Params, typename Parameters>
             inline void setup_merc(Params const& params, Parameters& par)
             {
-                typedef typename Parameters::type calc_t;
+                using calc_t = typename Parameters::type;
                 static const calc_t half_pi = detail::half_pi<calc_t>();
 
                 calc_t phits=0.0;

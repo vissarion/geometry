@@ -59,7 +59,7 @@ struct distance_strategy_type
 template <typename Geometry1, typename Geometry2, typename Strategy, bool Reverse>
 struct distance_strategy_type<Geometry1, Geometry2, Strategy, false, Reverse>
 {
-    typedef Strategy type;
+    using type = Strategy;
 };
 
 template <typename Geometry1, typename Geometry2, typename Strategies>

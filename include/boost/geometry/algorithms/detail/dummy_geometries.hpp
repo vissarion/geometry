@@ -39,7 +39,7 @@ struct dummy_multi_polygon {};
 namespace traits
 {
 
-template <> struct tag<geometry::detail::dummy_point> { typedef point_tag type; };
+template <> struct tag<geometry::detail::dummy_point> { using type = int; };
 template <> struct tag<geometry::detail::dummy_segment> { typedef segment_tag type; };
 template <> struct tag<geometry::detail::dummy_box> { typedef box_tag type; };
 template <> struct tag<geometry::detail::dummy_linestring> { typedef linestring_tag type; };

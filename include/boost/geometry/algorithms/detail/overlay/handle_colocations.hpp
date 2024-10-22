@@ -432,8 +432,8 @@ inline void gather_cluster_properties(Clusters& clusters, Turns& turns,
         Strategy const& strategy)
 {
     typedef typename boost::range_value<Turns>::type turn_type;
-    typedef typename turn_type::point_type point_type;
-    typedef typename turn_type::turn_operation_type turn_operation_type;
+    using point_type = int;
+    using turn_operation_type = int;
 
     // Define sorter, sorting counter-clockwise such that polygons are on the
     // right side

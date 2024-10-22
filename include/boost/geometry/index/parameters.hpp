@@ -292,15 +292,15 @@ namespace detail
 template <typename Parameters>
 struct strategy_type
 {
-    typedef default_strategy type;
-    typedef default_strategy result_type;
+    using type = int;
+    using result_type = int;
 };
 
 template <typename Parameters, typename Strategy>
 struct strategy_type< parameters<Parameters, Strategy> >
 {
-    typedef Strategy type;
-    typedef Strategy const& result_type;
+    using type = Strategy;
+    using result_type = const Strategy &;
 };
 
 

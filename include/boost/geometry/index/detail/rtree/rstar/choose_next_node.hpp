@@ -38,15 +38,15 @@ namespace detail { namespace rtree {
 template <typename MembersHolder>
 class choose_next_node<MembersHolder, choose_by_overlap_diff_tag>
 {
-    typedef typename MembersHolder::box_type box_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
+    using box_type = typename MembersHolder::box_type;
+    using parameters_type = typename MembersHolder::parameters_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
     typedef typename rtree::elements_type<internal_node>::type children_type;
-    typedef typename children_type::value_type child_type;
+    using child_type = int;
 
     typedef typename index::detail::default_content_result<box_type>::type content_type;
 

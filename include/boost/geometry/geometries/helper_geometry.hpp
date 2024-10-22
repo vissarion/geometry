@@ -44,11 +44,7 @@ template
 >
 struct helper_point
 {
-    typedef model::point
-        <
-            NewCoordinateType,
-            dimension<Point>::value,
-            typename cs_tag_to_coordinate_system<NewUnits, CS_Tag>::type
+    using type = int
         > type;
 };
 

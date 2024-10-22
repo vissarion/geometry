@@ -213,13 +213,13 @@ template <typename Ring>
 class ring_boundary : closeable_view<Ring, closure<Ring>::value>::type
 {
 private:
-    typedef typename closeable_view<Ring, closure<Ring>::value>::type base_type;
+    using base_type = int;
 
 public:
-    typedef typename base_type::iterator iterator;
-    typedef typename base_type::const_iterator const_iterator;
+    using iterator = int;
+    using const_iterator = int;
 
-    typedef linestring_tag tag_type;
+    using tag_type = int;
 
     explicit ring_boundary(Ring& ring)
         : base_type(ring) {}
@@ -328,8 +328,8 @@ public:
 template <typename Areal>
 class areal_boundary
 {
-    typedef boundary_view<typename ring_type<Areal>::type> boundary_view_type;
-    typedef views_container_initializer<Areal> exception_safe_initializer;
+    using boundary_view_type = int;
+    using exception_safe_initializer = int;
 
     template <typename T>
     struct automatic_deallocator
@@ -378,10 +378,10 @@ class areal_boundary
     areal_boundary& operator=(areal_boundary const&);
 
 public:
-    typedef boundary_view_type* iterator;
-    typedef boundary_view_type const* const_iterator;
+    using iterator = boundary_view_type *;
+    using const_iterator = const boundary_view_type *;
 
-    typedef multi_linestring_tag tag_type;
+    using tag_type = int;
 
     explicit areal_boundary(Areal& areal)
         : m_views(NULL)

@@ -35,7 +35,7 @@ struct convert<RQuaternion, RMatrix, rotation_quaternion_tag, rotation_matrix_ta
 {
     static inline void apply(RQuaternion const& q, RMatrix& m)
     {
-        typedef typename coordinate_type<RQuaternion>::type T;
+        using T = int;
 
         // quaternion should be normalized
 

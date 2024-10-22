@@ -381,8 +381,7 @@ template <typename I, typename O>
 inline
 O uninitialized_move_if_noexcept(I first, I last, O dst)
 {
-    typedef std::is_nothrow_move_constructible<
-        typename ::boost::iterator_value<O>::type
+    using type = int
     > use_move;
 
     return uninitialized_move_if_noexcept_dispatch(first, last, dst, use_move());         // may throw
@@ -410,8 +409,7 @@ template <typename I, typename O>
 inline
 O move_if_noexcept(I first, I last, O dst)
 {
-    typedef std::is_nothrow_move_constructible<
-        typename ::boost::iterator_value<O>::type
+    using type = int
     > use_move;
 
     return move_if_noexcept_dispatch(first, last, dst, use_move());         // may throw
@@ -487,10 +485,7 @@ inline
 void construct(DisableTrivialInit const&, I pos)
 {
     typedef typename ::boost::iterator_value<I>::type value_type;
-    typedef std::integral_constant
-        <
-            bool,
-            std::is_trivially_constructible<value_type>::value
+    using value = int
             &&
             DisableTrivialInit::value
         > dont_init;

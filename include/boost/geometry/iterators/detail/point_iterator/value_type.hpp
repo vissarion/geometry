@@ -29,9 +29,7 @@ namespace detail { namespace point_iterator
 template <typename Geometry>
 struct value_type
 {
-    typedef std::conditional_t
-        <
-            ! std::is_const<Geometry>::value,
+    using value = int,
             typename geometry::point_type<Geometry>::type,
             typename geometry::point_type<Geometry>::type const
         > type;

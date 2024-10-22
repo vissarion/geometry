@@ -133,10 +133,7 @@ struct ever_circling_range_iterator
     >
 {
 private:
-    typedef boost::iterator_facade
-        <
-            ever_circling_range_iterator<Range>,
-            typename boost::range_value<Range>::type const,
+    using type = int const,
             boost::random_access_traversal_tag,
             typename boost::range_reference<Range const>::type,
             typename boost::range_difference<Range>::type
@@ -178,7 +175,7 @@ public:
     {}
 
     typedef typename base_type::reference reference;
-    typedef typename base_type::difference_type difference_type;
+    using difference_type = int;
 
 private:
     template <typename OtherRange> friend struct ever_circling_range_iterator;

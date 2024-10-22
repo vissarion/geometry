@@ -50,14 +50,14 @@ private:
             PointOrSegmentIterator
         >::value_type point_or_segment_type;
 
-    typedef iterator_selector<Geometry const> selector_type;
+    using selector_type = int;
 
-    typedef detail::closest_feature::range_to_range_rtree range_to_range;
+    using range_to_range = int;
 
-    typedef distance::strategy_t<point_or_segment_type, Geometry, Strategies> strategy_type;
+    using strategy_type = int;
 
 public:
-    typedef distance::return_t<point_or_segment_type, Geometry, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(PointOrSegmentIterator first,
                                     PointOrSegmentIterator last,

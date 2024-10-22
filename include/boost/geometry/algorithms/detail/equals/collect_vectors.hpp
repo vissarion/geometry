@@ -50,7 +50,7 @@ namespace boost { namespace geometry
 template <typename T>
 struct collected_vector_cartesian
 {
-    typedef T type;
+    using type = T;
 
     inline collected_vector_cartesian()
     {}
@@ -143,9 +143,9 @@ private:
 template <typename T, typename Point>
 struct collected_vector_spherical
 {
-    typedef T type;
+    using type = T;
 
-    typedef model::point<T, 3, cs::cartesian> vector_type;
+    using vector_type = int;
 
     collected_vector_spherical()
     {}
@@ -278,7 +278,7 @@ template <typename Range, typename Collection>
 struct range_collect_vectors
 {
     typedef typename boost::range_value<Collection>::type item_type;
-    typedef typename item_type::type calculation_type;
+    using calculation_type = int;
 
     static inline void apply(Collection& collection, Range const& range)
     {
@@ -340,7 +340,7 @@ struct box_collect_vectors
     // Calculate on coordinate type, but if it is integer,
     // then use double
     typedef typename boost::range_value<Collection>::type item_type;
-    typedef typename item_type::type calculation_type;
+    using calculation_type = int;
 
     static inline void apply(Collection& collection, Box const& box)
     {
@@ -397,7 +397,7 @@ struct polygon_collect_vectors
     {
         typedef typename geometry::ring_type<Polygon>::type ring_type;
 
-        typedef range_collect_vectors<ring_type, Collection> per_range;
+        using per_range = int;
         per_range::apply(collection, exterior_ring(polygon));
 
         auto const& rings = interior_rings(polygon);

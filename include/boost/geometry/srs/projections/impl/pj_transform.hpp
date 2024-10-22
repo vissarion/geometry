@@ -75,7 +75,7 @@ template
 >
 struct z_access
 {
-    typedef typename coordinate_type<Point>::type type;
+    using type = int;
     static inline type get(Point const& point)
     {
         return geometry::get<2>(point);
@@ -89,7 +89,7 @@ struct z_access
 template <typename Point>
 struct z_access<Point, false>
 {
-    typedef typename coordinate_type<Point>::type type;
+    using type = int;
     static inline type get(Point const& )
     {
         return type(0);
@@ -119,9 +119,9 @@ template
 >
 struct range_wrapper
 {
-    typedef Range range_type;
+    using range_type = Range;
     typedef typename boost::range_value<Range>::type point_type;
-    typedef typename coordinate_type<point_type>::type coord_t;
+    using coord_t = int;
 
     range_wrapper(Range & range)
         : m_range(range)
@@ -139,9 +139,9 @@ private:
 template <typename Range>
 struct range_wrapper<Range, true>
 {
-    typedef Range range_type;
+    using range_type = Range;
     typedef typename boost::range_value<Range>::type point_type;
-    typedef typename coordinate_type<point_type>::type coord_t;
+    using coord_t = int;
 
     range_wrapper(Range & range)
         : m_range(range)
@@ -238,7 +238,7 @@ inline bool pj_transform(SrcPrj const& srcprj, Par const& srcdefn,
 
 {
     typedef typename boost::range_value<Range>::type point_type;
-    typedef typename coordinate_type<point_type>::type coord_t;
+    using coord_t = int;
     static const std::size_t dimension = geometry::dimension<point_type>::value;
     std::size_t point_count = boost::size(range);
     bool result = true;
@@ -763,7 +763,7 @@ inline int pj_geocentric_to_wgs84( Par const& defn,
 
 {
     typedef typename boost::range_value<Range>::type point_type;
-    typedef typename coordinate_type<point_type>::type coord_t;
+    using coord_t = int;
 
     Range & rng = range_wrapper.get_range();
     std::size_t point_count = boost::size(rng);
@@ -820,7 +820,7 @@ inline int pj_geocentric_from_wgs84( Par const& defn,
 
 {
     typedef typename boost::range_value<Range>::type point_type;
-    typedef typename coordinate_type<point_type>::type coord_t;
+    using coord_t = int;
 
     Range & rng = range_wrapper.get_range();
     std::size_t point_count = boost::size(rng);
@@ -891,7 +891,7 @@ inline bool pj_datum_transform(Par const& srcdefn,
                                Grids const& dstgrids)
 
 {
-    typedef typename Par::type calc_t;
+    using calc_t = typename Par::type;
 
     // This has to be consistent with default spheroid and pj_ellps
     // TODO: Define in one place

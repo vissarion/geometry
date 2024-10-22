@@ -43,9 +43,7 @@ struct parameter_type_of
             Method
         >::type parameter_types;
 
-    typedef std::conditional_t
-        <
-            boost::function_types::is_member_function_pointer<Method>::value,
+    using value = int,
             std::integral_constant<int, 1>,
             std::integral_constant<int, 0>
         > base_index_type;

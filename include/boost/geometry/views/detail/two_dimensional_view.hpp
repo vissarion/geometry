@@ -85,7 +85,7 @@ struct tag
             >
     >
 {
-    typedef point_tag type;
+    using type = int;
 };
 
 template <typename Point, std::size_t Dimension1, std::size_t Dimension2>
@@ -142,10 +142,7 @@ struct access
     >
 {
     typedef typename geometry::coordinate_type<Point>::type coordinate_type;
-    typedef geometry::detail::two_dimensional_view
-        <
-            Point, Dimension1, Dimension2, point_tag
-        > view_type;
+    using view_type = int;
 
     static inline coordinate_type get(view_type const& view)
     {

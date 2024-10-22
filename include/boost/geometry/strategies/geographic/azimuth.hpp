@@ -45,7 +45,7 @@ public:
               >
     {};
 
-    typedef Spheroid model_type;
+    using model_type = Spheroid;
 
     inline geographic()
         : m_spheroid()
@@ -100,18 +100,10 @@ private :
                         T2 const& lon2_rad, T2 const& lat2_rad,
                         Result& a1, Result& a2) const
     {
-        typedef typename result_type<T1, T2>::type calc_t;
+        using calc_t = typename result_type<T1, T2>::type;
 
-        typedef typename FormulaPolicy::template inverse
-            <
-                calc_t,
-                false,
-                EnableAzimuth,
-                EnableReverseAzimuth,
-                false,
-                false
-            > inverse_type;
-        typedef typename inverse_type::result_type inverse_result;
+        using inverse_type = typename FormulaPolicy::template inverse<calc_t, false, EnableAzimuth, EnableReverseAzimuth, false, false>;
+        using inverse_result = typename inverse_type::result_type;
         inverse_result i_res = inverse_type::apply(calc_t(lon1_rad), calc_t(lat1_rad),
                                                    calc_t(lon2_rad), calc_t(lat2_rad),
                                                    m_spheroid);

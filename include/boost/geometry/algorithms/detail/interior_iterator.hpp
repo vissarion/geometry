@@ -38,13 +38,13 @@ struct interior_iterator
 template <typename BaseT, typename T>
 struct copy_const
 {
-    typedef T type;
+    using type = T;
 };
 
 template <typename BaseT, typename T>
 struct copy_const<BaseT const, T>
 {
-    typedef T const type;
+    using type = const T;
 };
 
 template <typename Geometry>

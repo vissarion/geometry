@@ -59,7 +59,7 @@ namespace detail { namespace within
 class point_point_on_spheroid
 {
 public:
-    typedef spherical_tag cs_tag;
+    using cs_tag = int;
 
 private:
     template <typename Point1, typename Point2, bool SameUnits>
@@ -67,8 +67,8 @@ private:
     {
         static inline bool apply(Point1 const& point1, Point2 const& point2)
         {
-            typedef typename helper_geometry<Point1>::type helper_point_type1;
-            typedef typename helper_geometry<Point2>::type helper_point_type2;
+            using helper_point_type1 = int;
+            using helper_point_type2 = int;
 
             helper_point_type1 point1_normalized;
             strategy::normalize::spherical_point::apply(point1, point1_normalized);
@@ -149,7 +149,7 @@ namespace services
 template <typename PointLike1, typename PointLike2, typename Tag1, typename Tag2>
 struct default_strategy<PointLike1, PointLike2, Tag1, Tag2, pointlike_tag, pointlike_tag, spherical_tag, spherical_tag>
 {
-    typedef strategy::within::spherical_point_point type;
+    using type = strategy::within::spherical_point_point;
 };
 
 } // namespace services
@@ -166,7 +166,7 @@ namespace strategy { namespace covered_by { namespace services
 template <typename PointLike1, typename PointLike2, typename Tag1, typename Tag2>
 struct default_strategy<PointLike1, PointLike2, Tag1, Tag2, pointlike_tag, pointlike_tag, spherical_tag, spherical_tag>
 {
-    typedef strategy::within::spherical_point_point type;
+    using type = strategy::within::spherical_point_point;
 };
 
 }}} // namespace strategy::covered_by::services

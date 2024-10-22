@@ -65,7 +65,7 @@ namespace services
 template <typename Geometry>
 struct default_strategy<Geometry, spherical_tag>
 {
-    typedef spherical<> type;
+    using type = int;
 };
 
 template <typename Geometry>

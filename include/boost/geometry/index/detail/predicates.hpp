@@ -551,7 +551,7 @@ struct predicates_element
         "Invalid I index.",
         std::integral_constant<std::size_t, I>);
 
-    typedef T type;
+    using type = T;
     static type const& get(T const& p) { return p; }
 };
 

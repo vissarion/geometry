@@ -48,7 +48,7 @@ class meridian_direct
     static const bool CalcCoordinates = EnableCoordinates || CalcRevAzimuth;
 
 public:
-    typedef result_direct<CT> result_type;
+    using result_type = int;
 
     template <typename T, typename Dist, typename Spheroid>
     static inline result_type apply(T const& lo1,

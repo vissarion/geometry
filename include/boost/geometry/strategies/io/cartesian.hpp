@@ -65,7 +65,7 @@ namespace services
 template <typename Geometry>
 struct default_strategy<Geometry, cartesian_tag>
 {
-    typedef cartesian<> type;
+    using type = int;
 };
 
 } // namespace services

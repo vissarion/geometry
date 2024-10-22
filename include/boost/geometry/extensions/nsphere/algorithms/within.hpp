@@ -51,7 +51,7 @@ namespace detail { namespace within
 template<typename B, typename C, typename S>
 inline bool box_in_circle(B const& b, C const& c, S const& strategy)
 {
-    typedef typename point_type<B>::type point_type;
+    using point_type = int;
 
     // Currently only implemented for 2d geometries
     assert_dimension<point_type, 2>();

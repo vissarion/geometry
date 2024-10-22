@@ -65,18 +65,13 @@ public:
     // point-point strategy getters
     struct distance_pp_strategy
     {
-        typedef geographic<FormulaPolicy, Spheroid, CalculationType> type;
+        using type = int;
     };
 
     // point-segment strategy getters
     struct distance_ps_strategy
     {
-        typedef geographic_cross_track
-                <
-                    FormulaPolicy,
-                    Spheroid,
-                    CalculationType
-                > type;
+        using type = int;
     };
 
     template <typename Box1, typename Box2>
@@ -111,7 +106,7 @@ public:
             );
 #endif
 */
-        typedef typename return_type<Box1, Box2>::type return_type;
+        using return_type = typename return_type<Box1, Box2>::type;
         return details::cross_track_box_box_generic
                                        <return_type>::apply(box1, box2,
                                                             typename distance_pp_strategy::type(m_spheroid),
@@ -136,7 +131,7 @@ namespace services
 template <typename Strategy, typename Spheroid, typename CalculationType>
 struct tag<geographic_cross_track_box_box<Strategy, Spheroid, CalculationType> >
 {
-    typedef strategy_tag_distance_box_box type;
+    using type = int;
 };
 
 
@@ -167,10 +162,7 @@ struct return_type<geographic_cross_track_box_box<Strategy>, Box1, Box2>
 template <typename Strategy, typename Spheroid, typename CalculationType>
 struct comparable_type<geographic_cross_track_box_box<Strategy, Spheroid, CalculationType> >
 {
-    typedef geographic_cross_track_box_box
-        <
-            typename comparable_type<Strategy>::type, Spheroid, CalculationType
-        > type;
+    using type = int;
 };
 
 
@@ -193,12 +185,9 @@ struct result_from_distance
     >
 {
 private:
-    typedef geographic_cross_track_box_box<Strategy, Spheroid, CalculationType> this_strategy;
+    using this_strategy = geographic_cross_track_box_box<Strategy, Spheroid, CalculationType>;
 
-    typedef typename this_strategy::template return_type
-        <
-            Box1, Box2
-        >::type return_type;
+    using return_type = typename this_strategy::template return_type<Box1, Box2>::type;
 
 public:
     template <typename T>
@@ -221,7 +210,7 @@ struct default_strategy
         geographic_tag, geographic_tag
     >
 {
-    typedef geographic_cross_track_box_box<> type;
+    using type = int;
 };
 
 

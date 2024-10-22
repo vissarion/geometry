@@ -68,15 +68,15 @@ template <typename MembersHolder>
 class split<MembersHolder, split_kmeans_tag>
 {
 protected:
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::box_type box_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
-    typedef typename MembersHolder::size_type size_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using box_type = typename MembersHolder::box_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
+    using size_type = typename MembersHolder::size_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
 public:
     typedef index::detail::varray

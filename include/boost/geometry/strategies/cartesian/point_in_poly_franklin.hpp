@@ -80,14 +80,14 @@ class franklin
 
 public :
 
-    typedef crossings state_type;
+    using state_type = crossings;
 
     template <typename Point, typename PointOfSegment>
     static inline bool apply(Point const& point,
             PointOfSegment const& seg1, PointOfSegment const& seg2,
             crossings& state)
     {
-        typedef typename calculation_type<Point, PointOfSegment>::type calc_t;
+        using calc_t = typename calculation_type<Point, PointOfSegment>::type;
 
         calc_t const& px = get<0>(point);
         calc_t const& py = get<1>(point);

@@ -39,7 +39,7 @@ namespace detail { namespace distance
 template <typename MultiPoint1, typename MultiPoint2, typename Strategies>
 struct multipoint_to_multipoint
 {
-    typedef distance::return_t<MultiPoint1, MultiPoint2, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(MultiPoint1 const& multipoint1,
                                     MultiPoint2 const& multipoint2,
@@ -119,7 +119,7 @@ private:
     };
 
 public:
-    typedef distance::return_t<MultiPoint, Areal, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(MultiPoint const& multipoint,
                                     Areal const& areal,

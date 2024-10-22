@@ -57,7 +57,7 @@ struct point_geometry
         if ( BOOST_GEOMETRY_CONDITION(result.interrupt) )
             return;
 
-        typedef detail::relate::topology_check<Geometry, Strategy> tc_t;
+        using tc_t = int;
 
         if ( relate::may_update<exterior, interior, tc_t::interior, Transpose>(result)
           || relate::may_update<exterior, boundary, tc_t::boundary, Transpose>(result) )

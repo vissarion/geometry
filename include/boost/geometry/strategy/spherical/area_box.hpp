@@ -77,7 +77,7 @@ public:
     template <typename Box>
     inline auto apply(Box const& box) const
     {
-        typedef typename result_type<Box>::type return_type;
+        using return_type = typename result_type<Box>::type;
 
         return_type x_min = get_as_radian<min_corner, 0>(box); // lon
         return_type y_min = get_as_radian<min_corner, 1>(box); // lat

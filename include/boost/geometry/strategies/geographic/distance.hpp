@@ -78,7 +78,7 @@ public :
           >
     {};
 
-    typedef Spheroid model_type;
+    using model_type = Spheroid;
 
     inline geographic()
         : m_spheroid()
@@ -115,7 +115,7 @@ public :
     inline typename calculation_type<Point1, Point2>::type
     apply(Point1 const& point1, Point2 const& point2) const
     {
-        typedef typename calculation_type<Point1, Point2>::type CT;
+        using CT = typename calculation_type<Point1, Point2>::type;
 
         CT lon1 = get_as_radian<0>(point1);
         CT lat1 = get_as_radian<1>(point1);
@@ -147,7 +147,7 @@ template
 >
 struct tag<geographic<FormulaPolicy, Spheroid, CalculationType> >
 {
-    typedef strategy_tag_distance_point_point type;
+    using type = int;
 };
 
 
@@ -172,7 +172,7 @@ template
 >
 struct comparable_type<geographic<FormulaPolicy, Spheroid, CalculationType> >
 {
-    typedef geographic<FormulaPolicy, Spheroid, CalculationType> type;
+    using type = geographic<FormulaPolicy, Spheroid, CalculationType>;
 };
 
 

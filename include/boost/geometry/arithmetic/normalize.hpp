@@ -41,7 +41,7 @@ inline typename coordinate_type<Point>::type vec_length(Point const& pt)
 template <typename Point>
 inline bool vec_normalize(Point & pt, typename coordinate_type<Point>::type & len)
 {
-    typedef typename coordinate_type<Point>::type coord_t;
+    using coord_t = int;
 
     coord_t const c0 = 0;
     len = vec_length(pt);
@@ -58,7 +58,7 @@ inline bool vec_normalize(Point & pt, typename coordinate_type<Point>::type & le
 template <typename Point>
 inline bool vec_normalize(Point & pt)
 {
-    typedef typename coordinate_type<Point>::type coord_t;
+    using coord_t = int;
     coord_t len;
     return vec_normalize(pt, len);
 }

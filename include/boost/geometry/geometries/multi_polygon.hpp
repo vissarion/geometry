@@ -59,7 +59,7 @@ class multi_polygon : public Container<Polygon, Allocator<Polygon> >
     // default constructor and base_type definitions are required only
     // if the constructor taking std::initializer_list is defined
 
-    typedef Container<Polygon, Allocator<Polygon> > base_type;
+    using base_type = Container<Polygon, Allocator<Polygon>>;
 
 public:
     /// \constructor_default{multi_polygon}
@@ -102,7 +102,7 @@ template
 >
 struct tag< model::multi_polygon<Polygon, Container, Allocator> >
 {
-    typedef multi_polygon_tag type;
+    using type = int;
 };
 
 } // namespace traits

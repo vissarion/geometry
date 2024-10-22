@@ -62,7 +62,7 @@ namespace detail { namespace wkb
 template <typename T>
 struct value_parser
 {
-    typedef T value_type;
+    using value_type = T;
 
     template <typename Iterator>
     static bool parse(Iterator& it, Iterator end, T& value, byte_order_type::enum_t order)
@@ -79,7 +79,7 @@ struct value_parser
         diff_type const required_size = sizeof(T);
         if (it != end && std::distance(it, end) >= required_size)
         {
-            typedef endian::endian_value<T> parsed_value_type;
+            using parsed_value_type = int;
             parsed_value_type parsed_value;
 
             // Decide on direcion of endianness translation, detault to native
@@ -150,7 +150,7 @@ struct parsing_assigner
     static void run(Iterator& it, Iterator end, P& point,
                 byte_order_type::enum_t order)
     {
-        typedef typename coordinate_type<P>::type coordinate_type;
+        using coordinate_type = int;
 
         // coordinate type in WKB is always double
         double value(0);
@@ -208,7 +208,7 @@ struct point_container_parser
     static bool parse(Iterator& it, Iterator end, C& container,
                 byte_order_type::enum_t order)
     {
-        typedef typename point_type<C>::type point_type;
+        using point_type = int;
 
         boost::uint32_t num_points(0);
         if (!value_parser<boost::uint32_t>::parse(it, end, num_points, order))

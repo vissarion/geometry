@@ -34,14 +34,14 @@ class SegmentIntersectStrategy
 #ifndef DOXYGEN_NO_CONCEPT_MEMBERS
 
     // 1) must define return_type
-    typedef typename Strategy::return_type return_type;
+    using return_type = typename Strategy::return_type;
 
     // 2) must define point_type (of segment points)
     //typedef typename Strategy::point_type point_type;
 
     // 3) must define segment_type 1 and 2 (of segment points)
-    typedef typename Strategy::segment_type1 segment_type1;
-    typedef typename Strategy::segment_type2 segment_type2;
+    using segment_type1 = typename Strategy::segment_type1;
+    using segment_type2 = typename Strategy::segment_type2;
 
 
     struct check_methods

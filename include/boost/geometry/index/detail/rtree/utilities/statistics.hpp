@@ -32,8 +32,8 @@ template <typename MembersHolder>
 struct statistics
     : public MembersHolder::visitor_const
 {
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
     inline statistics()
         : level(0)
@@ -95,7 +95,7 @@ template <typename Rtree> inline
 std::tuple<std::size_t, std::size_t, std::size_t, std::size_t, std::size_t, std::size_t>
 statistics(Rtree const& tree)
 {
-    typedef utilities::view<Rtree> RTV;
+    using RTV = utilities::view<Rtree>;
     RTV rtv(tree);
 
     visitors::statistics<

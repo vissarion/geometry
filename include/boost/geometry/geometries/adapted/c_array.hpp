@@ -46,14 +46,14 @@ namespace detail
 template <bool>
 struct c_array_tag
 {
-    typedef geometry_not_recognized_tag type;
+    using type = int;
 };
 
 
 template <>
 struct c_array_tag<true>
 {
-    typedef point_tag type;
+    using type = int;
 };
 
 
@@ -70,7 +70,7 @@ struct tag<CoordinateType[DimensionCount]>
 template <typename CoordinateType, std::size_t DimensionCount>
 struct coordinate_type<CoordinateType[DimensionCount]>
 {
-    typedef CoordinateType type;
+    using type = CoordinateType;
 };
 
 

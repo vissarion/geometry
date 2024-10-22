@@ -46,17 +46,10 @@ template
 struct intersection_strategies
 {
 private :
-    typedef segment_intersection_points
-    <
-        IntersectionPoint,
-        typename segment_ratio_type<IntersectionPoint>::type
-    > ip_type;
+    using ip_type = int;
 
 public:
-    typedef policies::relate::segments_intersection_policy
-        <
-            ip_type
-        > intersection_policy_type;
+    using intersection_policy_type = int;
 
     typedef typename strategy::intersection::services::default_strategy
             <

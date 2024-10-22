@@ -236,8 +236,8 @@ class exit_watcher
     static std::size_t const op_id = OpId;
     static std::size_t const other_op_id = (OpId + 1) % 2;
 
-    typedef typename TurnInfo::point_type point_type;
-    typedef detail::relate::point_info<point_type> point_info;
+    using point_type = typename TurnInfo::point_type;
+    using point_info = detail::relate::point_info<point_type>;
 
 public:
     exit_watcher()

@@ -34,15 +34,15 @@ namespace boost { namespace geometry
 template <typename Base, typename Point>
 struct segment_returning_iterator
 {
-    typedef Base base_type;
-    typedef Point point_type;
+    using base_type = Base;
+    using point_type = Point;
     typedef typename model::referring_segment<Point> segment_type;
 
-    typedef std::input_iterator_tag iterator_category;
+    using iterator_category = int;
     typedef typename std::iterator_traits<Base>::difference_type difference_type;
-    typedef segment_type value_type;
-    typedef segment_type* pointer;
-    typedef segment_type& reference;
+    using value_type = int;
+    using pointer = int *;
+    using reference = int &;
 
     explicit segment_returning_iterator(Base const& end)
         : m_segment(p1 , p2)
@@ -129,8 +129,8 @@ inline segment_returning_iterator
 >
 make_segment_returning_iterator(C& c)
 {
-    typedef typename C::iterator base_iterator;
-    typedef typename C::value_type point_type;
+    using base_iterator = typename C::iterator;
+    using point_type = typename C::value_type;
     return segment_returning_iterator<base_iterator, point_type>(c.begin(), c.end());
 }
 

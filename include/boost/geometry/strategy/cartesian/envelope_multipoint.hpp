@@ -67,7 +67,7 @@ namespace services
 template <typename CalculationType>
 struct default_strategy<multi_point_tag, cartesian_tag, CalculationType>
 {
-    typedef strategy::envelope::cartesian_multipoint type;
+    using type = strategy::envelope::cartesian_multipoint;
 };
 
 

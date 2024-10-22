@@ -196,8 +196,8 @@ void store_dispatch(Iterator& bytes, T value, E1, E2)
 template <typename T>
 struct endian_value_base
 {
-    typedef T value_type;
-    typedef native_endian_tag endian_type;
+    using value_type = T;
+    using endian_type = int;
 
     endian_value_base() : value(T()) {}
     explicit endian_value_base(T value) : value(value) {}
@@ -214,7 +214,7 @@ protected:
 template <typename T, std::size_t N = sizeof(T)>
 struct endian_value : public endian_value_base<T>
 {
-    typedef endian_value_base<T> base;
+    using base = endian_value_base<T>;
 
     endian_value() {}
     explicit endian_value(T value) : base(value) {}
@@ -235,7 +235,7 @@ struct endian_value : public endian_value_base<T>
 template <>
 struct endian_value<double, 8> : public endian_value_base<double>
 {
-    typedef endian_value_base<double> base;
+    using base = endian_value_base<double>;
 
     endian_value() {}
     explicit endian_value(double value) : base(value) {}

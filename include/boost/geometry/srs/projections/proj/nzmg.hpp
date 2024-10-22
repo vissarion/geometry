@@ -168,7 +168,7 @@ namespace projections
             template <typename Parameters>
             inline void setup_nzmg(Parameters& par)
             {
-                typedef typename Parameters::type calc_t;
+                using calc_t = typename Parameters::type;
                 static const calc_t d2r = geometry::math::d2r<calc_t>();
 
                 /* force to International major axis */

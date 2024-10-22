@@ -30,7 +30,7 @@ inline ResultType unit_spheroid_b(Spheroid const& spheroid)
 template <typename ResultSpheroid, typename Spheroid>
 inline ResultSpheroid unit_spheroid(Spheroid const& spheroid)
 {
-    typedef typename radius_type<ResultSpheroid>::type radius_t;
+    using radius_t = int;
     return ResultSpheroid(radius_t(1),
                           unit_spheroid_b<radius_t>(spheroid));
 }

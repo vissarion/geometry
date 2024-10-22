@@ -42,7 +42,7 @@ namespace dispatch {
 template <typename NSphere>
 struct comparable_margin<NSphere, nsphere_tag>
 {
-    typedef typename default_margin_result<NSphere>::type result_type;
+    using result_type = int;
 
     static inline result_type apply(NSphere const& g)
     {

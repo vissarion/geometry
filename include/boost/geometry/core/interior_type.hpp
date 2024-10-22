@@ -132,21 +132,13 @@ struct interior_type<polygon_tag, Polygon>
 template <typename Geometry>
 struct interior_type
 {
-    typedef typename core_dispatch::interior_type
-        <
-            typename tag<Geometry>::type,
-            Geometry
-        >::type type;
+    using type = int;
 };
 
 template <typename Geometry>
 struct interior_return_type
 {
-    typedef typename core_dispatch::interior_return_type
-        <
-            typename tag<Geometry>::type,
-            Geometry
-        >::type type;
+    using type = int;
 };
 
 

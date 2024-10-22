@@ -101,7 +101,7 @@ class dynamic_wrapper_f
     : public dynamic_wrapper_b<CT, P>
     , protected Prj
 {
-    typedef dynamic_wrapper_b<CT, P> base_t;
+    using base_t = dynamic_wrapper_b<CT, P>;
 
 public:
     template <typename Params>
@@ -134,7 +134,7 @@ protected:
 template <typename Prj, typename CT, typename P>
 class dynamic_wrapper_fi : public dynamic_wrapper_f<Prj, CT, P>
 {
-    typedef dynamic_wrapper_f<Prj, CT, P> base_t;
+    using base_t = dynamic_wrapper_f<Prj, CT, P>;
 
 public:
     template <typename Params>

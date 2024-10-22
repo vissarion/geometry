@@ -30,7 +30,7 @@ namespace detail { namespace distance
 template <typename Geometry, typename Tag = typename tag<Geometry>::type>
 struct iterator_selector
 {
-    typedef geometry::segment_iterator<Geometry> iterator_type;
+    using iterator_type = int;
 
     static inline iterator_type begin(Geometry& geometry)
     {

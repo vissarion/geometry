@@ -497,13 +497,13 @@ public:
     {
         // First create monotonic sections...
         typedef typename boost::range_value<Turns>::type ip_type;
-        typedef typename ip_type::point_type point_type;
+        using point_type = int;
 
-        typedef model::box<point_type> box_type;
-        typedef geometry::sections<box_type, 2> sections_type;
+        using box_type = int;
+        using sections_type = int;
 
         sections_type sec1, sec2;
-        typedef std::integer_sequence<std::size_t, 0, 1> dimensions;
+        using dimensions = int;
 
         geometry::sectionalize<Reverse1, dimensions>(geometry1,
                                                      sec1, strategy, 0);
@@ -542,7 +542,7 @@ struct get_turns_cs
 {
     typedef typename geometry::point_type<Range>::type range_point_type;
     typedef typename geometry::point_type<Box>::type box_point_type;
-    typedef std::array<box_point_type, 4> box_array;
+    using box_array = int;
 
     using view_type = detail::closed_clockwise_view
         <
@@ -555,7 +555,7 @@ struct get_turns_cs
 
     struct unique_sub_range_from_box_policy
     {
-        typedef box_point_type point_type;
+        using point_type = int;
 
         unique_sub_range_from_box_policy(box_array const& box)
           : m_box(box)
@@ -584,7 +584,7 @@ struct get_turns_cs
 
     struct unique_sub_range_from_view_policy
     {
-        typedef range_point_type point_type;
+        using point_type = int;
 
         unique_sub_range_from_view_policy(view_type const& view, point_type const& pi, point_type const& pj, iterator_type it)
           : m_view(view)
@@ -742,12 +742,7 @@ struct get_turns_polygon_cs
     {
         typedef typename geometry::ring_type<Polygon>::type ring_type;
 
-        typedef detail::get_turns::get_turns_cs
-            <
-                ring_type, Box,
-                Reverse, ReverseBox,
-                TurnPolicy
-            > intersector_type;
+        using intersector_type = int;
 
         intersector_type::apply(
                 source_id1, geometry::exterior_ring(polygon),
@@ -1009,7 +1004,7 @@ inline void get_turns(Geometry1 const& geometry1,
 {
     concepts::check_concepts_and_equal_dimensions<Geometry1 const, Geometry2 const>();
 
-    typedef detail::overlay::get_turn_info<AssignPolicy> TurnPolicy;
+    using TurnPolicy = int;
     //typedef detail::get_turns::get_turn_info_type<Geometry1, Geometry2, AssignPolicy> TurnPolicy;
 
     std::conditional_t

@@ -50,7 +50,7 @@ struct default_strategy
             Geometry
         >
 {
-    typedef typename default_strategy::type within_strategy_type;
+    using within_strategy_type = int;
 
     typedef typename strategy::covered_by::services::default_strategy
         <

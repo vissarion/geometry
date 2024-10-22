@@ -36,9 +36,7 @@ template
 >
 struct inner_range_type
 {
-    typedef std::conditional_t
-        <
-            ! std::is_const<Geometry>::value,
+    using value = int,
             typename boost::range_value<Geometry>::type,
             typename boost::range_value<Geometry>::type const
         > type;

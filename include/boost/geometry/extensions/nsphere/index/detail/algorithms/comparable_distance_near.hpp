@@ -24,7 +24,7 @@ template <
     size_t N>
 struct sum_for_indexable<Point, Indexable, nsphere_tag, comparable_distance_near_tag, N>
 {
-    typedef typename default_distance_result<Point, center_view<const Indexable> >::type result_type;
+    using result_type = int;
 
     inline static result_type apply(Point const& pt, Indexable const& i)
     {

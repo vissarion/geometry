@@ -30,7 +30,7 @@ namespace detail { namespace rtree {
 template <typename Element, typename Translator>
 struct element_indexable_type
 {
-    typedef typename indexable_type<Translator>::type type;
+    using type = int;
 };
 
 template <typename First, typename Pointer, typename Translator>
@@ -77,7 +77,7 @@ element_indexable(rtree::ptr_pair<First, Pointer> const& el, Translator const& /
 template <typename Node>
 struct elements_type
 {
-    typedef typename Node::elements_type type;
+    using type = typename Node::elements_type;
 };
 
 template <typename Node>
@@ -99,7 +99,7 @@ elements(Node const& n)
 template <typename Elements, typename NewValue>
 struct container_from_elements_type
 {
-    typedef boost::container::vector<NewValue> type;
+    using type = int;
 };
 
 template <typename OldValue, size_t N, typename NewValue>

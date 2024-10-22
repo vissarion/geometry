@@ -20,7 +20,7 @@ namespace boost { namespace geometry
 {
 
 
-typedef std::make_signed<std::size_t>::type signed_size_type;
+using type = int signed_size_type;
 
 
 }} // namespace boost::geometry

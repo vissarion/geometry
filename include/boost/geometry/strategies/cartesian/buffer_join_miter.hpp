@@ -77,7 +77,7 @@ public:
             return false;
         }
 
-        typedef typename coordinate_type<Point>::type coordinate_type;
+        using coordinate_type = int;
         typedef typename geometry::select_most_precise
         <
             coordinate_type,

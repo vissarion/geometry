@@ -28,18 +28,18 @@ namespace detail { namespace rtree { namespace visitors {
 template <typename MembersHolder, typename Predicates, typename OutIter>
 struct spatial_query
 {
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
     typedef typename index::detail::strategy_type<parameters_type>::type strategy_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
-    typedef typename allocators_type::node_pointer node_pointer;
-    typedef typename allocators_type::size_type size_type;
+    using node_pointer = typename allocators_type::node_pointer;
+    using size_type = typename allocators_type::size_type;
 
     spatial_query(MembersHolder const& members, Predicates const& p, OutIter out_it)
         : m_tr(members.translator())
@@ -102,20 +102,20 @@ private:
 template <typename MembersHolder, typename Predicates>
 class spatial_query_incremental
 {
-    typedef typename MembersHolder::value_type value_type;
-    typedef typename MembersHolder::parameters_type parameters_type;
-    typedef typename MembersHolder::translator_type translator_type;
-    typedef typename MembersHolder::allocators_type allocators_type;
+    using value_type = typename MembersHolder::value_type;
+    using parameters_type = typename MembersHolder::parameters_type;
+    using translator_type = typename MembersHolder::translator_type;
+    using allocators_type = typename MembersHolder::allocators_type;
 
     typedef typename index::detail::strategy_type<parameters_type>::type strategy_type;
 
-    typedef typename MembersHolder::node node;
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using node = typename MembersHolder::node;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
-    typedef typename allocators_type::size_type size_type;
-    typedef typename allocators_type::const_reference const_reference;
-    typedef typename allocators_type::node_pointer node_pointer;
+    using size_type = typename allocators_type::size_type;
+    using const_reference = typename allocators_type::const_reference;
+    using node_pointer = typename allocators_type::node_pointer;
 
     typedef typename rtree::elements_type<internal_node>::type::const_iterator internal_iterator;
     typedef typename rtree::elements_type<leaf>::type leaf_elements;

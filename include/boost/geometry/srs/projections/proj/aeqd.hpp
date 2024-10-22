@@ -497,7 +497,7 @@ namespace projections
         template <typename BGP, typename CT, typename P>
         struct static_projection_type<srs::spar::proj_aeqd, srs_sphere_tag, BGP, CT, P>
         {
-            typedef static_wrapper_fi<aeqd_s<CT, P>, P> type;
+            using type = int;
         };
         template <typename BGP, typename CT, typename P>
         struct static_projection_type<srs::spar::proj_aeqd, srs_spheroid_tag, BGP, CT, P>

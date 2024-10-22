@@ -37,7 +37,7 @@ template
 class geometry_collection
     : public Container<DynamicGeometry, Allocator<DynamicGeometry>>
 {
-    typedef Container<DynamicGeometry, Allocator<DynamicGeometry>> base_type;
+    using base_type = Container<DynamicGeometry, Allocator<DynamicGeometry>>;
 
 public:
     geometry_collection() = default;

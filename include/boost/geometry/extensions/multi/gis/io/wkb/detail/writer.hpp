@@ -63,7 +63,7 @@ namespace detail { namespace wkb
             uint32_t num_points = boost::size(multipoint);
             value_writer<uint32_t>::write(num_points, iter, byte_order);
 
-            typedef typename point_type<MultiPoint>::type point_type;
+            using point_type = int;
 
             for(typename boost::range_iterator<MultiPoint const>::type
                     point_iter = boost::begin(multipoint);

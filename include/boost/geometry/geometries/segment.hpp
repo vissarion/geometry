@@ -96,7 +96,7 @@ class referring_segment
             >
     ) );
 
-    typedef ConstOrNonConstPoint point_type;
+    using point_type = ConstOrNonConstPoint;
 
 public:
 
@@ -124,19 +124,19 @@ namespace traits
 template <typename Point>
 struct tag<model::segment<Point> >
 {
-    typedef segment_tag type;
+    using type = int;
 };
 
 template <typename Point>
 struct point_type<model::segment<Point> >
 {
-    typedef Point type;
+    using type = Point;
 };
 
 template <typename Point, std::size_t Dimension>
 struct indexed_access<model::segment<Point>, 0, Dimension>
 {
-    typedef model::segment<Point> segment_type;
+    using segment_type = model::segment<Point>;
     typedef typename geometry::coordinate_type<segment_type>::type coordinate_type;
 
     static constexpr coordinate_type get(segment_type const& s)
@@ -172,7 +172,7 @@ struct indexed_access<model::segment<Point>, 1, Dimension>
 template <typename Point>
 struct make<model::segment<Point> >
 {
-    typedef model::segment<Point> segment_type;
+    using segment_type = model::segment<Point>;
 
     static const bool is_specialized = true;
 
@@ -187,13 +187,13 @@ struct make<model::segment<Point> >
 template <typename ConstOrNonConstPoint>
 struct tag<model::referring_segment<ConstOrNonConstPoint> >
 {
-    typedef segment_tag type;
+    using type = int;
 };
 
 template <typename ConstOrNonConstPoint>
 struct point_type<model::referring_segment<ConstOrNonConstPoint> >
 {
-    typedef ConstOrNonConstPoint type;
+    using type = ConstOrNonConstPoint;
 };
 
 template <typename ConstOrNonConstPoint, std::size_t Dimension>

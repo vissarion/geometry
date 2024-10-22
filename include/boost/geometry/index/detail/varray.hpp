@@ -50,24 +50,24 @@ namespace varray_detail {
 template <typename Value, std::size_t Capacity>
 struct varray_traits
 {
-    typedef Value value_type;
-    typedef std::size_t size_type;
-    typedef std::ptrdiff_t difference_type;
-    typedef Value* pointer;
-    typedef const Value* const_pointer;
-    typedef Value& reference;
-    typedef const Value& const_reference;
+    using value_type = Value;
+    using size_type = int;
+    using difference_type = int;
+    using pointer = Value *;
+    using const_pointer = const Value *;
+    using reference = Value &;
+    using const_reference = const Value &;
 
-    typedef std::false_type use_memop_in_swap_and_move;
-    typedef std::false_type use_optimized_swap;
-    typedef std::false_type disable_trivial_init;
+    using use_memop_in_swap_and_move = int;
+    using use_optimized_swap = int;
+    using disable_trivial_init = int;
 };
 
 template <typename Varray>
 struct checker
 {
-    typedef typename Varray::size_type size_type;
-    typedef typename Varray::const_iterator const_iterator;
+    using size_type = typename Varray::size_type;
+    using const_iterator = typename Varray::const_iterator;
 
     static inline void check_capacity(Varray const& v, size_type s)
     {
@@ -149,8 +149,8 @@ possible.
 template <typename Value, std::size_t Capacity>
 class varray
 {
-    typedef varray_detail::varray_traits<Value, Capacity> vt;
-    typedef varray_detail::checker<varray> errh;
+    using vt = varray_detail::varray_traits<Value, Capacity>;
+    using errh = varray_detail::checker<varray>;
 
     BOOST_GEOMETRY_STATIC_ASSERT(
         ( std::is_unsigned<typename vt::size_type>::value &&
@@ -159,9 +159,7 @@ class varray
         typename vt::size_type, std::integral_constant<std::size_t, Capacity>
     );
 
-    typedef boost::aligned_storage<
-        sizeof(Value[Capacity]),
-        boost::alignment_of<Value[Capacity]>::value
+    using value = int
     > aligned_storage_type;
 
     template <typename V, std::size_t C>
@@ -169,28 +167,28 @@ class varray
 
 public:
     //! @brief The type of elements stored in the container.
-    typedef typename vt::value_type value_type;
+    using value_type = typename vt::value_type;
     //! @brief The unsigned integral type used by the container.
-    typedef typename vt::size_type size_type;
+    using size_type = typename vt::size_type;
     //! @brief The pointers difference type.
-    typedef typename vt::difference_type difference_type;
+    using difference_type = typename vt::difference_type;
     //! @brief The pointer type.
-    typedef typename vt::pointer pointer;
+    using pointer = typename vt::pointer;
     //! @brief The const pointer type.
-    typedef typename vt::const_pointer const_pointer;
+    using const_pointer = typename vt::const_pointer;
     //! @brief The value reference type.
-    typedef typename vt::reference reference;
+    using reference = typename vt::reference;
     //! @brief The value const reference type.
-    typedef typename vt::const_reference const_reference;
+    using const_reference = typename vt::const_reference;
 
     //! @brief The iterator type.
-    typedef pointer iterator;
+    using iterator = pointer;
     //! @brief The const iterator type.
-    typedef const_pointer const_iterator;
+    using const_iterator = const_pointer;
     //! @brief The reverse iterator type.
-    typedef boost::reverse_iterator<iterator> reverse_iterator;
+    using reverse_iterator = int;
     //! @brief The const reverse iterator.
-    typedef boost::reverse_iterator<const_iterator> const_reverse_iterator;
+    using const_reverse_iterator = int;
 
     //! @brief Constructs an empty varray.
     //!
@@ -363,8 +361,7 @@ public:
     //!   Linear O(N).
     varray(varray&& other)
     {
-        typedef typename
-        vt::use_memop_in_swap_and_move use_memop_in_swap_and_move;
+        using use_memop_in_swap_and_move = typename vt::use_memop_in_swap_and_move;
 
         this->move_ctor_dispatch(other, use_memop_in_swap_and_move());
     }
@@ -393,8 +390,7 @@ public:
     {
         errh::check_capacity(*this, other.size());                                  // may throw
 
-        typedef typename
-        vt::use_memop_in_swap_and_move use_memop_in_swap_and_move;
+        using use_memop_in_swap_and_move = typename vt::use_memop_in_swap_and_move;
 
         this->move_ctor_dispatch(other, use_memop_in_swap_and_move());
     }
@@ -417,8 +413,7 @@ public:
         if ( &other == this )
             return *this;
 
-        typedef typename
-        vt::use_memop_in_swap_and_move use_memop_in_swap_and_move;
+        using use_memop_in_swap_and_move = typename vt::use_memop_in_swap_and_move;
 
         this->move_assign_dispatch(other, use_memop_in_swap_and_move());
 
@@ -448,8 +443,7 @@ public:
     {
         errh::check_capacity(*this, other.size());                                  // may throw
 
-        typedef typename
-        vt::use_memop_in_swap_and_move use_memop_in_swap_and_move;
+        using use_memop_in_swap_and_move = typename vt::use_memop_in_swap_and_move;
 
         this->move_assign_dispatch(other, use_memop_in_swap_and_move());
 
@@ -484,8 +478,7 @@ public:
     //!   Linear O(N).
     void swap(varray& other)
     {
-        typedef typename
-        vt::use_optimized_swap use_optimized_swap;
+        using use_optimized_swap = typename vt::use_optimized_swap;
 
         this->swap_dispatch(other, use_optimized_swap());
     }
@@ -514,8 +507,7 @@ public:
         errh::check_capacity(*this, other.size());
         errh::check_capacity(other, this->size());
 
-        typedef typename
-        vt::use_optimized_swap use_optimized_swap;
+        using use_optimized_swap = typename vt::use_optimized_swap;
 
         this->swap_dispatch(other, use_optimized_swap());
     }
@@ -538,7 +530,7 @@ public:
     void resize(size_type count)
     {
         namespace sv = varray_detail;
-        typedef typename vt::disable_trivial_init dti;
+        using dti = typename vt::disable_trivial_init;
 
         if ( count < m_size )
         {
@@ -620,7 +612,7 @@ public:
     //!   Constant O(1).
     void push_back(value_type const& value)
     {
-        typedef typename vt::disable_trivial_init dti;
+        using dti = typename vt::disable_trivial_init;
 
         errh::check_capacity(*this, m_size + 1);                                    // may throw
 
@@ -645,7 +637,7 @@ public:
     //!   Constant O(1).
     void push_back(value_type&& value)
     {
-        typedef typename vt::disable_trivial_init dti;
+        using dti = typename vt::disable_trivial_init;
 
         errh::check_capacity(*this, m_size + 1);                                    // may throw
 
@@ -692,7 +684,7 @@ public:
     //!   Constant or linear.
     iterator insert(iterator position, value_type const& value)
     {
-        typedef typename vt::disable_trivial_init dti;
+        using dti = typename vt::disable_trivial_init;
         namespace sv = varray_detail;
 
         errh::check_iterator_end_eq(*this, position);
@@ -735,7 +727,7 @@ public:
     //!   Constant or linear.
     iterator insert(iterator position, value_type&& value)
     {
-        typedef typename vt::disable_trivial_init dti;
+        using dti = typename vt::disable_trivial_init;
         namespace sv = varray_detail;
 
         errh::check_iterator_end_eq(*this, position);
@@ -979,7 +971,7 @@ public:
     template<class ...Args>
     void emplace_back(Args&& ...args)
     {
-        typedef typename vt::disable_trivial_init dti;
+        using dti = typename vt::disable_trivial_init;
 
         errh::check_capacity(*this, m_size + 1);                                    // may throw
 
@@ -1009,7 +1001,7 @@ public:
     template<class ...Args>
     iterator emplace(iterator position, Args&& ...args)
     {
-        typedef typename vt::disable_trivial_init dti;
+        using dti = typename vt::disable_trivial_init;
 
         namespace sv = varray_detail;
 
@@ -1487,11 +1479,7 @@ private:
     template <std::size_t C>
     void swap_dispatch(varray<value_type, C>& other, std::true_type /*use_optimized_swap*/)
     {
-        typedef std::conditional_t
-            <
-                (Capacity < C),
-                aligned_storage_type,
-                typename varray<value_type, C>::aligned_storage_type
+        using aligned_storage_type = int
             > storage_type;
 
         storage_type temp;
@@ -1514,8 +1502,7 @@ private:
     {
         namespace sv = varray_detail;
 
-        typedef typename
-        vt::use_memop_in_swap_and_move use_memop_in_swap_and_move;
+        using use_memop_in_swap_and_move = typename vt::use_memop_in_swap_and_move;
 
         if ( this->size() < other.size() )
             swap_dispatch_impl(this->begin(), this->end(), other.begin(), other.end(), use_memop_in_swap_and_move()); // may throw
@@ -1746,22 +1733,22 @@ private:
 template<typename Value>
 class varray<Value, 0>
 {
-    typedef varray_detail::varray_traits<Value, 0> vt;
-    typedef varray_detail::checker<varray> errh;
+    using vt = varray_detail::varray_traits<Value, 0>;
+    using errh = varray_detail::checker<boost::geometry::index::detail::varray>;
 
 public:
-    typedef typename vt::value_type value_type;
-    typedef typename vt::size_type size_type;
-    typedef typename vt::difference_type difference_type;
-    typedef typename vt::pointer pointer;
-    typedef typename vt::const_pointer const_pointer;
-    typedef typename vt::reference reference;
-    typedef typename vt::const_reference const_reference;
+    using value_type = typename vt::value_type;
+    using size_type = typename vt::size_type;
+    using difference_type = typename vt::difference_type;
+    using pointer = typename vt::pointer;
+    using const_pointer = typename vt::const_pointer;
+    using reference = typename vt::reference;
+    using const_reference = typename vt::const_reference;
 
-    typedef pointer iterator;
-    typedef const_pointer const_iterator;
-    typedef boost::reverse_iterator<iterator> reverse_iterator;
-    typedef boost::reverse_iterator<const_iterator> const_reverse_iterator;
+    using iterator = pointer;
+    using const_iterator = const_pointer;
+    using reverse_iterator = int;
+    using const_reverse_iterator = int;
 
     // nothrow
     varray() {}

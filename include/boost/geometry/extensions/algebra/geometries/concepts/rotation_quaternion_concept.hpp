@@ -38,8 +38,8 @@ class RotationQuaternion
 {
 #ifndef DOXYGEN_NO_CONCEPT_MEMBERS
 
-    typedef typename coordinate_type<Geometry>::type ctype;
-    typedef typename coordinate_system<Geometry>::type csystem;
+    using ctype = int;
+    using csystem = int;
 
     template <typename G, std::size_t I, std::size_t N>
     struct dimension_checker
@@ -84,8 +84,8 @@ class ConstRotationQuaternion
 {
 #ifndef DOXYGEN_NO_CONCEPT_MEMBERS
 
-    typedef typename coordinate_type<Geometry>::type ctype;
-    typedef typename coordinate_system<Geometry>::type csystem;
+    using ctype = int;
+    using csystem = int;
 
     template <typename G, std::size_t I, std::size_t N>
     struct dimension_checker

@@ -94,14 +94,10 @@ private :
 
     typedef typename sort_by_side::side_compare<target_operation>::type side_compare_type;
     typedef typename boost::range_value<Turns>::type turn_type;
-    typedef typename turn_type::turn_operation_type turn_operation_type;
+    using turn_operation_type = int;
 
     typedef typename geometry::point_type<Geometry1>::type point_type;
-    typedef sort_by_side::side_sorter
-        <
-            Reverse1, Reverse2, OverlayType,
-            point_type, Strategy, side_compare_type
-        > sbs_type;
+    using sbs_type = int;
 
 public :
     inline traversal(Geometry1 const& geometry1, Geometry2 const& geometry2,

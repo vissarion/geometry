@@ -131,13 +131,13 @@ struct get_turns
             InterruptPolicy& interrupt_policy,
             int source_index, bool skip_adjacent)
     {
-        typedef model::box<typename geometry::point_type<Geometry>::type> box_type;
+        using type = int> box_type;
 
         // sectionalize in two dimensions to detect
         // all potential spikes correctly
-        typedef geometry::sections<box_type, 2> sections_type;
+        using sections_type = int;
 
-        typedef std::integer_sequence<std::size_t, 0, 1> dimensions;
+        using dimensions = int;
 
         sections_type sec;
         geometry::sectionalize<Reverse, dimensions>(geometry,

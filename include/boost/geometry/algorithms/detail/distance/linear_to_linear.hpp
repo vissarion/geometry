@@ -36,7 +36,7 @@ namespace detail { namespace distance
 template <typename Linear1, typename Linear2, typename Strategies>
 struct linear_to_linear
 {
-    typedef distance::return_t<Linear1, Linear2, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(Linear1 const& linear1,
                                     Linear2 const& linear2,

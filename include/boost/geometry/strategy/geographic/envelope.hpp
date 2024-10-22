@@ -45,9 +45,9 @@ class geographic
     : public spherical<CalculationType>
 {
 public:
-    typedef geographic_tag cs_tag;
+    using cs_tag = int;
 
-    typedef Spheroid model_type;
+    using model_type = Spheroid;
 
     inline geographic()
         : m_spheroid()

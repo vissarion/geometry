@@ -114,7 +114,7 @@ template <typename CalculationType = void>
 struct spherical
     : strategy::area::spherical<double, CalculationType>
 {
-    typedef area_tag version_tag;
+    using version_tag = int;
 
     // TEMP
     static strategy::area::spherical<double, CalculationType> get_area_strategy()
@@ -129,7 +129,7 @@ namespace services
 template <>
 struct default_strategy<spherical_equatorial_tag>
 {
-    typedef spherical<> type;
+    using type = int;
 };
 
 /*template <>

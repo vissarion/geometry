@@ -64,7 +64,7 @@ namespace detail {
 template <typename Geometry>
 struct single_geometry_return_type
 {
-    typedef typename detail_dispatch::single_geometry<Geometry>::return_type type;
+    using type = typename detail_dispatch::single_geometry<Geometry>::return_type;
 };
 
 template <typename Geometry, typename Id>

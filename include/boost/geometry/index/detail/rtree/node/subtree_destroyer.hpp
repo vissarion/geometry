@@ -24,10 +24,10 @@ namespace detail { namespace rtree {
 template <typename MembersHolder>
 class subtree_destroyer
 {
-    typedef typename MembersHolder::node node;
+    using node = typename MembersHolder::node;
 
-    typedef typename MembersHolder::allocators_type allocators_type;
-    typedef typename MembersHolder::node_pointer pointer;
+    using allocators_type = typename MembersHolder::allocators_type;
+    using pointer = typename MembersHolder::node_pointer;
 
     subtree_destroyer(subtree_destroyer const&);
     subtree_destroyer & operator=(subtree_destroyer const&);

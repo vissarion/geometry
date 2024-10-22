@@ -51,7 +51,7 @@ struct area_result
 template <typename Geometry, typename Strategy>
 struct area_result<Geometry, Strategy, false>
 {
-    typedef typename Strategy::template result_type<Geometry>::type type;
+    using type = typename Strategy::template result_type<Geometry>::type;
 };
 
 

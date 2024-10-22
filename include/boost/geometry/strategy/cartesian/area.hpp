@@ -68,7 +68,7 @@ public :
     {
         friend class cartesian;
 
-        typedef typename result_type<Geometry>::type return_type;
+        using return_type = typename result_type<Geometry>::type;
 
     public:
         inline state()
@@ -93,7 +93,7 @@ public :
                              PointOfSegment const& p2,
                              state<Geometry>& st)
     {
-        typedef typename state<Geometry>::return_type return_type;
+        using return_type = typename state<Geometry>::return_type;
 
         // Below formulas are equivalent, however the two lower ones
         // suffer less from accuracy loss for great values of coordinates.
@@ -126,7 +126,7 @@ namespace services
     template <>
     struct default_strategy<cartesian_tag>
     {
-        typedef strategy::area::cartesian<> type;
+        using type = int;
     };
 
 } // namespace services

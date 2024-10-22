@@ -40,7 +40,7 @@ template
 class thomas
     : public side::geographic<strategy::thomas, Spheroid, CalculationType>
 {
-    typedef side::geographic<strategy::thomas, Spheroid, CalculationType> base_t;
+    using base_t = int;
 
 public:
     thomas()

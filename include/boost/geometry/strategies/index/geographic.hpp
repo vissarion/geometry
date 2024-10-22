@@ -27,7 +27,7 @@ template
 class geographic
     : public distance::geographic<FormulaPolicy, Spheroid, CalculationType>
 {
-    typedef distance::geographic<FormulaPolicy, Spheroid, CalculationType> base_t;
+    using base_t = int;
 
 public:
     geographic() = default;

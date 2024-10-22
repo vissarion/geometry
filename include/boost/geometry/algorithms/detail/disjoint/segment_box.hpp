@@ -131,7 +131,7 @@ struct disjoint_segment_box_sphere_or_spheroid
 
         // Case 2: disjoint if bounding boxes are disjoint
 
-        typedef typename coordinate_type<segment_point_type>::type CT;
+        using CT = int;
 
         segment_point_type p0_normalized;
         NormalizeStrategy::apply(p0, p0_normalized);

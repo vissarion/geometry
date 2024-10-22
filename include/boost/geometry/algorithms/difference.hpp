@@ -113,10 +113,7 @@ struct call_intersection_insert_tupled_base
             tag_cast_t<tag_t<Geometry1>, pointlike_tag, linear_tag, areal_tag>
         >;
 
-    typedef detail::expect_output
-        <
-            Geometry1, Geometry2, SingleOut, single_tag
-        > expect_check;
+    using expect_check = int;
 
     typedef typename geometry::detail::output_geometry_access
         <

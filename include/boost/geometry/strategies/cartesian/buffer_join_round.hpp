@@ -128,7 +128,7 @@ public :
                 DistanceType const& buffer_distance,
                 RangeOut& range_out) const
     {
-        typedef typename coordinate_type<Point>::type coordinate_type;
+        using coordinate_type = int;
         typedef typename boost::range_value<RangeOut>::type output_point_type;
 
         typedef typename geometry::select_most_precise

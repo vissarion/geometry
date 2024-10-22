@@ -86,19 +86,12 @@ class spherical_side_formula
 {
 
 public :
-    typedef spherical_tag cs_tag;
+    using cs_tag = int;
 
     template <typename P1, typename P2, typename P>
     static inline int apply(P1 const& p1, P2 const& p2, P const& p)
     {
-        typedef typename promote_floating_point
-            <
-                typename select_calculation_type_alt
-                    <
-                        CalculationType,
-                        P1, P2, P
-                    >::type
-            >::type calculation_type;
+        using calculation_type = int;
 
         calculation_type const lambda1 = get_as_radian<0>(p1);
         calculation_type const delta1 = get_as_radian<1>(p1);
@@ -127,7 +120,7 @@ struct default_strategy<spherical_polar_tag, CalculationType>
 template <typename CalculationType>
 struct default_strategy<spherical_equatorial_tag, CalculationType>
 {
-    typedef spherical_side_formula<CalculationType> type;
+    using type = spherical_side_formula<CalculationType>;
 };
 
 template <typename CalculationType>

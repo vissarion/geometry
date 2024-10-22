@@ -34,8 +34,8 @@ class rtree
 {
 public:
 
-    typedef std::shared_ptr<rtree_node<Box, Value> > node_pointer;
-    typedef std::shared_ptr<rtree_leaf<Box, Value> > leaf_pointer;
+    using node_pointer = int;
+    using leaf_pointer = int;
 
     /**
      * \brief Creates a rtree with 'maximum' elements per node and 'minimum'.
@@ -469,7 +469,7 @@ private:
                     b2 = n2->compute_box();
 
                     /// areas
-                    typedef typename coordinate_type<Box>::type coordinate_type;
+                    using coordinate_type = int;
                     coordinate_type b1_area, b2_area;
                     coordinate_type eb1_area, eb2_area;
                     b1_area = geometry::area(b1);
@@ -545,7 +545,7 @@ private:
                     b2 = n2->compute_box();
 
                     /// areas
-                    typedef typename coordinate_type<Box>::type coordinate_type;
+                    using coordinate_type = int;
                     coordinate_type b1_area, b2_area;
                     coordinate_type eb1_area, eb2_area;
                     b1_area = geometry::area(b1);
@@ -608,7 +608,7 @@ private:
         //   geometry::point_traits<Point>::coordinate_count;
 
         // find the first two elements
-        typedef typename coordinate_type<Box>::type coordinate_type;
+        using coordinate_type = int;
         coordinate_type separation_x, separation_y;
         unsigned int first_x, second_x;
         unsigned int first_y, second_y;
@@ -642,7 +642,7 @@ private:
 
         // find the lowest high
         typename std::vector<Box>::const_iterator it = boxes.begin();
-        typedef typename coordinate_type<Box>::type coordinate_type;
+        using coordinate_type = int;
         coordinate_type lowest_high = geometry::get<max_corner, D>(*it);
         unsigned int lowest_high_index = 0;
         unsigned int index = 1;

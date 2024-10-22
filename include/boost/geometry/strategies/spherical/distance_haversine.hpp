@@ -145,7 +145,7 @@ template
 >
 class haversine
 {
-    typedef comparable::haversine<RadiusTypeOrSphere, CalculationType> comparable_type;
+    using comparable_type = comparable::haversine<RadiusTypeOrSphere, CalculationType>;
 
 public :
     template <typename Point1, typename Point2>
@@ -187,7 +187,7 @@ public :
     inline typename calculation_type<Point1, Point2>::type
     apply(Point1 const& p1, Point2 const& p2) const
     {
-        typedef typename calculation_type<Point1, Point2>::type calculation_type;
+        using calculation_type = typename calculation_type<Point1, Point2>::type;
         calculation_type const a = comparable_type::apply(p1, p2);
         calculation_type const c = calculation_type(2.0) * asin(math::sqrt(a));
         return calculation_type(m_radius) * c;
@@ -214,7 +214,7 @@ namespace services
 template <typename RadiusType, typename CalculationType>
 struct tag<haversine<RadiusType, CalculationType> >
 {
-    typedef strategy_tag_distance_point_point type;
+    using type = int;
 };
 
 
@@ -227,7 +227,7 @@ struct return_type<haversine<RadiusType, CalculationType>, P1, P2>
 template <typename RadiusType, typename CalculationType>
 struct comparable_type<haversine<RadiusType, CalculationType> >
 {
-    typedef comparable::haversine<RadiusType, CalculationType> type;
+    using type = comparable::haversine<RadiusType, CalculationType>;
 };
 
 
@@ -235,8 +235,8 @@ template <typename RadiusType, typename CalculationType>
 struct get_comparable<haversine<RadiusType, CalculationType> >
 {
 private :
-    typedef haversine<RadiusType, CalculationType> this_type;
-    typedef comparable::haversine<RadiusType, CalculationType> comparable_type;
+    using this_type = haversine<RadiusType, CalculationType>;
+    using comparable_type = comparable::haversine<RadiusType, CalculationType>;
 public :
     static inline comparable_type apply(this_type const& input)
     {
@@ -248,8 +248,8 @@ template <typename RadiusType, typename CalculationType, typename P1, typename P
 struct result_from_distance<haversine<RadiusType, CalculationType>, P1, P2>
 {
 private :
-    typedef haversine<RadiusType, CalculationType> this_type;
-    typedef typename return_type<this_type, P1, P2>::type return_type;
+    using this_type = haversine<RadiusType, CalculationType>;
+    using return_type = int;
 public :
     template <typename T>
     static inline return_type apply(this_type const& , T const& value)
@@ -318,7 +318,7 @@ struct default_strategy
         spherical_equatorial_tag, spherical_equatorial_tag
     >
 {
-    typedef strategy::distance::haversine<typename select_coordinate_type<Point1, Point2>::type> type;
+    using type = int;
 };
 
 // Note: spherical polar coordinate system requires "get_as_radian_equatorial"

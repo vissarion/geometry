@@ -96,7 +96,7 @@ namespace services
 template <typename Box1, typename Box2, int TopDim1, int TopDim2>
 struct default_strategy<Box1, Box2, box_tag, box_tag, TopDim1, TopDim2, cartesian_tag, cartesian_tag>
 {
-    typedef disjoint::cartesian_box_box type;
+    using type = disjoint::cartesian_box_box;
 };
 
 

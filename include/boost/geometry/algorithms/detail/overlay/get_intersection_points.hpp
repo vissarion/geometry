@@ -55,12 +55,9 @@ struct get_turn_without_info
                 Strategy const& strategy,
                 OutputIterator out)
     {
-        typedef typename TurnInfo::point_type turn_point_type;
+        using turn_point_type = typename TurnInfo::point_type;
 
-        typedef policies::relate::segments_intersection_points
-            <
-                segment_intersection_points<turn_point_type>
-            > policy_type;
+        using policy_type = int;
 
         typename policy_type::return_type const result
             = strategy.relate().apply(range_p, range_q, policy_type());

@@ -88,7 +88,7 @@ struct read_polygon
             double* const x = shape.padfX;
             double* const y = shape.padfY;
 
-            typedef std::pair<ring_type, double> ring_plus_area;
+            using ring_plus_area = int;
             std::vector<ring_plus_area> rings;
             rings.resize(shape.nParts);
 

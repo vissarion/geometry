@@ -166,15 +166,12 @@ template
 class point_to_range
 {
 private:
-    typedef distance::strategy_t<Point, Range, Strategies> strategy_type;
+    using strategy_type = int;
 
-    typedef detail::closest_feature::point_to_point_range
-        <
-            Point, Range, Closure
-        > point_to_point_range;
+    using point_to_point_range = int;
 
 public:
-    typedef distance::return_t<Point, Range, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(Point const& point, Range const& range,
                                     Strategies const& strategies)
@@ -219,7 +216,7 @@ template
 >
 struct point_to_ring
 {
-    typedef distance::return_t<Point, Ring, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(Point const& point,
                                     Ring const& ring,
@@ -248,13 +245,10 @@ template
 class point_to_polygon
 {
 public:
-    typedef distance::return_t<Point, Polygon, Strategies> return_type;
+    using return_type = int;
 
 private:
-    typedef point_to_range
-        <
-            Point, typename ring_type<Polygon>::type, Closure, Strategies
-        > per_ring;
+    using per_ring = int;
 
     struct distance_to_interior_rings
     {
@@ -375,7 +369,7 @@ public:
 template <typename Point, typename MultiPolygon, typename Strategies>
 struct point_to_multigeometry<Point, MultiPolygon, Strategies, true>
 {
-    typedef distance::return_t<Point, MultiPolygon, Strategies> return_type;
+    using return_type = int;
 
     static inline return_type apply(Point const& point,
                                     MultiPolygon const& multipolygon,

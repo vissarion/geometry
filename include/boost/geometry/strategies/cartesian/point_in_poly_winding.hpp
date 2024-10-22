@@ -83,10 +83,10 @@ class cartesian_winding_base
     };
 
 public:
-    typedef cartesian_tag cs_tag;
+    using cs_tag = int;
 
     // Typedefs and static methods to fulfill the concept
-    typedef counter state_type;
+    using state_type = counter;
 
     template <typename Point, typename PointOfSegment>
     static inline bool apply(Point const& point,
@@ -158,7 +158,7 @@ private:
                                    counter& state,
                                    bool& eq1, bool& eq2)
     {
-        typedef typename calculation_type<Point, PointOfSegment>::type calc_t;
+        using calc_t = typename calculation_type<Point, PointOfSegment>::type;
 
         calc_t const px = get<0>(point);
         calc_t const s1x = get<0>(seg1);
@@ -189,7 +189,7 @@ private:
                                       PointOfSegment const& seg2,
                                       bool eq1, bool eq2)
     {
-        typedef typename calculation_type<Point, PointOfSegment>::type calc_t;
+        using calc_t = typename calculation_type<Point, PointOfSegment>::type;
 
         calc_t const p = get<0>(point);
         calc_t const s1 = get<0>(seg1);

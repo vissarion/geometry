@@ -46,9 +46,7 @@ struct value_type
     // it would store pointers to temporary objects. Instead we use a
     // segment, which does a full copy of the temporary objects
     // returned by the point iterator.
-    typedef std::conditional_t
-        <
-            std::is_reference<point_iterator_reference_type>::value,
+    using value = int,
             geometry::model::pointing_segment<point_iterator_value_type>,
             geometry::model::segment
                 <

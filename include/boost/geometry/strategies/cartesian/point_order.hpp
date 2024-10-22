@@ -27,7 +27,7 @@ template <typename CalculationType = void>
 struct cartesian
     : strategy::area::cartesian<CalculationType>
 {
-    typedef area_tag version_tag;
+    using version_tag = int;
 
     // TEMP
     static strategy::area::cartesian<CalculationType> get_area_strategy()
@@ -42,7 +42,7 @@ namespace services
 template <>
 struct default_strategy<cartesian_tag>
 {
-    typedef cartesian<> type;
+    using type = int;
 };
 
 } // namespace services

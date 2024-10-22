@@ -85,19 +85,19 @@ namespace traits
 template <typename CoordinateType, typename CoordinateSystem>
 struct tag<model::d2::point_xy<CoordinateType, CoordinateSystem> >
 {
-    typedef point_tag type;
+    using type = int;
 };
 
 template<typename CoordinateType, typename CoordinateSystem>
 struct coordinate_type<model::d2::point_xy<CoordinateType, CoordinateSystem> >
 {
-    typedef CoordinateType type;
+    using type = CoordinateType;
 };
 
 template<typename CoordinateType, typename CoordinateSystem>
 struct coordinate_system<model::d2::point_xy<CoordinateType, CoordinateSystem> >
 {
-    typedef CoordinateSystem type;
+    using type = CoordinateSystem;
 };
 
 template<typename CoordinateType, typename CoordinateSystem>
@@ -124,7 +124,7 @@ struct access<model::d2::point_xy<CoordinateType, CoordinateSystem>, Dimension >
 template<typename CoordinateType, typename CoordinateSystem>
 struct make<model::d2::point_xy<CoordinateType, CoordinateSystem> >
 {
-    typedef model::d2::point_xy<CoordinateType, CoordinateSystem> point_type;
+    using point_type = model::d2::point_xy<CoordinateType, CoordinateSystem>;
 
     static const bool is_specialized = true;
 

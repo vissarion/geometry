@@ -23,8 +23,8 @@ template <typename MembersHolder>
 struct is_leaf
     : public MembersHolder::visitor_const
 {
-    typedef typename MembersHolder::internal_node internal_node;
-    typedef typename MembersHolder::leaf leaf;
+    using internal_node = typename MembersHolder::internal_node;
+    using leaf = typename MembersHolder::leaf;
 
     is_leaf()
         : result(false)

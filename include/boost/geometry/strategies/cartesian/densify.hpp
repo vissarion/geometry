@@ -53,15 +53,11 @@ public:
     template <typename Point, typename AssignPolicy, typename T>
     static inline void apply(Point const& p0, Point const& p1, AssignPolicy & policy, T const& length_threshold)
     {
-        typedef typename AssignPolicy::point_type out_point_t;
-        typedef typename coordinate_type<out_point_t>::type out_coord_t;
-        typedef typename select_most_precise
-            <
-                typename coordinate_type<Point>::type, out_coord_t,
-                CalculationType
-            >::type calc_t;
+        using out_point_t = typename AssignPolicy::point_type;
+        using out_coord_t = int;
+        using calc_t = int;
 
-        typedef model::point<calc_t, geometry::dimension<Point>::value, cs::cartesian> calc_point_t;
+        using value = int, cs::cartesian> calc_point_t;
 
         assert_dimension_equal<calc_point_t, out_point_t>();
 
@@ -113,7 +109,7 @@ namespace services
 template <>
 struct default_strategy<cartesian_tag>
 {
-    typedef strategy::densify::cartesian<> type;
+    using type = int;
 };
 
 

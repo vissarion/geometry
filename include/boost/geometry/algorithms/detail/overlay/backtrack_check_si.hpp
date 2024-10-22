@@ -100,7 +100,7 @@ class backtrack_check_self_intersections
         {}
     };
 public :
-    typedef state state_type;
+    using state_type = state;
 
     template
     <

@@ -40,7 +40,7 @@ template
 class andoyer
     : public side::geographic<strategy::andoyer, Spheroid, CalculationType>
 {
-    typedef side::geographic<strategy::andoyer, Spheroid, CalculationType> base_t;
+    using base_t = int;
 
 public:
     andoyer()

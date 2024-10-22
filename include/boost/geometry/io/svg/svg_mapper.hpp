@@ -266,7 +266,7 @@ template
 >
 class svg_mapper : boost::noncopyable
 {
-    typedef model::point<SvgCoordinateType, 2, cs::cartesian> svg_point_type;
+    using svg_point_type = int;
 
     typedef typename geometry::select_most_precise
         <

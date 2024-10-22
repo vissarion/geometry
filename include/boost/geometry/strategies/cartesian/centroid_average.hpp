@@ -71,7 +71,7 @@ public :
     template <typename GeometryPoint, typename ResultPoint>
     struct state_type
     {
-        typedef sum<GeometryPoint, ResultPoint> type;
+        using type = sum<GeometryPoint, ResultPoint>;
     };
 
     template <typename GeometryPoint, typename ResultPoint>
@@ -115,11 +115,7 @@ struct default_strategy
     Geometry
 >
 {
-    typedef average
-        <
-            Point,
-            point_type_t<Geometry>
-        > type;
+    using type = int;
 };
 
 } // namespace services

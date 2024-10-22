@@ -166,7 +166,7 @@ struct polygon_remove_spikes
     template <typename Polygon, typename SideStrategy>
     static inline void apply(Polygon& polygon, SideStrategy const& strategy)
     {
-        typedef range_remove_spikes per_range;
+        using per_range = range_remove_spikes;
         per_range::apply(exterior_ring(polygon), strategy);
 
         auto&& rings = interior_rings(polygon);

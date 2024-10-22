@@ -50,7 +50,7 @@ namespace traits
 template<typename NSphere>
 struct tag< center_view<NSphere> >
 {
-    typedef point_tag type;
+    using type = int;
 };
 
 template<typename NSphere>

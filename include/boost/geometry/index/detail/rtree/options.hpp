@@ -47,12 +47,12 @@ struct node_variant_static_tag {};
 template <typename Parameters, typename InsertTag, typename ChooseNextNodeTag, typename SplitTag, typename RedistributeTag, typename NodeTag>
 struct options
 {
-    typedef Parameters parameters_type;
-    typedef InsertTag insert_tag;
-    typedef ChooseNextNodeTag choose_next_node_tag;
-    typedef SplitTag split_tag;
-    typedef RedistributeTag redistribute_tag;
-    typedef NodeTag node_tag;
+    using parameters_type = Parameters;
+    using insert_tag = InsertTag;
+    using choose_next_node_tag = ChooseNextNodeTag;
+    using split_tag = SplitTag;
+    using redistribute_tag = RedistributeTag;
+    using node_tag = NodeTag;
 };
 
 template <typename Parameters>
