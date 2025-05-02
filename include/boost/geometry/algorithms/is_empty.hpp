@@ -143,6 +143,11 @@ struct is_empty<Geometry, multi_polygon_tag>
     : detail::is_empty::multi_is_empty<detail::is_empty::polygon_is_empty>
 {};
 
+template <typename Geometry>
+struct is_empty<Geometry, polyhedral_surface_tag>
+    : is_empty<Geometry, multi_polygon_tag>
+{};
+
 } // namespace dispatch
 #endif // DOXYGEN_NO_DISPATCH
 
