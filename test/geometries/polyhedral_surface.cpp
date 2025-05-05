@@ -60,6 +60,8 @@ int test_main(int, char* [])
     // clear polyhedral surface
     bg::clear(polyhedral1);
     BOOST_CHECK_EQUAL(boost::size(polyhedral1), 0);
+    // Test that the polyhedral surface is empty
+    BOOST_CHECK(boost::empty(polyhedral1));
 
     // read/write polyhedral surface wkt
     polyhedral_t polyhedral2;
