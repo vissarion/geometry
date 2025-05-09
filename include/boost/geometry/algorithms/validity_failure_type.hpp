@@ -81,7 +81,24 @@ enum validity_failure_type
     failure_wrong_corner_order = 50, // for boxes
     /// The geometry has at least one point with an invalid coordinate
     /// (for example, the coordinate is a NaN)
-    failure_invalid_coordinate = 60
+    failure_invalid_coordinate = 60,
+    /// The geometry has colinear points on the same face
+    /// (applies to polyhedral surfaces only)
+    failure_collinear_points_on_face = 70,
+    /// The geometry has non-coplanar points on the same face
+    /// The points do not lie on the same plane and thus cannot define a face
+    /// (applies to polyhedral surfaces only)
+    failure_non_coplanar_points_on_face = 71,
+    /// The geometry has a very small number of points on the same face
+    /// The face must have at least 3 points to be defined
+    /// (applies to polyhedral surfaces only)
+    failure_few_points_on_face = 72,
+    /// The geometry has inconsistent orientation of the faces
+    /// The normals of the faces are not in the same direction
+    /// (applies to polyhedral surfaces only)
+    failure_inconsistent_orientation = 73,
+    failure_invalid_intersection = 74,
+    failure_disconnected_surface = 75
 };
 
 

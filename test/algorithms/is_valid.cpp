@@ -35,6 +35,7 @@
 #include <boost/geometry/algorithms/reverse.hpp>
 
 #include <boost/geometry/geometries/geometry_collection.hpp>
+#include <boost/geometry/geometries/polyhedral_surface.hpp>
 
 template <typename Geometry>
 void geometry_to_svg(Geometry const& geometry, const std::string& case_id)
@@ -1546,4 +1547,171 @@ BOOST_AUTO_TEST_CASE( test_is_valid_geometry_collection )
     test::apply("gc02", gc, false);
     gc = {valid_linestring, invalid_polygon};
     test::apply("gc03", gc, false);
+}
+
+
+BOOST_AUTO_TEST_CASE(test_is_valid_polyhedral_surface)
+{
+    using point_type = bg::model::point<double, 3, bg::cs::cartesian>;
+    using polygon_type = bg::model::polygon<point_type>;
+    using polyhedral_surface_type = bg::model::polyhedral_surface<polygon_type>;
+
+    // Valid polyhedral surface
+    bg::validity_failure_type failure;
+    polyhedral_surface_type valid_surface;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,0 1 0,1 1 0,1 0 0,0 0 0)),((0 0 0,0 0 1,0 1 1,0 1 0,0 0 0)),\
+                           ((0 0 0,1 0 0,1 0 1,0 0 1,0 0 0)),((1 1 1,0 1 1,0 0 1,1 0 1,1 1 1)),\
+                           ((1 1 1,1 0 1,1 0 0,1 1 0,1 1 1)),((1 1 1,1 1 0,0 1 0,0 1 1,1 1 1)))",
+        valid_surface);
+    BOOST_CHECK(bg::is_valid(valid_surface, failure));
+
+    // A valid polyhedral surface which is open and has non-convex faces
+    polyhedral_surface_type valid_surface2;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,0 1 0,1 1 0,1 0 0,0 0 0)),((0 0 0,0 0 1,0 1 1,0 1 0,0 0 0)),\
+                           ((0 0 0,1 0 0,1 0 1,0 0 1,0 0 0)),((1 1 1,0 1 1,0 0 1,1 0 1,1 1 1)),\
+                           ((1 1 1,1 0 1,1 0 0,1 1 0,1 .5 .5,1 1 1)))",
+        valid_surface2);
+    BOOST_CHECK(bg::is_valid(valid_surface2, failure));
+
+    // A valid polyhedral surface which is open and has holes on the faces
+    polyhedral_surface_type valid_surface3;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,0 1 0,1 1 0,1 0 0,0 0 0),(0.2 0.2 0,0.2 0.5 0,0.5 0.5 0,0.5 0.2 0,0.2 0.2 0)),\
+                           ((0 0 0,0 0 1,0 1 1,0 1 0,0 0 0)),((0 0 0,1 0 0,1 0 1,0 0 1,0 0 0)),\
+                           ((1 1 1,0 1 1,0 0 1,1 0 1,1 1 1)),((1 1 1,1 0 1,1 0 0,1 1 0,1 1 1)),\
+                           ((1 1 1,1 1 0,0 1 0,0 1 1,1 1 1)))",
+        valid_surface3);
+    BOOST_CHECK(bg::is_valid(valid_surface3, failure));
+
+    // Invalid polyhedral surface: non planar face (polygon)
+    polyhedral_surface_type invalid_surface_non_planar_face;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0 0,0 1 0,0 0 1,0 0 0)),((1 0 0,1 1 0,0 1 0,1 0 0)))",
+        invalid_surface_non_planar_face);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_non_planar_face, failure));
+    BOOST_CHECK(failure == bg::failure_non_coplanar_points_on_face);
+
+    // Invalid polyhedral surface: colinear points on face (polygon)
+    polyhedral_surface_type invalid_surface_collinear_points;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((1 0 0,1 1 0,0 1 0,1 0 0)),((0 0 0,1 0 0,2 0 0,0 0 0)))",
+        invalid_surface_collinear_points);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_collinear_points, failure));
+    BOOST_CHECK(failure == bg::failure_collinear_points_on_face);
+
+    // Invalid polyhedral surface: few points on face (polygon)
+    polyhedral_surface_type invalid_surface_few_points;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((1 0 0,1 1 0,0 1 0,1 0 0)),((0 0 0,1 0 0,0 0 0)))",
+        invalid_surface_few_points);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_few_points, failure));
+    BOOST_CHECK(failure == bg::failure_few_points_on_face);
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0 0)),((1 0 0,1 1 0,0 1 0,1 0 0)))",
+        invalid_surface_few_points);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_few_points, failure));
+    BOOST_CHECK(failure == bg::failure_few_points_on_face);
+
+    // Invalid polyhedral surface; incosistent orientation
+    polyhedral_surface_type invalid_surface_inconsistent_orientation;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,0 1 0,1 1 0,1 0 0,0 0 0)),((0 0 0,0 0 1,0 1 1,0 1 0,0 0 0)),\
+                           ((0 0 0,1 0 0,1 0 1,0 0 1,0 0 0)),((1 1 1,1 0 1,0 0 1,0 1 1,1 1 1)),\
+                           ((1 1 1,1 0 1,1 0 0,1 1 0,1 1 1)),((1 1 1,1 1 0,0 1 0,0 1 1,1 1 1)))",
+                           invalid_surface_inconsistent_orientation);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_inconsistent_orientation, failure));
+    BOOST_CHECK(failure == bg::failure_inconsistent_orientation);
+
+    // Invalid polyhedral surface: invalid intersection
+    polyhedral_surface_type invalid_surface_invalid_intersection;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0 0,0 0 1,0 0 0)),((0 1 0,0.5 -0.5 0.5,1 1 0,0 1 0)))",
+        invalid_surface_invalid_intersection);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_invalid_intersection, failure));
+    BOOST_CHECK(failure == bg::failure_invalid_intersection);
+
+    // Invalid polyhedral surface: disconnected polygon patches
+    polyhedral_surface_type invalid_surface_disconnected_polygons;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0 0,0 1 0,0 0 0)),((1 1 0,2 1 0,2 2 0,1 2 0,1 1 0)))",
+        invalid_surface_disconnected_polygons);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_disconnected_polygons, failure));
+    BOOST_CHECK(failure == bg::failure_disconnected_surface);
+
+    // Invalid polyhedral surface: invalid intersection (intersection vertex with edge of another polygon)
+    // Issue https://github.com/boostorg/geometry/issues/1406
+    polyhedral_surface_type invalid_surface_invalid_intersection_vertex_edge;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0 0,0 1 0,0 0 0)),((0.5 0.5 0,2 1 0,2 2 0,1 2 0,0.5 0.5 0)))",
+        invalid_surface_invalid_intersection_vertex_edge);
+    //BOOST_CHECK(!bg::is_valid(invalid_surface_invalid_intersection_vertex_edge, failure));
+    //BOOST_CHECK(failure == bg::failure_invalid_intersection);
+
+    // Invalid polyhedral surface: invalid intersection (intersection vertex with vertex of another polygon)
+    // Issue 1406
+    polyhedral_surface_type invalid_surface_invalid_intersection_vertex_vertex;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0 0,0 1 0,0 0 0)),((1 0 0,2 1 0,2 2 0,1 2 0,1 0 0)))",
+        invalid_surface_invalid_intersection_vertex_vertex);
+    //BOOST_CHECK(!bg::is_valid(invalid_surface_invalid_intersection_vertex_vertex, failure));
+    //BOOST_CHECK(failure == bg::failure_invalid_intersection);
+
+    // Invalid polyhedral surface: invalid intersection
+    polyhedral_surface_type invalid_surface_invalid_intersection_parallel_edges;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0 0,0 1 0,0 0 0)),((0 1 0,0.5 0.5 0,1 0 0,2 1 0,2 2 0,1 2 0,0 1 0)))",
+        invalid_surface_invalid_intersection_parallel_edges);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_invalid_intersection_parallel_edges, failure));
+    BOOST_CHECK(failure == bg::failure_invalid_intersection);
+
+    // Invalid polyhedral surface: invalid intersection (overlapping faces)
+    polyhedral_surface_type invalid_surface_invalid_intersection_operlapping_faces;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0.5 0,0.5 1 0,0 0 0)),((0 1 0,1 0 0,2 1 0,2 2 0,1 2 0,0 1 0)))",
+        invalid_surface_invalid_intersection_operlapping_faces);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_invalid_intersection_operlapping_faces, failure));
+    BOOST_CHECK(failure == bg::failure_invalid_intersection);
+
+    // Invalid polyhedral surface: invalid intersection (overlapping faces with common vertex)
+    polyhedral_surface_type invalid_surface_invalid_intersection_operlapping_faces2;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0 0,0.5 1 0,0 0 0)),((0 1 0,1 0 0,2 1 0,2 2 0,1 2 0,0 1 0)))",
+        invalid_surface_invalid_intersection_operlapping_faces2);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_invalid_intersection_operlapping_faces2, failure));
+    BOOST_CHECK(failure == bg::failure_invalid_intersection);
+
+    // Invalid polyhedral surface: invalid intersection of face
+    polyhedral_surface_type invalid_surface_invalid_face;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0 0,0 1 0,0 0 0)),((0 1 0,1 0 0,2 2 0,2 1 0,1 2 0,0 1 0)))",
+        invalid_surface_invalid_face);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_invalid_face, failure));
+    BOOST_CHECK(failure == bg::failure_self_intersections);
+
+//
+/*
+    // Invalid polyhedral surface: disconnected polygons
+    polyhedral_surface_type invalid_surface_disconnected;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0 0,0 1 0,0 0 0)),((2 2 0,3 2 0,2 3 0,2 2 0)))",
+        invalid_surface_disconnected);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_disconnected));
+
+    // Invalid polyhedral surface: overlapping polygons
+    polyhedral_surface_type invalid_surface_overlap;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0 0,0 1 0,0 0 0)),((0 0 0,1 0 0,0 1 0,0 0 0)))",
+        invalid_surface_overlap);
+    BOOST_CHECK(!bg::is_valid(invalid_surface_overlap));
+
+    // Valid polyhedral surface with multiple connected polygons
+    polyhedral_surface_type valid_surface_connected;
+    bg::read_wkt(
+        "POLYHEDRALSURFACE(((0 0 0,1 0 0,0 1 0,0 0 0)),((1 0 0,2 0 0,1 1 0,1 0 0)),\
+                           ((0 1 0,1 1 0,0 2 0,0 1 0)))",
+        valid_surface_connected);
+    BOOST_CHECK(bg::is_valid(valid_surface_connected));
+*/
 }
